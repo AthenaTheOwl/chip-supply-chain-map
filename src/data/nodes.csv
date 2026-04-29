@@ -1,0 +1,79 @@
+id,name,type,subtype,country,city,public_ticker,founded,short_description,source_id
+tsmc,TSMC,foundry,leading-edge,TW,Hsinchu,TSM,1987,Worlds largest pure play foundry,s1
+samsung-foundry,Samsung Foundry,foundry,leading-edge,KR,Hwaseong,005930.KS,2005,Advanced logic foundry inside Samsung Electronics,s2
+intel-foundry,Intel Foundry,foundry,leading-edge,US,Santa Clara,INTC,2021,US based advanced logic foundry business,s3
+globalfoundries,GlobalFoundries,foundry,specialty,US,Malta,GFS,2009,Specialty foundry for RF automotive and embedded chips,s4
+umc,UMC,foundry,mature-node,TW,Hsinchu,UMC,1980,Mature node foundry with global fabs,s5
+smic,SMIC,foundry,mature-node,CN,Shanghai,0981.HK,2000,China based foundry with mature and advanced-node ambitions,s6
+tower-semi,Tower Semiconductor,foundry,specialty,IL,Migdal Haemek,TSEM,1993,Analog and mixed signal specialty foundry,s7
+vanguard,Vanguard International Semiconductor,foundry,mature-node,TW,Hsinchu,5347.TW,1994,Mature node foundry focused on specialty processes,s8
+psmc,PSMC,foundry,mature-node,TW,Hsinchu,6770.TW,1994,Memory and logic foundry with mature-node capacity,s9
+hua-hong,Hua Hong Semiconductor,foundry,mature-node,CN,Shanghai,1347.HK,1996,China specialty foundry focused on embedded and power processes,s10
+nvidia,NVIDIA,fabless,gpu,US,Santa Clara,NVDA,1993,AI accelerator and GPU platform leader,s11
+amd,AMD,fabless,cpu-gpu,US,Santa Clara,AMD,1969,CPU GPU and accelerator designer,s12
+apple,Apple,fabless,consumer-soc,US,Cupertino,AAPL,1976,Custom SoC designer and major foundry customer,s13
+qualcomm,Qualcomm,fabless,mobile-soc,US,San Diego,QCOM,1985,Mobile and edge AI chip designer,s14
+broadcom,Broadcom,fabless,networking,US,Palo Alto,AVGO,1961,Networking ASIC and connectivity semiconductor supplier,s15
+mediatek,MediaTek,fabless,mobile-soc,TW,Hsinchu,2454.TW,1997,Mobile and consumer SoC designer,s16
+marvell,Marvell,fabless,networking,US,Santa Clara,MRVL,1995,Cloud networking storage and custom silicon supplier,s17
+synopsys,Synopsys,eda-ip,eda,US,Sunnyvale,SNPS,1986,EDA software and semiconductor IP supplier,s18
+cadence,Cadence,eda-ip,eda,US,San Jose,CDNS,1988,EDA software and IP platform supplier,s19
+siemens-eda,Siemens EDA,eda-ip,eda,US,Plano,SIE.DE,1981,EDA software business inside Siemens Digital Industries,s20
+arm,Arm,eda-ip,cpu-ip,GB,Cambridge,ARM,1990,CPU architecture and core IP licensor,s21
+asml,ASML,equipment,lithography,NL,Veldhoven,ASML,1984,Sole supplier of EUV lithography systems,s22
+nikon,Nikon,equipment,lithography,JP,Tokyo,7731.T,1917,DUV lithography equipment supplier,s23
+canon,Canon,equipment,lithography,JP,Tokyo,7751.T,1937,Nanoimprint and lithography equipment supplier,s24
+applied-materials,Applied Materials,equipment,deposition-etch,US,Santa Clara,AMAT,1967,WFE leader across deposition etch implant and process control,s25
+lam-research,Lam Research,equipment,etch-deposition,US,Fremont,LRCX,1980,Etch and deposition equipment supplier,s26
+kla,KLA,equipment,metrology-inspection,US,Milpitas,KLAC,1997,Process control inspection and metrology leader,s27
+tokyo-electron,Tokyo Electron,equipment,coater-developer,JP,Tokyo,8035.T,1963,WFE supplier across coat develop etch and deposition,s28
+lasertec,Lasertec,equipment,mask-inspection,JP,Yokohama,6920.T,1960,Mask inspection equipment supplier for advanced lithography,s29
+onto-innovation,Onto Innovation,equipment,metrology-inspection,US,Wilmington,ONTO,2019,Metrology inspection and packaging process control supplier,s30
+aixtron,AIXTRON,equipment,compound-semi,DE,Herzogenrath,AIXA.DE,1983,Deposition equipment supplier for compound semiconductors,s31
+veeco,Veeco,equipment,compound-semi,US,Plainview,VECO,1945,Deposition and process equipment supplier,s32
+edwards-vacuum,Edwards Vacuum,equipment,vacuum,GB,Burgess Hill,ATCO-A.ST,1919,Vacuum and abatement supplier for semiconductor fabs,s33
+disco,DISCO,equipment,dicing-grinding,JP,Tokyo,6146.T,1937,Wafer dicing grinding and polishing equipment supplier,s34
+advantest,Advantest,equipment,test,JP,Tokyo,6857.T,1954,Semiconductor test equipment supplier,s35
+teradyne,Teradyne,equipment,test,US,North Reading,TER,1960,Automated test equipment supplier,s36
+shin-etsu,Shin-Etsu Chemical,materials,wafers,JP,Tokyo,4063.T,1926,Silicon wafer and photoresist materials supplier,s37
+sumco,SUMCO,materials,wafers,JP,Tokyo,3436.T,1999,Silicon wafer supplier for semiconductor manufacturing,s38
+jsr,JSR,materials,photoresist,JP,Tokyo,private,1957,Photoresist and advanced materials supplier,s39
+coherent,Coherent,materials,compound-materials,US,Saxonburg,COHR,1971,Compound semiconductor materials and photonics supplier,s40
+entegris,Entegris,materials,chemicals,US,Billerica,ENTG,1966,Specialty chemicals filtration and materials handling supplier,s41
+hoya,Hoya,materials,photomasks,JP,Tokyo,7741.T,1941,Photomask blanks and optical materials supplier,s42
+cabot-microelectronics,Cabot Microelectronics,materials,cmp-slurry,US,Aurora,ENTG,1999,CMP slurry legacy supplier now part of Entegris,s43
+globalwafers,GlobalWafers,materials,wafers,TW,Hsinchu,6488.TWO,2011,Global silicon wafer supplier,s44
+siltronic,Siltronic,materials,wafers,DE,Munich,WAF.DE,1968,Silicon wafer supplier based in Germany,s45
+soitec,Soitec,materials,engineered-wafers,FR,Bernin,SOI.PA,1992,Engineered substrate supplier for RF power and FD-SOI,s46
+ube,UBE,materials,polyimide,JP,Tokyo,4208.T,1897,Polyimide and specialty chemical supplier,s47
+ajinomoto,Ajinomoto,materials,abf-film,JP,Tokyo,2802.T,1909,Supplier of Ajinomoto build-up film for substrates,s48
+ibiden,Ibiden,substrates,abf,JP,Ogaki,4062.T,1912,Advanced package substrate supplier,s49
+unimicron,Unimicron,substrates,abf,TW,Taoyuan,3037.TW,1990,PCB and ABF substrate supplier,s50
+shinko,Shinko Electric Industries,substrates,package-substrates,JP,Nagano,6967.T,1946,Semiconductor package substrate and leadframe supplier,s51
+kyocera,Kyocera,substrates,ceramic-packages,JP,Kyoto,6971.T,1959,Ceramic package and electronic component supplier,s52
+micron,Micron,memory,dram-nand,US,Boise,MU,1978,DRAM NAND and HBM memory supplier,s53
+sk-hynix,SK Hynix,memory,dram-hbm,KR,Icheon,000660.KS,1983,DRAM NAND and HBM memory supplier,s54
+samsung-memory,Samsung Memory,memory,dram-nand,KR,Hwaseong,005930.KS,1983,DRAM NAND and HBM memory business,s55
+kioxia,Kioxia,memory,nand,JP,Tokyo,private,2017,NAND flash memory supplier,s56
+winbond,Winbond,memory,specialty-dram,TW,Taichung,2344.TW,1987,Specialty DRAM and flash memory supplier,s57
+ymtc,YMTC,memory,nand,CN,Wuhan,private,2016,China based NAND flash memory manufacturer,s58
+ase,ASE Group,osat-packaging,advanced-packaging,TW,Kaohsiung,3711.TW,1984,OSAT leader across assembly test and advanced packaging,s59
+amkor,Amkor,osat-packaging,advanced-packaging,US,Tempe,AMKR,1968,Outsourced assembly and test provider,s60
+jcet,JCET,osat-packaging,advanced-packaging,CN,Jiangyin,600584.SS,1972,China based OSAT and advanced packaging supplier,s61
+powertech,Powertech Technology,osat-packaging,memory-packaging,TW,Hsinchu,6239.TW,1997,Memory and logic assembly and test provider,s62
+tongfu,Tongfu Microelectronics,osat-packaging,advanced-packaging,CN,Nantong,002156.SZ,1997,OSAT supplier with advanced packaging capacity,s63
+aws,AWS,hyperscaler,cloud-ai,US,Seattle,AMZN,2006,Cloud operator building custom AI and infrastructure silicon,s64
+microsoft,Microsoft,hyperscaler,cloud-ai,US,Redmond,MSFT,1975,Cloud and AI infrastructure operator with custom silicon,s65
+google,Google,hyperscaler,cloud-ai,US,Mountain View,GOOGL,1998,Cloud operator and TPU accelerator designer,s66
+meta,Meta,hyperscaler,cloud-ai,US,Menlo Park,META,2004,AI infrastructure operator building MTIA accelerators,s67
+tesla,Tesla,auto-industrial,ev-ai,US,Austin,TSLA,2003,EV and autonomy company procuring AI and automotive chips,s68
+nxp,NXP,auto-industrial,automotive-mcu,NL,Eindhoven,NXPI,2006,Automotive and industrial semiconductor supplier,s69
+infineon,Infineon,auto-industrial,power-mcu,DE,Neubiberg,IFX.DE,1999,Power automotive and security semiconductor supplier,s70
+renesas,Renesas,auto-industrial,automotive-mcu,JP,Tokyo,6723.T,2002,Automotive microcontroller and analog supplier,s71
+stmicro,STMicroelectronics,auto-industrial,power-mcu,CH,Geneva,STM,1987,Automotive power and industrial semiconductor supplier,s72
+onsemi,onsemi,auto-industrial,power-sensors,US,Scottsdale,ON,1999,Power and sensing semiconductor supplier,s73
+wolfspeed,Wolfspeed,auto-industrial,sic-power,US,Durham,WOLF,1987,Silicon carbide materials and power device supplier,s74
+analog-devices,Analog Devices,auto-industrial,analog,US,Wilmington,ADI,1965,Analog mixed signal and power semiconductor supplier,s75
+texas-instruments,Texas Instruments,auto-industrial,analog-embedded,US,Dallas,TXN,1930,Analog and embedded processing semiconductor supplier,s76
+arista,Arista Networks,auto-industrial,networking-systems,US,Santa Clara,ANET,2004,Cloud networking systems company using merchant silicon,s77
+cisco,Cisco,auto-industrial,networking-systems,US,San Jose,CSCO,1984,Networking systems company and silicon consumer,s78

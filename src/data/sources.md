@@ -1,0 +1,86 @@
+# Sources
+
+Each data row uses a `source_id` below. Many relationship rows are directional heuristics built from public filings and industry reports rather than disclosed purchase-order data.
+
+- **s1** - TSMC 2024 Annual Report. https://investor.tsmc.com/static/annualReports/2024/english/index.html
+- **s2** - Samsung Electronics Annual Reports. https://www.samsung.com/global/ir/reports-disclosures/annual-reports/
+- **s3** - Intel Foundry official company page. https://www.intel.com/content/www/us/en/foundry/home.html
+- **s4** - GlobalFoundries SEC filings and annual reports. https://investors.gf.com/financial-information/sec-filings
+- **s5** - UMC Annual Reports. https://www.umc.com/en/Download/annual_reports
+- **s6** - SMIC Investor Relations financial reports. https://www.smics.com/en/site/company_financialSummary
+- **s7** - Tower Semiconductor Investor Relations. https://towersemi.com/investor-relations/
+- **s8** - Vanguard International Semiconductor annual reports. https://www.vis.com.tw/en/investor-relations/financial-information/annual-report
+- **s9** - Powerchip Semiconductor Manufacturing financial reports. https://www.powerchip.com/en-global/ir/financial-reports
+- **s10** - Hua Hong Semiconductor annual reports. https://www.huahonggrace.com/en/Investor-Relations/Financial-Reports/Annual-Reports/
+- **s11** - NVIDIA annual reports and proxies. https://investor.nvidia.com/financial-info/annual-reports-and-proxies/default.aspx
+- **s12** - AMD SEC filings. https://ir.amd.com/financial-information/sec-filings
+- **s13** - Apple SEC filings. https://investor.apple.com/sec-filings/default.aspx
+- **s14** - Qualcomm SEC filings. https://investor.qualcomm.com/financial-information/sec-filings
+- **s15** - Broadcom annual reports. https://investors.broadcom.com/financial-information/annual-reports
+- **s16** - MediaTek annual reports. https://corp.mediatek.com/investor-relations/financial-information/annual-reports
+- **s17** - Marvell annual reports. https://investor.marvell.com/sec-filings/annual-reports
+- **s18** - Synopsys SEC filings. https://investor.synopsys.com/financials/sec-filings/default.aspx
+- **s19** - Cadence annual reports. https://investors.cadence.com/financial-information/annual-reports
+- **s20** - Siemens EDA official product page. https://eda.sw.siemens.com/en-US/
+- **s21** - Arm annual reports. https://investors.arm.com/financials/annual-reports
+- **s22** - ASML annual reports. https://www.asml.com/en/investors/annual-report
+- **s23** - Nikon annual reports. https://www.nikon.com/company/ir/ir_library/ar/
+- **s24** - Canon annual reports. https://global.canon/en/ir/library/annual.html
+- **s25** - Applied Materials annual reports. https://ir.appliedmaterials.com/financial-information/annual-reports
+- **s26** - Lam Research annual reports. https://investor.lamresearch.com/financial-information/annual-reports
+- **s27** - KLA annual reports. https://ir.kla.com/financial-information/annual-reports
+- **s28** - Tokyo Electron annual reports. https://www.tel.com/ir/library/ar/
+- **s29** - Lasertec annual reports. https://www.lasertec.co.jp/en/ir/library/annual.html
+- **s30** - Onto Innovation SEC filings. https://investors.ontoinnovation.com/financial-information/sec-filings
+- **s31** - AIXTRON publications and reports. https://www.aixtron.com/en/investors/publications
+- **s32** - Veeco SEC filings. https://ir.veeco.com/financials/sec-filings/default.aspx
+- **s33** - Edwards Vacuum semiconductor market page. https://www.edwardsvacuum.com/en/semiconductor
+- **s34** - DISCO annual reports. https://www.disco.co.jp/en/ir/library/annual/
+- **s35** - Advantest annual reports. https://www.advantest.com/investors/library/annual-report/
+- **s36** - Teradyne SEC filings. https://investors.teradyne.com/financials/sec-filings/default.aspx
+- **s37** - Shin-Etsu Chemical annual reports. https://www.shinetsu.co.jp/en/ir/library/annual/
+- **s38** - SUMCO annual reports. https://www.sumcosi.com/en/ir/library/annual.html
+- **s39** - JSR annual reports. https://www.jsr.co.jp/jsr_e/ir/library/annual.shtml
+- **s40** - Coherent SEC filings. https://investors.coherent.com/financials/sec-filings/default.aspx
+- **s41** - Entegris SEC filings. https://investor.entegris.com/financials/sec-filings/default.aspx
+- **s42** - Hoya investor library. https://www.hoya.com/en/ir/library/
+- **s43** - Entegris acquisition of CMC Materials. https://investor.entegris.com/news-releases/news-release-details/entegris-completes-acquisition-cmc-materials
+- **s44** - GlobalWafers financial information. https://www.sas-globalwafers.com/en/investor-relations/financial-information/
+- **s45** - Siltronic reports and presentations. https://www.siltronic.com/en/investors/reports-and-presentations.html
+- **s46** - Soitec financial reports. https://www.soitec.com/en/investors/financial-reports
+- **s47** - UBE annual reports. https://www.ube.com/ube/en/ir/library/annual_report/
+- **s48** - Ajinomoto investor library. https://www.ajinomoto.com/ir/library
+- **s49** - Ibiden annual reports. https://www.ibiden.com/ir/library/annual/
+- **s50** - Unimicron annual reports. https://www.unimicron.com/en/ir/annual-report
+- **s51** - Shinko Electric annual reports. https://www.shinko.co.jp/english/ir/library/annual-report/
+- **s52** - Kyocera annual reports. https://global.kyocera.com/ir/library/annual/
+- **s53** - Micron SEC filings. https://investors.micron.com/financial-information/sec-filings
+- **s54** - SK Hynix investor relations reports. https://www.skhynix.com/ir/UI-FR-IR50
+- **s55** - Samsung Semiconductor memory products. https://semiconductor.samsung.com/us/dram/
+- **s56** - Kioxia Holdings annual reports. https://www.kioxia-holdings.com/en-jp/ir/library/annual-reports.html
+- **s57** - Winbond financial reports. https://www.winbond.com/hq/about-winbond/investor-relations/financial-reports/
+- **s58** - YMTC company profile. https://www.ymtc.com/en/about.html
+- **s59** - ASE investor financial reports. https://www.aseglobal.com/en/investor-relations/financial-reports
+- **s60** - Amkor annual reports. https://ir.amkor.com/financials/annual-reports/default.aspx
+- **s61** - JCET investor relations. https://www.jcetglobal.com/en/site/investor
+- **s62** - Powertech Technology financial reports. https://www.pti.com.tw/en/ir/financial-reports/
+- **s63** - Tongfu Microelectronics investor notices. https://en.tfme.com/en/investor/notice.html
+- **s64** - AWS Trainium official page. https://aws.amazon.com/machine-learning/trainium/
+- **s65** - Microsoft Azure Maia and Cobalt announcement. https://azure.microsoft.com/en-us/blog/introducing-microsoft-azure-maia-and-cobalt/
+- **s66** - Google Cloud TPU official page. https://cloud.google.com/tpu
+- **s67** - Meta MTIA announcement. https://ai.meta.com/blog/meta-training-inference-accelerator-AI-MTIA/
+- **s68** - Tesla SEC filings. https://ir.tesla.com/sec-filings
+- **s69** - NXP annual reports. https://investors.nxp.com/financial-information/annual-reports
+- **s70** - Infineon reports and presentations. https://www.infineon.com/cms/en/about-infineon/investor/reports-and-presentations/
+- **s71** - Renesas annual reports. https://www.renesas.com/en/about/investor-relations/ir-library/annual-report
+- **s72** - STMicroelectronics annual reports. https://investors.st.com/financial-information/annual-reports
+- **s73** - onsemi SEC filings. https://investor.onsemi.com/financials/sec-filings/default.aspx
+- **s74** - Wolfspeed SEC filings. https://investor.wolfspeed.com/financials/sec-filings/default.aspx
+- **s75** - Analog Devices SEC filings. https://investor.analog.com/financial-info/sec-filings/default.aspx
+- **s76** - Texas Instruments SEC filings. https://investor.ti.com/financial-information/sec-filings
+- **s77** - Arista annual reports. https://investors.arista.com/financials/annual-reports/default.aspx
+- **s78** - Cisco SEC filings. https://investor.cisco.com/financial-info/sec-filings/default.aspx
+- **s79** - SIA and BCG Strengthening the Global Semiconductor Supply Chain in an Uncertain Era. https://www.semiconductors.org/strengthening-the-global-semiconductor-supply-chain-in-an-uncertain-era/
+- **s80** - BCG Emerging Resilience in the Semiconductor Supply Chain. https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain
+- **s81** - SEMI Semiconductor Supply Chain Annual Survey Report page. https://discover.semi.org/supply-chain-scm-2024-report-registration.html
+- **s82** - Renesas announcement on Naka factory fire recovery. https://www.renesas.com/en/about/newsroom

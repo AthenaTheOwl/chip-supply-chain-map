@@ -1,0 +1,181 @@
+source,target,relation,strength,notes,source_id
+asml,tsmc,supplies-equipment,critical,EUV scanners for leading-edge nodes,s22
+asml,samsung-foundry,supplies-equipment,critical,EUV scanners for leading-edge nodes,s22
+asml,intel-foundry,supplies-equipment,critical,EUV scanners for leading-edge nodes,s22
+asml,sk-hynix,supplies-equipment,high,EUV for advanced DRAM layers,s22
+asml,samsung-memory,supplies-equipment,high,EUV for advanced DRAM layers,s22
+asml,micron,supplies-equipment,high,EUV for advanced DRAM layers,s22
+asml,smic,supplies-equipment,high,Advanced DUV access and controls shape China node progress,s22
+nikon,umc,supplies-equipment,medium,DUV lithography for mature-node fabs,s23
+nikon,globalfoundries,supplies-equipment,medium,DUV lithography for specialty fabs,s23
+nikon,tower-semi,supplies-equipment,medium,DUV lithography for specialty fabs,s23
+nikon,vanguard,supplies-equipment,medium,DUV lithography for mature-node fabs,s23
+nikon,psmc,supplies-equipment,medium,DUV lithography for mature-node fabs,s23
+canon,smic,supplies-equipment,medium,DUV and mature-node lithography tools,s24
+canon,hua-hong,supplies-equipment,medium,DUV and mature-node lithography tools,s24
+canon,winbond,supplies-equipment,medium,Lithography tools for specialty memory,s24
+canon,kioxia,supplies-equipment,medium,Lithography tools for NAND manufacturing,s24
+applied-materials,tsmc,supplies-equipment,high,Deposition etch implant and process equipment,s25
+applied-materials,samsung-foundry,supplies-equipment,high,Deposition etch implant and process equipment,s25
+applied-materials,intel-foundry,supplies-equipment,high,Deposition etch implant and process equipment,s25
+applied-materials,micron,supplies-equipment,high,Deposition and process equipment for memory,s25
+applied-materials,sk-hynix,supplies-equipment,high,Deposition and process equipment for memory,s25
+applied-materials,umc,supplies-equipment,medium,Equipment for mature-node capacity,s25
+lam-research,tsmc,supplies-equipment,high,Etch and deposition tools for advanced logic,s26
+lam-research,samsung-memory,supplies-equipment,high,Etch and deposition tools for memory,s26
+lam-research,sk-hynix,supplies-equipment,high,Etch and deposition tools for memory,s26
+lam-research,micron,supplies-equipment,high,Etch and deposition tools for memory,s26
+lam-research,intel-foundry,supplies-equipment,high,Etch and deposition tools for advanced logic,s26
+lam-research,smic,supplies-equipment,medium,Etch and deposition tools affected by controls,s26
+kla,tsmc,supplies-equipment,high,Inspection and metrology for advanced logic,s27
+kla,samsung-foundry,supplies-equipment,high,Inspection and metrology for advanced logic,s27
+kla,intel-foundry,supplies-equipment,high,Inspection and metrology for advanced logic,s27
+kla,micron,supplies-equipment,high,Inspection and metrology for memory,s27
+kla,umc,supplies-equipment,medium,Inspection and metrology for mature-node fabs,s27
+kla,smic,supplies-equipment,medium,Inspection and metrology affected by controls,s27
+tokyo-electron,tsmc,supplies-equipment,high,Coat develop etch and deposition equipment,s28
+tokyo-electron,samsung-foundry,supplies-equipment,high,Coat develop etch and deposition equipment,s28
+tokyo-electron,intel-foundry,supplies-equipment,high,Coat develop etch and deposition equipment,s28
+tokyo-electron,sk-hynix,supplies-equipment,high,Memory process equipment,s28
+tokyo-electron,micron,supplies-equipment,high,Memory process equipment,s28
+tokyo-electron,kioxia,supplies-equipment,high,NAND process equipment,s28
+lasertec,tsmc,supplies-equipment,critical,EUV mask inspection for leading-edge mask ecosystem,s29
+lasertec,samsung-foundry,supplies-equipment,high,EUV mask inspection for leading-edge mask ecosystem,s29
+lasertec,intel-foundry,supplies-equipment,high,EUV mask inspection for leading-edge mask ecosystem,s29
+onto-innovation,ase,supplies-equipment,medium,Advanced packaging metrology and inspection,s30
+onto-innovation,amkor,supplies-equipment,medium,Advanced packaging metrology and inspection,s30
+onto-innovation,tsmc,supplies-equipment,medium,Advanced packaging process control,s30
+aixtron,wolfspeed,supplies-equipment,high,SiC and GaN deposition equipment,s31
+veeco,coherent,supplies-equipment,medium,Compound semiconductor deposition equipment,s32
+edwards-vacuum,tsmc,supplies-equipment,high,Vacuum and abatement systems for fabs,s33
+edwards-vacuum,samsung-foundry,supplies-equipment,high,Vacuum and abatement systems for fabs,s33
+disco,ase,supplies-equipment,high,Dicing grinding and polishing equipment,s34
+disco,amkor,supplies-equipment,high,Dicing grinding and polishing equipment,s34
+advantest,ase,supplies-equipment,high,Automated test equipment for OSAT flow,s35
+advantest,sk-hynix,supplies-equipment,high,Memory and high-end device test equipment,s35
+teradyne,qualcomm,supplies-equipment,high,Automated test equipment for SoC validation,s36
+teradyne,apple,supplies-equipment,medium,Automated test equipment for custom SoC validation,s36
+teradyne,ase,supplies-equipment,high,Automated test equipment for OSAT flow,s36
+shin-etsu,tsmc,supplies-materials,high,Silicon wafers for advanced logic,s37
+shin-etsu,samsung-foundry,supplies-materials,high,Silicon wafers for advanced logic,s37
+shin-etsu,intel-foundry,supplies-materials,high,Silicon wafers for advanced logic,s37
+shin-etsu,micron,supplies-materials,high,Silicon wafers for memory,s37
+sumco,tsmc,supplies-materials,high,Silicon wafers for logic fabs,s38
+sumco,umc,supplies-materials,high,Silicon wafers for mature-node fabs,s38
+sumco,globalfoundries,supplies-materials,medium,Silicon wafers for specialty fabs,s38
+globalwafers,tsmc,supplies-materials,high,Silicon wafers for logic fabs,s44
+globalwafers,umc,supplies-materials,high,Silicon wafers for mature-node fabs,s44
+siltronic,globalfoundries,supplies-materials,medium,Silicon wafers for specialty fabs,s45
+siltronic,infineon,supplies-materials,medium,Silicon wafers for power and automotive chips,s45
+soitec,globalfoundries,supplies-materials,high,FD-SOI and engineered substrates,s46
+soitec,stmicro,supplies-materials,high,FD-SOI and RF engineered substrates,s46
+jsr,tsmc,supplies-materials,critical,Advanced photoresist concentration risk,s39
+jsr,samsung-foundry,supplies-materials,high,Advanced photoresist materials,s39
+jsr,intel-foundry,supplies-materials,high,Advanced photoresist materials,s39
+hoya,tsmc,supplies-materials,high,Photomask blanks for advanced lithography,s42
+hoya,asml,supplies-materials,high,Mask ecosystem materials for EUV lithography,s42
+entegris,tsmc,supplies-materials,high,Specialty chemicals filtration and handling,s41
+entegris,samsung-foundry,supplies-materials,high,Specialty chemicals filtration and handling,s41
+cabot-microelectronics,tsmc,supplies-materials,high,CMP slurries for planarization,s43
+coherent,wolfspeed,supplies-materials,high,SiC and compound materials ecosystem,s40
+ube,ase,supplies-materials,medium,Polyimide and packaging materials,s47
+ajinomoto,ibiden,supplies-materials,critical,ABF resin film for build-up substrates,s48
+ajinomoto,unimicron,supplies-materials,critical,ABF resin film for build-up substrates,s48
+ajinomoto,shinko,supplies-materials,high,ABF resin film for build-up substrates,s48
+ibiden,nvidia,supplies-substrates,critical,ABF substrates for AI accelerator packages,s49
+ibiden,amd,supplies-substrates,critical,ABF substrates for chiplet packages,s49
+ibiden,apple,supplies-substrates,high,Advanced substrates for custom SoCs,s49
+ibiden,tsmc,supplies-substrates,critical,Substrate support for advanced packaging flow,s49
+unimicron,nvidia,supplies-substrates,high,ABF substrates for accelerator packages,s50
+unimicron,amd,supplies-substrates,high,ABF substrates for chiplet packages,s50
+unimicron,broadcom,supplies-substrates,high,ABF substrates for networking ASICs,s50
+shinko,nvidia,supplies-substrates,high,Package substrates for AI accelerators,s51
+shinko,intel-foundry,supplies-substrates,high,Package substrates and leadframes,s51
+kyocera,onsemi,supplies-substrates,medium,Ceramic packages for power and sensing devices,s52
+kyocera,infineon,supplies-substrates,medium,Ceramic packages for power semiconductors,s52
+arm,apple,licenses-ip,critical,Arm architecture for Apple silicon,s21
+arm,qualcomm,licenses-ip,critical,Arm CPU cores and architecture,s21
+arm,mediatek,licenses-ip,critical,Arm CPU cores for mobile SoCs,s21
+arm,aws,licenses-ip,high,Arm architecture for Graviton server CPUs,s21
+arm,google,licenses-ip,high,Arm architecture for data center and mobile silicon,s21
+arm,microsoft,licenses-ip,high,Arm architecture for cloud CPUs,s21
+arm,nvidia,licenses-ip,high,Arm architecture for Grace CPUs,s21
+synopsys,nvidia,licenses-ip,high,EDA and IP used in complex SoC design,s18
+synopsys,amd,licenses-ip,high,EDA and IP used in complex SoC design,s18
+synopsys,tsmc,licenses-ip,high,EDA enablement and IP ecosystem partnership,s18
+cadence,apple,licenses-ip,high,EDA tools for custom silicon design,s19
+cadence,qualcomm,licenses-ip,high,EDA tools for mobile SoC design,s19
+cadence,tsmc,licenses-ip,high,EDA enablement and IP ecosystem partnership,s19
+siemens-eda,intel-foundry,licenses-ip,high,EDA flow and verification ecosystem,s20
+siemens-eda,globalfoundries,licenses-ip,medium,EDA flow and verification ecosystem,s20
+siemens-eda,nxp,licenses-ip,medium,EDA tools for automotive chip design,s20
+tsmc,apple,manufactures-for,critical,Advanced-node custom SoC manufacturing,s1
+tsmc,nvidia,manufactures-for,critical,Advanced-node GPU and accelerator manufacturing,s1
+tsmc,amd,manufactures-for,critical,Advanced-node CPU GPU and chiplet manufacturing,s1
+tsmc,qualcomm,manufactures-for,high,Advanced mobile SoC manufacturing,s1
+tsmc,broadcom,manufactures-for,critical,Networking and custom ASIC manufacturing,s1
+tsmc,mediatek,manufactures-for,high,Mobile SoC manufacturing,s1
+tsmc,marvell,manufactures-for,high,Cloud and networking silicon manufacturing,s1
+tsmc,google,manufactures-for,high,Custom TPU and infrastructure silicon manufacturing,s66
+tsmc,aws,manufactures-for,high,Custom cloud silicon manufacturing,s64
+samsung-foundry,qualcomm,manufactures-for,high,Advanced mobile SoC foundry capacity,s2
+samsung-foundry,google,manufactures-for,high,Custom mobile and AI silicon foundry capacity,s66
+samsung-foundry,nvidia,manufactures-for,medium,Advanced logic foundry capacity,s2
+intel-foundry,microsoft,manufactures-for,high,Custom foundry engagement for future chips,s65
+globalfoundries,nxp,manufactures-for,high,Automotive and RF specialty process capacity,s4
+globalfoundries,infineon,manufactures-for,high,Automotive and industrial specialty process capacity,s4
+globalfoundries,analog-devices,manufactures-for,high,Analog and mixed-signal process capacity,s4
+umc,texas-instruments,manufactures-for,medium,Mature-node wafer capacity,s5
+umc,mediatek,manufactures-for,high,Mature and specialty process capacity,s5
+tower-semi,analog-devices,manufactures-for,high,Analog and mixed-signal specialty foundry capacity,s7
+tower-semi,onsemi,manufactures-for,medium,Analog and power specialty foundry capacity,s7
+hua-hong,stmicro,manufactures-for,medium,Power and embedded specialty capacity,s10
+psmc,winbond,manufactures-for,medium,Memory and logic manufacturing ecosystem,s9
+vanguard,nxp,manufactures-for,medium,Mature-node specialty foundry capacity,s8
+globalfoundries,cisco,manufactures-for,medium,RF and specialty process capacity for networking ecosystem,s4
+tsmc,nvidia,packages-for,critical,CoWoS advanced packaging for AI accelerators,s1
+tsmc,amd,packages-for,high,Advanced packaging for chiplet accelerators,s1
+ase,apple,packages-for,high,Assembly and test for high-volume devices,s59
+ase,qualcomm,packages-for,high,Assembly and test for mobile SoCs,s59
+ase,broadcom,packages-for,high,Advanced packaging and test for networking ASICs,s59
+ase,mediatek,packages-for,high,Assembly and test for mobile SoCs,s59
+amkor,qualcomm,packages-for,high,Assembly and test for mobile SoCs,s60
+amkor,apple,packages-for,high,Assembly and test for consumer SoCs,s60
+amkor,nvidia,packages-for,medium,Advanced package assembly and test support,s60
+jcet,mediatek,packages-for,medium,Assembly and test for mobile SoCs,s61
+jcet,marvell,packages-for,medium,Assembly and test for networking silicon,s61
+powertech,micron,packages-for,high,Memory assembly and test services,s62
+powertech,sk-hynix,packages-for,high,Memory assembly and test services,s62
+tongfu,amd,packages-for,high,Advanced package assembly and test ecosystem,s63
+tongfu,marvell,packages-for,medium,Assembly and test for networking silicon,s63
+disco,powertech,supplies-equipment,high,Dicing and grinding equipment for memory packaging,s34
+sk-hynix,nvidia,supplies-memory,critical,HBM for AI accelerator platforms,s54
+micron,nvidia,supplies-memory,high,HBM and GDDR for accelerator platforms,s53
+samsung-memory,nvidia,supplies-memory,high,HBM and GDDR for accelerator platforms,s55
+sk-hynix,amd,supplies-memory,high,HBM for accelerator platforms,s54
+micron,amd,supplies-memory,high,HBM for accelerator platforms,s53
+samsung-memory,amd,supplies-memory,high,HBM for accelerator platforms,s55
+kioxia,apple,supplies-memory,high,NAND flash for consumer devices,s56
+samsung-memory,apple,supplies-memory,high,Mobile DRAM and NAND supply,s55
+winbond,nxp,supplies-memory,medium,Specialty memory for embedded systems,s57
+aws,nvidia,procures-from-fabless,critical,Cloud AI accelerator demand,s64
+microsoft,nvidia,procures-from-fabless,critical,Cloud AI accelerator demand,s65
+google,nvidia,procures-from-fabless,high,Cloud AI accelerator demand,s66
+meta,nvidia,procures-from-fabless,critical,AI training accelerator demand,s67
+aws,amd,procures-from-fabless,high,Cloud accelerator and CPU demand,s64
+microsoft,amd,procures-from-fabless,high,Cloud accelerator and CPU demand,s65
+google,broadcom,procures-from-fabless,high,Custom TPU and networking ASIC ecosystem,s66
+meta,broadcom,procures-from-fabless,high,Custom AI and networking ASIC ecosystem,s67
+arista,broadcom,procures-from-fabless,critical,Switch ASIC dependency for cloud networking,s77
+arista,marvell,procures-from-fabless,high,Networking silicon dependency,s77
+cisco,broadcom,procures-from-fabless,high,Networking silicon dependency,s78
+cisco,marvell,procures-from-fabless,high,Networking and storage silicon dependency,s78
+tesla,nvidia,procures-from-fabless,high,AI compute and automotive accelerator demand,s68
+tesla,samsung-foundry,procures-from-foundry,high,FSD chip foundry dependency,s68
+tesla,tsmc,procures-from-foundry,medium,Automotive and AI silicon foundry dependency,s68
+aws,tsmc,procures-from-foundry,high,Custom cloud silicon foundry dependency,s64
+google,tsmc,procures-from-foundry,high,TPU foundry dependency,s66
+microsoft,tsmc,procures-from-foundry,high,Custom accelerator foundry dependency,s65
+meta,tsmc,procures-from-foundry,high,MTIA foundry dependency,s67
+nxp,tsmc,procures-from-foundry,medium,Outsourced wafer capacity dependency,s69
+infineon,tsmc,procures-from-foundry,medium,Outsourced wafer capacity dependency,s70
