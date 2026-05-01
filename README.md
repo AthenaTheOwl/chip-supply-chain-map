@@ -1,27 +1,27 @@
 # No. 12 - chip-supply-chain-map
 
 The global semiconductor supply chain as a dependency graph. Foundries,
-OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints are mapped
-with scenario toggles for disruption analysis.
+OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints — with
+scenario toggles for disruption analysis.
 
-Deployed at: pending. The parent agent will create the remote and handle push.
+deployed at: <URL once live>
 
 ![Graph overview](./public/screenshots/hero.png)
 
-## What It Does
+## what it does
 
-The app renders 78 companies and 180 curated dependency edges. Selecting a node
-shows what it depends on, what depends on it, source links, geography, and a
-chokepoint score that updates as disruption scenarios are toggled.
+78 companies. 180 curated dependency edges. Click any node to see what it
+depends on, what depends on it, source links, geography, and a chokepoint
+score that updates as you toggle disruption scenarios.
 
 ![Scenario toggle preview](./public/screenshots/scenario-active.gif)
 
-## Stack
+## stack
 
-React 18, Vite 5, TypeScript 5, Cytoscape.js, cytoscape-fcose, Tailwind CSS 3,
-and Zustand.
+React 18 · Vite 5 · TypeScript 5 · Cytoscape.js · cytoscape-fcose · Tailwind 3
+· Zustand.
 
-## Local Dev
+## local dev
 
 ```bash
 npm.cmd install
@@ -29,18 +29,18 @@ npm.cmd run dev
 npm.cmd run build
 ```
 
-## Methodology
+## methodology
 
-See [docs/methodology.md](./docs/methodology.md). This is a decision-support
-heuristic, not a rigorous industry model. Limitations are documented in
+See [docs/methodology.md](./docs/methodology.md). A decision-support heuristic,
+not a rigorous industry model. Limitations are documented in
 [docs/known-limitations.md](./docs/known-limitations.md).
 
-## Data
+## data
 
-- `src/data/nodes.csv` - companies and high-level attributes
-- `src/data/edges.csv` - directional dependencies
-- `src/data/sources.md` - source IDs used by the CSV files
+- `src/data/nodes.csv` — companies and high-level attributes
+- `src/data/edges.csv` — directional dependencies
+- `src/data/sources.md` — source IDs used by the CSV files
 
-The data favors official annual reports, SEC/company pages, and industry reports.
-Some supplier-customer edges are public-claim heuristics where companies do not
-disclose exact volumes or customer mix.
+Sources favor official annual reports, SEC and company pages, and industry
+reports. Some supplier-customer edges are public-claim heuristics where
+companies don't disclose exact volumes or customer mix.
