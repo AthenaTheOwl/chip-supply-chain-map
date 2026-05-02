@@ -14,14 +14,14 @@
     "cytoscape": "^3.30.0",
     "cytoscape-fcose": "^2.2.0",
     "cytoscape-popper": "^4.0.0",
-    "react": "^18.3.1",
+    "react": "^19.2.5",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/cytoscape": "^3.21.0",
-    "@types/react": "^18.3.0",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.20",
