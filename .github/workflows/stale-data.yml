@@ -1,0 +1,48 @@
+name: Stale data check
+
+on:
+  schedule:
+    - cron: "0 11 * * 1"   # Monday 11:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # need full history to date-check files
+
+      - name: Check nodes.csv freshness
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          THRESHOLD_DAYS: "180"
+          PATH_TO_CHECK: "src/data/nodes.csv"
+        run: |
+          set -euo pipefail
+          last_commit_ts=$(git log -1 --format=%ct -- "$PATH_TO_CHECK")
+          if [ -z "$last_commit_ts" ]; then
+            echo "No commit history for $PATH_TO_CHECK"
+            exit 0
+          fi
+          now_ts=$(date +%s)
+          age_days=$(( (now_ts - last_commit_ts) / 86400 ))
+          echo "Last commit on $PATH_TO_CHECK: ${age_days}d ago"
+          if [ "$age_days" -lt "$THRESHOLD_DAYS" ]; then
+            echo "Within threshold (${THRESHOLD_DAYS}d). Done."
+            exit 0
+          fi
+          title="Stale data: $PATH_TO_CHECK is ${age_days} days old"
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq length)
+          if [ "$existing" != "0" ]; then
+            echo "Issue already open. Skipping."
+            exit 0
+          fi
+          gh issue create \
+            --title "$title" \
+            --body "\`$PATH_TO_CHECK\` has not been touched in ${age_days} days (threshold: ${THRESHOLD_DAYS}). Refresh, or extend the threshold in \`.github/workflows/stale-data.yml\`." \
+            --label "stale-data,maintenance"
