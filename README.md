@@ -4,7 +4,7 @@ The global semiconductor supply chain as a dependency graph. Foundries,
 OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints — with
 scenario toggles for disruption analysis.
 
-deployed at: <URL once live>
+deployed at: https://chip-supply-chain-map.vercel.app
 
 ![Graph overview](./public/screenshots/hero.png)
 
