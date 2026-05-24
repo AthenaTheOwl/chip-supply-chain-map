@@ -1,0 +1,9 @@
+allowed_tools:
+  - repo.read
+  - npm.build
+  - gates.run_voice_lint
+  - gates.run_spec_check
+  - gates.run_validate_decisions
+  - gates.run_validate_roles
+  - gates.run_validate_tools
+  - gates.run_validate_policies

@@ -1,0 +1,13 @@
+required_gates:
+  - id: spec_check
+    script: scripts/spec_check.py
+    blocking: true
+  - id: validate_decisions
+    script: scripts/validate_decisions.py
+    blocking: true
+  - id: build
+    script: npm run build
+    blocking: true
+    note: |
+      The reviewer reruns npm run build locally as a cross-check on
+      the implementation role's local run. CI reruns the same build.

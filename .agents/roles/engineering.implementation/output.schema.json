@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chip-supply-chain-map.local/roles/engineering.implementation/output.schema.json",
+  "title": "ImplementationOutput",
+  "description": "Code patch artifact the implementation role emits per change.",
+  "type": "object",
+  "required": ["requirement", "files_changed", "tests_added", "gates"],
+  "additionalProperties": false,
+  "properties": {
+    "requirement": {
+      "type": "string",
+      "pattern": "^R-[A-Z]+-\\d{3,}$"
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "tests_added": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["build", "spec_check"],
+      "properties": {
+        "build": {"type": "string", "enum": ["passing", "failing", "skipped"]},
+        "spec_check": {"type": "string", "enum": ["passing", "failing"]},
+        "voice_lint": {"type": "string", "enum": ["passing", "failing", "n/a"]}
+      }
+    },
+    "source_citation_path": {
+      "type": "string",
+      "description": "Pointer to the src/data/sources.md update when the change edits CSV data."
+    }
+  }
+}

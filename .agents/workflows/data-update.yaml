@@ -1,0 +1,72 @@
+# .agents/workflows/data-update.yaml
+#
+# Repo-specific workflow that fires when the change touches
+# src/data/nodes.csv or src/data/edges.csv. Pairs with the
+# data-csv-changes-require-source-citation policy and the 180-day
+# data-freshness gate (DEC-MAP-005).
+
+id: data-update
+version: 0.1.0
+owner_guild: engineering
+description: |
+  The steps a CSV data refresh moves through. The
+  data-csv-changes-require-source-citation policy enforces the
+  paired source-citation rule; this workflow names the steps.
+
+trigger:
+  - path_modified: src/data/nodes.csv
+  - path_modified: src/data/edges.csv
+
+steps:
+  - id: validate_csv_shape
+    role: engineering.implementation
+    output_type: test_report
+    status_semantics:
+      - pending: CSV not yet parsed
+      - passing: parseCsv accepts the file; toNode / toEdge accept every row; npm run build succeeds
+
+  - id: check_source_citation
+    role: engineering.implementation
+    output_type: test_report
+    status_semantics:
+      - pending: source IDs not yet checked
+      - passing: every new or changed source_id token resolves to a `- **sNNN** -` line in src/data/sources.md
+      - failing: at least one source_id has no entry in sources.md; merge blocked
+
+  - id: run_scoring
+    role: engineering.implementation
+    output_type: eval_report
+    status_semantics:
+      - pending: scores not yet recomputed
+      - completed: computeChokepointScores ran against the new graph for every scenario combination of interest
+
+  - id: diff_chokepoint_scores
+    role: science.proof-gate-runner
+    output_type: eval_report
+    status_semantics:
+      - pending: diff not yet computed
+      - small: every node's score moved less than 0.1 (no review needed beyond the citation gate)
+      - large: at least one node's score moved 0.1 or more; routes to human approval
+
+  - id: human_approval
+    role: control.coordinator
+    output_type: review
+    status_semantics:
+      - pending: no human sign-off yet
+      - approved: human read the diff and the new citations
+      - changes_requested: refresh sent back for source clarification
+
+  - id: release
+    role: control.coordinator
+    output_type: release_note
+    status_semantics:
+      - shipped: refresh lands on main with an entry in ops/RELEASE_LEDGER.md
+      - reverted: refresh rolled back; sources.md restored
+
+post_conditions:
+  - rule: attestation_chain_intact
+    description: |
+      Every row in src/data/nodes.csv and src/data/edges.csv carries
+      a source_id that resolves to an entry in src/data/sources.md.
+      The check_source_citation step makes the rule executable; this
+      post-condition makes the invariant explicit.

@@ -1,0 +1,34 @@
+id: data-csv-changes-require-source-citation
+applies_to:
+  roles:
+    - engineering.implementation
+  tools:
+    - repo.apply_patch
+  actions:
+    - modify_data
+decision: require_approval
+conditions:
+  - field: request.path
+    op: matches
+    value: ^src/data/(nodes|edges)\.csv$
+  - field: request.source_citation_present
+    op: ne
+    value: true
+priority: 100
+description: |
+  A change to src/data/nodes.csv or src/data/edges.csv must land
+  alongside a matching source citation in src/data/sources.md. The
+  policy engine routes the request to the approval queue if the
+  paired sources.md update is missing or if no `source_id` token in
+  the changed CSV rows resolves to a `- **sNNN** -` line in
+  sources.md.
+rationale: |
+  The attestation chain is what makes the dataset reviewable. Every
+  CSV row carries a source_id; every source_id resolves to a labeled
+  link in sources.md. Letting a CSV refresh land without the paired
+  citation update silently breaks the chain. The 180-day data-
+  freshness gate (DEC-MAP-005) catches a long-stale dataset; this
+  policy catches a fresh-but-unattested edit. Repo-specific rule;
+  may not apply to repos whose data does not have an attestation
+  chain.
+owner: platform

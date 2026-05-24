@@ -1,0 +1,54 @@
+id: science.proof-gate-runner
+guild: science
+mission: Own the six python governance gates and the npm build gate; refuse merges that regress any of them.
+inputs:
+  - name: code_patch
+    kind: artifact
+    required: true
+  - name: gate_set
+    kind: spec
+    required: true
+outputs:
+  - name: gate_run
+    kind: artifact
+    artifact_type: test_report
+    required: true
+  - name: gate_report
+    kind: artifact
+    artifact_type: eval_report
+    required: false
+allowed_tools:
+  - repo.read
+  - npm.build
+  - gates.run_voice_lint
+  - gates.run_spec_check
+  - gates.run_validate_decisions
+  - gates.run_validate_roles
+  - gates.run_validate_tools
+  - gates.run_validate_policies
+forbidden_actions:
+  - modify_code
+  - modify_data
+  - approve_own_work
+  - deploy_to_production
+required_gates:
+  - voice_lint
+  - spec_check
+  - validate_decisions
+  - validate_roles
+  - validate_tools
+  - validate_policies
+escalation:
+  - condition: persistent_gate_regression
+    escalate_to: engineering.implementation
+  - condition: governance_gate_misfire
+    escalate_to: control.coordinator
+permissions:
+  read_repo: true
+  write_code: false
+  run_tests: true
+  approve: true
+  deploy: false
+  promote_memory: false
+runtime_hint: claude_code
+examples_dir: .agents/roles/science.proof-gate-runner/examples

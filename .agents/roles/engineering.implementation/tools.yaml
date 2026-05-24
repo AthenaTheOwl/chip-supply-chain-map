@@ -1,0 +1,7 @@
+allowed_tools:
+  - repo.read
+  - repo.apply_patch
+  - npm.build
+  - npm.test
+  - gates.run_voice_lint
+  - gates.run_spec_check

@@ -1,0 +1,27 @@
+required_gates:
+  - id: build
+    script: npm run build
+    blocking: true
+  - id: spec_check
+    script: scripts/spec_check.py
+    blocking: true
+  - id: voice_lint
+    script: scripts/voice_lint.py
+    blocking: true
+    note: |
+      Runs against any governance copy the implementation touched
+      (specs, decisions, dreams, agents, ops). Code under src/ is
+      not in the lint scope today.
+
+conditional_gates:
+  - id: source_citation
+    script: scripts/check_data_freshness.py
+    blocking: true
+    triggers:
+      - path_modified: src/data/nodes.csv
+      - path_modified: src/data/edges.csv
+    note: |
+      The data-csv-changes-require-source-citation policy makes this
+      gate hard-blocking when either CSV is touched. The check_data_
+      freshness.py script lands in a later pass; today the human
+      reviewer enforces the rule.

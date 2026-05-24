@@ -1,0 +1,43 @@
+name: Gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install gate dependencies
+        run: python -m pip install --upgrade pip pyyaml "jsonschema>=4.21"
+
+      - name: voice_lint
+        run: python scripts/voice_lint.py
+
+      - name: spec_check
+        run: python scripts/spec_check.py
+
+      - name: validate_decisions
+        run: python scripts/validate_decisions.py
+
+      - name: validate_roles
+        run: python scripts/validate_roles.py
+
+      - name: validate_tools
+        run: python scripts/validate_tools.py
+
+      - name: validate_policies
+        run: python scripts/validate_policies.py
+
+      - name: check_data_freshness
+        run: python scripts/check_data_freshness.py
