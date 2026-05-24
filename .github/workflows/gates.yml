@@ -42,5 +42,8 @@ jobs:
       - name: validate_dreams
         run: python scripts/validate_dreams.py
 
+      - name: check_schema_cache_freshness
+        run: python scripts/check_schema_cache_freshness.py
+
       - name: check_data_freshness
         run: python scripts/check_data_freshness.py
