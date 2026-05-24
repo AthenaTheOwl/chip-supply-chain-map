@@ -8,6 +8,7 @@ import cytoscape, {
 } from "cytoscape";
 import fcose from "cytoscape-fcose";
 import popper from "cytoscape-popper";
+import { getScoreMapForQuarter, type QuarterOrCurrent } from "../lib/history";
 import { isEdgeSuppressedByScenarios } from "../lib/scenarios";
 import { strengthWeight, type ScoreMap } from "../lib/scoring";
 import type { GraphData, Strength } from "../lib/types";
@@ -20,9 +21,14 @@ cytoscape.use(popper);
 interface SupplyChainGraphProps {
   graph: GraphData;
   scores: ScoreMap;
+  quarter?: QuarterOrCurrent;
 }
 
-export function SupplyChainGraph({ graph, scores }: SupplyChainGraphProps) {
+export function SupplyChainGraph({
+  graph,
+  scores,
+  quarter = "current"
+}: SupplyChainGraphProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<Core | null>(null);
   const activeScenarioIds = useGraphStore((state) => state.activeScenarioIds);
@@ -35,13 +41,27 @@ export function SupplyChainGraph({ graph, scores }: SupplyChainGraphProps) {
     score: number;
   } | null>(null);
 
+  const effectiveScores = useMemo(() => {
+    if (quarter === "current") {
+      return scores;
+    }
+    const historical = getScoreMapForQuarter(quarter);
+    if (historical.size === 0) {
+      return scores;
+    }
+    // Fall back to the live score for any node missing a historical row.
+    const merged: ScoreMap = new Map(scores);
+    historical.forEach((value, id) => merged.set(id, value));
+    return merged;
+  }, [quarter, scores]);
+
   const elements = useMemo(
     () => [
       ...graph.nodes.map((node) => ({
         data: {
           id: node.id,
           label: node.name,
-          score: scores.get(node.id) ?? 0,
+          score: effectiveScores.get(node.id) ?? 0,
           type: node.type
         }
       })),
@@ -58,7 +78,7 @@ export function SupplyChainGraph({ graph, scores }: SupplyChainGraphProps) {
         }
       }))
     ],
-    [activeScenarioIds, graph, scores]
+    [activeScenarioIds, graph, effectiveScores]
   );
 
   useEffect(() => {
@@ -194,7 +214,7 @@ export function SupplyChainGraph({ graph, scores }: SupplyChainGraphProps) {
     }
 
     cy.nodes().forEach((node) => {
-      node.data("score", scores.get(node.id()) ?? 0);
+      node.data("score", effectiveScores.get(node.id()) ?? 0);
       node.toggleClass("active-node", node.id() === selectedNodeId);
       if (node.id() === selectedNodeId) {
         node.select();
@@ -202,7 +222,7 @@ export function SupplyChainGraph({ graph, scores }: SupplyChainGraphProps) {
         node.unselect();
       }
     });
-  }, [scores, selectedNodeId]);
+  }, [effectiveScores, selectedNodeId]);
 
   return (
     <div className="relative h-full min-h-[620px]">

@@ -1,0 +1,313 @@
+id,quarter,chokepoint_score,geography_concentration,substitutability_penalty,lead_time_penalty,dependency_centrality,notes
+tsmc,2025-Q3,82,0.71,0.86,3.0,0.78,Pre-Arizona ramp slip; CoWoS tightening
+tsmc,2025-Q4,86,0.71,0.86,3.0,0.81,Arizona N4 delay reported; CoWoS allocation extends to 2026
+tsmc,2026-Q1,91,0.71,0.86,3.0,0.85,N2 risk production starts; advanced packaging fully booked
+tsmc,2026-Q2,95,0.71,0.86,3.0,0.88,Current snapshot; CoWoS-L allocation peaks
+asml,2025-Q3,88,0.92,0.92,2.5,0.74,Sole EUV supplier; High-NA ramp on schedule
+asml,2025-Q4,82,0.92,0.88,2.5,0.71,Nikon DUV-i competitor announcement softens monopoly perception
+asml,2026-Q1,86,0.92,0.90,2.5,0.73,High-NA shipments resume on plan
+asml,2026-Q2,90,0.92,0.92,2.5,0.76,Current snapshot; High-NA backlog stretches to 2028
+samsung-foundry,2025-Q3,58,0.61,0.55,3.0,0.48,3nm yield issues persist; foundry market share slips
+samsung-foundry,2025-Q4,62,0.61,0.55,3.0,0.51,Reported yield improvement on 3nm GAA
+samsung-foundry,2026-Q1,65,0.61,0.55,3.0,0.53,2nm pilot line stands up; HBM-attached customers commit
+samsung-foundry,2026-Q2,68,0.61,0.55,3.0,0.55,Current snapshot
+intel-foundry,2025-Q3,54,0.55,0.55,3.0,0.43,18A on track; Ohio Fab 1 construction continues
+intel-foundry,2025-Q4,57,0.55,0.55,3.0,0.45,External-customer wins announced for 18A
+intel-foundry,2026-Q1,61,0.55,0.55,3.0,0.48,18A pilot wafers ramp
+intel-foundry,2026-Q2,63,0.55,0.55,3.0,0.50,Current snapshot
+globalfoundries,2025-Q3,32,0.45,0.40,2.0,0.27,Specialty mature-node demand stable
+globalfoundries,2025-Q4,33,0.45,0.40,2.0,0.28,Auto MCU restocking cycle
+globalfoundries,2026-Q1,34,0.45,0.40,2.0,0.29,Same
+globalfoundries,2026-Q2,35,0.45,0.40,2.0,0.30,Current snapshot
+umc,2025-Q3,38,0.71,0.40,2.0,0.31,Mature-node price competition with SMIC
+umc,2025-Q4,39,0.71,0.40,2.0,0.32,Same
+umc,2026-Q1,40,0.71,0.40,2.0,0.33,Same
+umc,2026-Q2,41,0.71,0.40,2.0,0.34,Current snapshot
+smic,2025-Q3,44,0.55,0.55,2.0,0.36,Export-control headwind; mature-node capacity ramps in China
+smic,2025-Q4,46,0.55,0.55,2.0,0.38,7nm production attempt continues despite EUV gap
+smic,2026-Q1,48,0.55,0.55,2.0,0.40,Same
+smic,2026-Q2,50,0.55,0.55,2.0,0.42,Current snapshot
+tower-semi,2025-Q3,22,0.30,0.35,2.0,0.18,Stable analog/RF foundry
+tower-semi,2025-Q4,23,0.30,0.35,2.0,0.19,Same
+tower-semi,2026-Q1,24,0.30,0.35,2.0,0.20,Same
+tower-semi,2026-Q2,24,0.30,0.35,2.0,0.20,Current snapshot
+vanguard,2025-Q3,26,0.71,0.40,2.0,0.22,Mature-node Taiwan
+vanguard,2025-Q4,27,0.71,0.40,2.0,0.23,Same
+vanguard,2026-Q1,28,0.71,0.40,2.0,0.24,Same
+vanguard,2026-Q2,28,0.71,0.40,2.0,0.24,Current snapshot
+psmc,2025-Q3,24,0.71,0.40,2.0,0.20,Mature-node Taiwan
+psmc,2025-Q4,25,0.71,0.40,2.0,0.21,Same
+psmc,2026-Q1,25,0.71,0.40,2.0,0.21,Same
+psmc,2026-Q2,26,0.71,0.40,2.0,0.22,Current snapshot
+hua-hong,2025-Q3,28,0.55,0.40,2.0,0.23,China specialty mature node
+hua-hong,2025-Q4,29,0.55,0.40,2.0,0.24,Same
+hua-hong,2026-Q1,30,0.55,0.40,2.0,0.25,Same
+hua-hong,2026-Q2,31,0.55,0.40,2.0,0.26,Current snapshot
+nvidia,2025-Q3,72,0.50,0.45,1.5,0.66,AI accelerator demand; H200 and Blackwell ramp
+nvidia,2025-Q4,78,0.50,0.45,1.5,0.70,Blackwell allocation extended; HBM3e tight
+nvidia,2026-Q1,83,0.50,0.45,1.5,0.74,Rubin pre-orders; CoWoS-L bottleneck
+nvidia,2026-Q2,86,0.50,0.45,1.5,0.77,Current snapshot
+amd,2025-Q3,52,0.50,0.45,1.5,0.46,MI300 ramp; second AI source
+amd,2025-Q4,56,0.50,0.45,1.5,0.49,MI325X launch; hyperscaler design wins
+amd,2026-Q1,60,0.50,0.45,1.5,0.52,MI350 sampling
+amd,2026-Q2,63,0.50,0.45,1.5,0.55,Current snapshot
+apple,2025-Q3,48,0.50,0.45,1.5,0.42,M-series and A-series captive on TSMC N3
+apple,2025-Q4,49,0.50,0.45,1.5,0.43,Same
+apple,2026-Q1,50,0.50,0.45,1.5,0.44,N2 launch silicon allocation
+apple,2026-Q2,51,0.50,0.45,1.5,0.45,Current snapshot
+qualcomm,2025-Q3,38,0.50,0.45,1.5,0.33,Snapdragon mobile and PC silicon
+qualcomm,2025-Q4,39,0.50,0.45,1.5,0.34,Same
+qualcomm,2026-Q1,40,0.50,0.45,1.5,0.35,Same
+qualcomm,2026-Q2,41,0.50,0.45,1.5,0.36,Current snapshot
+broadcom,2025-Q3,52,0.50,0.45,1.5,0.46,Custom AI ASIC programs grow
+broadcom,2025-Q4,57,0.50,0.45,1.5,0.50,Google TPU and Meta MTIA programs scale
+broadcom,2026-Q1,61,0.50,0.45,1.5,0.54,Custom XPU pipeline strengthens
+broadcom,2026-Q2,65,0.50,0.45,1.5,0.58,Current snapshot
+mediatek,2025-Q3,34,0.71,0.45,1.5,0.29,Mobile SoC; Dimensity launches
+mediatek,2025-Q4,35,0.71,0.45,1.5,0.30,Same
+mediatek,2026-Q1,36,0.71,0.45,1.5,0.31,Same
+mediatek,2026-Q2,37,0.71,0.45,1.5,0.32,Current snapshot
+marvell,2025-Q3,42,0.50,0.45,1.5,0.36,Custom-silicon and DPU programs grow
+marvell,2025-Q4,45,0.50,0.45,1.5,0.39,Hyperscaler optical-DSP wins
+marvell,2026-Q1,47,0.50,0.45,1.5,0.41,Same
+marvell,2026-Q2,49,0.50,0.45,1.5,0.43,Current snapshot
+synopsys,2025-Q3,66,0.55,0.65,2.0,0.58,EDA duopoly with Cadence; AI-design tools
+synopsys,2025-Q4,67,0.55,0.65,2.0,0.59,Same
+synopsys,2026-Q1,68,0.55,0.65,2.0,0.60,Ansys merger integration progresses
+synopsys,2026-Q2,69,0.55,0.65,2.0,0.61,Current snapshot
+cadence,2025-Q3,66,0.55,0.65,2.0,0.58,EDA duopoly with Synopsys
+cadence,2025-Q4,67,0.55,0.65,2.0,0.59,Same
+cadence,2026-Q1,68,0.55,0.65,2.0,0.60,Same
+cadence,2026-Q2,69,0.55,0.65,2.0,0.61,Current snapshot
+siemens-eda,2025-Q3,46,0.55,0.55,2.0,0.40,Third EDA player
+siemens-eda,2025-Q4,46,0.55,0.55,2.0,0.40,Same
+siemens-eda,2026-Q1,47,0.55,0.55,2.0,0.41,Same
+siemens-eda,2026-Q2,47,0.55,0.55,2.0,0.41,Current snapshot
+arm,2025-Q3,64,0.60,0.70,2.0,0.56,CPU IP licensor; mobile and data-center ramp
+arm,2025-Q4,65,0.60,0.70,2.0,0.57,Same
+arm,2026-Q1,67,0.60,0.70,2.0,0.59,Custom CPU programs scale at hyperscalers
+arm,2026-Q2,68,0.60,0.70,2.0,0.60,Current snapshot
+nikon,2025-Q3,30,0.65,0.40,2.0,0.25,DUV lithography; EUV competitor preannouncement leaked
+nikon,2025-Q4,34,0.65,0.40,2.0,0.29,EUV competitor announcement softens ASML monopoly perception
+nikon,2026-Q1,33,0.65,0.40,2.0,0.28,Same
+nikon,2026-Q2,33,0.65,0.40,2.0,0.28,Current snapshot
+canon,2025-Q3,26,0.65,0.40,2.0,0.22,Nanoimprint lithography pilot installs
+canon,2025-Q4,28,0.65,0.40,2.0,0.24,Nanoimprint ships to Kioxia; alternative-path coverage grows
+canon,2026-Q1,28,0.65,0.40,2.0,0.24,Same
+canon,2026-Q2,28,0.65,0.40,2.0,0.24,Current snapshot
+applied-materials,2025-Q3,60,0.50,0.55,2.0,0.54,WFE leader across deposition/etch
+applied-materials,2025-Q4,60,0.50,0.55,2.0,0.54,Same
+applied-materials,2026-Q1,61,0.50,0.55,2.0,0.55,Same
+applied-materials,2026-Q2,61,0.50,0.55,2.0,0.55,Current snapshot
+lam-research,2025-Q3,56,0.50,0.55,2.0,0.50,Etch leader
+lam-research,2025-Q4,56,0.50,0.55,2.0,0.50,Same
+lam-research,2026-Q1,57,0.50,0.55,2.0,0.51,Same
+lam-research,2026-Q2,57,0.50,0.55,2.0,0.51,Current snapshot
+kla,2025-Q3,58,0.50,0.65,2.0,0.50,Inspection/metrology leader
+kla,2025-Q4,59,0.50,0.65,2.0,0.51,Same
+kla,2026-Q1,59,0.50,0.65,2.0,0.51,Same
+kla,2026-Q2,60,0.50,0.65,2.0,0.52,Current snapshot
+tokyo-electron,2025-Q3,56,0.65,0.55,2.0,0.49,Coat/develop dominance; lithocluster
+tokyo-electron,2025-Q4,56,0.65,0.55,2.0,0.49,Same
+tokyo-electron,2026-Q1,57,0.65,0.55,2.0,0.50,Same
+tokyo-electron,2026-Q2,57,0.65,0.55,2.0,0.50,Current snapshot
+lasertec,2025-Q3,54,0.65,0.80,2.0,0.43,Sole supplier of EUV mask-inspection
+lasertec,2025-Q4,55,0.65,0.80,2.0,0.44,Same
+lasertec,2026-Q1,56,0.65,0.80,2.0,0.45,High-NA mask blanks need new inspection
+lasertec,2026-Q2,58,0.65,0.80,2.0,0.47,Current snapshot
+onto-innovation,2025-Q3,32,0.50,0.45,2.0,0.27,Metrology supplier; advanced-packaging exposure
+onto-innovation,2025-Q4,33,0.50,0.45,2.0,0.28,Same
+onto-innovation,2026-Q1,34,0.50,0.45,2.0,0.29,Same
+onto-innovation,2026-Q2,35,0.50,0.45,2.0,0.30,Current snapshot
+aixtron,2025-Q3,22,0.55,0.55,2.0,0.18,Compound-semi MOCVD
+aixtron,2025-Q4,22,0.55,0.55,2.0,0.18,Same
+aixtron,2026-Q1,23,0.55,0.55,2.0,0.19,Same
+aixtron,2026-Q2,23,0.55,0.55,2.0,0.19,Current snapshot
+veeco,2025-Q3,22,0.50,0.55,2.0,0.18,Compound-semi deposition
+veeco,2025-Q4,22,0.50,0.55,2.0,0.18,Same
+veeco,2026-Q1,23,0.50,0.55,2.0,0.19,Same
+veeco,2026-Q2,23,0.50,0.55,2.0,0.19,Current snapshot
+edwards-vacuum,2025-Q3,36,0.65,0.45,2.0,0.30,Vacuum/abatement for fabs
+edwards-vacuum,2025-Q4,37,0.65,0.45,2.0,0.31,Same
+edwards-vacuum,2026-Q1,38,0.65,0.45,2.0,0.32,Same
+edwards-vacuum,2026-Q2,38,0.65,0.45,2.0,0.32,Current snapshot
+disco,2025-Q3,46,0.65,0.65,2.0,0.39,Dicing/grinding leader
+disco,2025-Q4,47,0.65,0.65,2.0,0.40,Same
+disco,2026-Q1,48,0.65,0.65,2.0,0.41,HBM-stack thinning demand
+disco,2026-Q2,49,0.65,0.65,2.0,0.42,Current snapshot
+advantest,2025-Q3,50,0.65,0.55,2.0,0.42,AI-accelerator test demand
+advantest,2025-Q4,54,0.65,0.55,2.0,0.46,Blackwell test programs ramp
+advantest,2026-Q1,57,0.65,0.55,2.0,0.49,HBM test capacity tight
+advantest,2026-Q2,60,0.65,0.55,2.0,0.52,Current snapshot
+teradyne,2025-Q3,42,0.50,0.55,2.0,0.36,SoC test
+teradyne,2025-Q4,44,0.50,0.55,2.0,0.38,Same
+teradyne,2026-Q1,45,0.50,0.55,2.0,0.39,Same
+teradyne,2026-Q2,46,0.50,0.55,2.0,0.40,Current snapshot
+shin-etsu,2025-Q3,58,0.71,0.55,1.5,0.52,Silicon wafer leader; photoresist
+shin-etsu,2025-Q4,58,0.71,0.55,1.5,0.52,Same
+shin-etsu,2026-Q1,59,0.71,0.55,1.5,0.53,300mm wafer pricing firms
+shin-etsu,2026-Q2,59,0.71,0.55,1.5,0.53,Current snapshot
+sumco,2025-Q3,46,0.71,0.50,1.5,0.40,Silicon wafer #2
+sumco,2025-Q4,46,0.71,0.50,1.5,0.40,Same
+sumco,2026-Q1,47,0.71,0.50,1.5,0.41,Same
+sumco,2026-Q2,47,0.71,0.50,1.5,0.41,Current snapshot
+jsr,2025-Q3,54,0.71,0.60,1.5,0.47,EUV photoresist leader
+jsr,2025-Q4,55,0.71,0.60,1.5,0.48,Going-private deal closes; supply unchanged
+jsr,2026-Q1,55,0.71,0.60,1.5,0.48,Same
+jsr,2026-Q2,56,0.71,0.60,1.5,0.49,Current snapshot
+coherent,2025-Q3,30,0.50,0.50,1.5,0.25,Compound-semi materials; SiC and InP
+coherent,2025-Q4,31,0.50,0.50,1.5,0.26,Same
+coherent,2026-Q1,32,0.50,0.50,1.5,0.27,Same
+coherent,2026-Q2,32,0.50,0.50,1.5,0.27,Current snapshot
+entegris,2025-Q3,44,0.50,0.55,1.5,0.38,Specialty chemicals and CMP
+entegris,2025-Q4,45,0.50,0.55,1.5,0.39,Same
+entegris,2026-Q1,46,0.50,0.55,1.5,0.40,Same
+entegris,2026-Q2,46,0.50,0.55,1.5,0.40,Current snapshot
+hoya,2025-Q3,52,0.71,0.70,1.5,0.45,Photomask blanks; EUV blank monopoly tight
+hoya,2025-Q4,53,0.71,0.70,1.5,0.46,Same
+hoya,2026-Q1,54,0.71,0.70,1.5,0.47,High-NA mask blanks
+hoya,2026-Q2,55,0.71,0.70,1.5,0.48,Current snapshot
+cabot-microelectronics,2025-Q3,28,0.50,0.50,1.5,0.23,CMP slurry inside Entegris
+cabot-microelectronics,2025-Q4,28,0.50,0.50,1.5,0.23,Same
+cabot-microelectronics,2026-Q1,29,0.50,0.50,1.5,0.24,Same
+cabot-microelectronics,2026-Q2,29,0.50,0.50,1.5,0.24,Current snapshot
+globalwafers,2025-Q3,40,0.71,0.55,1.5,0.34,Silicon wafer #3 (Taiwan)
+globalwafers,2025-Q4,40,0.71,0.55,1.5,0.34,Same
+globalwafers,2026-Q1,41,0.71,0.55,1.5,0.35,Same
+globalwafers,2026-Q2,42,0.71,0.55,1.5,0.36,Current snapshot
+siltronic,2025-Q3,32,0.65,0.55,1.5,0.27,Silicon wafer (Germany)
+siltronic,2025-Q4,32,0.65,0.55,1.5,0.27,Same
+siltronic,2026-Q1,33,0.65,0.55,1.5,0.28,Same
+siltronic,2026-Q2,33,0.65,0.55,1.5,0.28,Current snapshot
+soitec,2025-Q3,30,0.50,0.65,1.5,0.25,Engineered wafers; FD-SOI
+soitec,2025-Q4,30,0.50,0.65,1.5,0.25,Same
+soitec,2026-Q1,31,0.50,0.65,1.5,0.26,Same
+soitec,2026-Q2,31,0.50,0.65,1.5,0.26,Current snapshot
+ube,2025-Q3,24,0.71,0.50,1.5,0.20,Polyimide and specialty chemicals
+ube,2025-Q4,25,0.71,0.50,1.5,0.21,Same
+ube,2026-Q1,25,0.71,0.50,1.5,0.21,Same
+ube,2026-Q2,26,0.71,0.50,1.5,0.22,Current snapshot
+ajinomoto,2025-Q3,50,0.85,0.85,1.5,0.42,ABF build-up film monopoly; advanced packaging
+ajinomoto,2025-Q4,53,0.85,0.85,1.5,0.45,ABF capacity expansion still 18 months out
+ajinomoto,2026-Q1,57,0.85,0.85,1.5,0.48,ABF allocation tightens with CoWoS demand
+ajinomoto,2026-Q2,60,0.85,0.85,1.5,0.51,Current snapshot
+ibiden,2025-Q3,58,0.71,0.70,1.6,0.50,ABF substrate leader; CoWoS substrate exposure
+ibiden,2025-Q4,62,0.71,0.70,1.6,0.54,Same; capacity expansion in Gifu announced but late
+ibiden,2026-Q1,66,0.71,0.70,1.6,0.58,CoWoS substrate allocation fully booked
+ibiden,2026-Q2,70,0.71,0.70,1.6,0.62,Current snapshot
+unimicron,2025-Q3,46,0.71,0.65,1.6,0.40,ABF substrate #2 (Taiwan)
+unimicron,2025-Q4,50,0.71,0.65,1.6,0.43,CoWoS substrate volumes rise
+unimicron,2026-Q1,54,0.71,0.65,1.6,0.47,Same
+unimicron,2026-Q2,58,0.71,0.65,1.6,0.50,Current snapshot
+shinko,2025-Q3,50,0.71,0.65,1.6,0.43,Substrate and leadframe; FC-BGA
+shinko,2025-Q4,53,0.71,0.65,1.6,0.46,FC-BGA tightens for advanced packages
+shinko,2026-Q1,56,0.71,0.65,1.6,0.49,Same
+shinko,2026-Q2,59,0.71,0.65,1.6,0.51,Current snapshot
+kyocera,2025-Q3,32,0.71,0.55,1.5,0.27,Ceramic packages
+kyocera,2025-Q4,33,0.71,0.55,1.5,0.28,Same
+kyocera,2026-Q1,34,0.71,0.55,1.5,0.29,Same
+kyocera,2026-Q2,34,0.71,0.55,1.5,0.29,Current snapshot
+micron,2025-Q3,52,0.50,0.55,1.7,0.45,DRAM/HBM ramp
+micron,2025-Q4,57,0.50,0.55,1.7,0.49,HBM3e qualifies at NVIDIA
+micron,2026-Q1,62,0.50,0.55,1.7,0.54,HBM allocation booked through 2026
+micron,2026-Q2,65,0.50,0.55,1.7,0.57,Current snapshot
+sk-hynix,2025-Q3,60,0.60,0.55,1.7,0.53,HBM market leader
+sk-hynix,2025-Q4,66,0.60,0.55,1.7,0.58,HBM3e majority share with NVIDIA
+sk-hynix,2026-Q1,72,0.60,0.55,1.7,0.64,HBM4 sampling
+sk-hynix,2026-Q2,76,0.60,0.55,1.7,0.67,Current snapshot
+samsung-memory,2025-Q3,52,0.60,0.55,1.7,0.45,HBM3e qualification delayed
+samsung-memory,2025-Q4,55,0.60,0.55,1.7,0.48,HBM3e qualifies with select customers
+samsung-memory,2026-Q1,58,0.60,0.55,1.7,0.51,HBM allocation grows
+samsung-memory,2026-Q2,62,0.60,0.55,1.7,0.54,Current snapshot
+kioxia,2025-Q3,36,0.71,0.50,1.7,0.31,NAND flash
+kioxia,2025-Q4,37,0.71,0.50,1.7,0.32,Same
+kioxia,2026-Q1,38,0.71,0.50,1.7,0.33,Same
+kioxia,2026-Q2,39,0.71,0.50,1.7,0.34,Current snapshot
+winbond,2025-Q3,22,0.71,0.45,1.7,0.18,Specialty DRAM/flash
+winbond,2025-Q4,22,0.71,0.45,1.7,0.18,Same
+winbond,2026-Q1,23,0.71,0.45,1.7,0.19,Same
+winbond,2026-Q2,23,0.71,0.45,1.7,0.19,Current snapshot
+ymtc,2025-Q3,28,0.55,0.45,1.7,0.23,China NAND under export-control headwind
+ymtc,2025-Q4,29,0.55,0.45,1.7,0.24,Same
+ymtc,2026-Q1,30,0.55,0.45,1.7,0.25,Same
+ymtc,2026-Q2,31,0.55,0.45,1.7,0.26,Current snapshot
+ase,2025-Q3,58,0.71,0.55,1.5,0.51,OSAT leader; advanced packaging
+ase,2025-Q4,62,0.71,0.55,1.5,0.54,CoWoS-S volumes climb
+ase,2026-Q1,66,0.71,0.55,1.5,0.58,Advanced-packaging capacity tight
+ase,2026-Q2,70,0.71,0.55,1.5,0.62,Current snapshot
+amkor,2025-Q3,46,0.50,0.55,1.5,0.40,OSAT #2; advanced packaging in Arizona
+amkor,2025-Q4,50,0.50,0.55,1.5,0.43,Arizona OSAT site groundbreaking
+amkor,2026-Q1,54,0.50,0.55,1.5,0.47,US advanced-packaging capacity grows
+amkor,2026-Q2,58,0.50,0.55,1.5,0.50,Current snapshot
+jcet,2025-Q3,32,0.55,0.45,1.5,0.27,China OSAT
+jcet,2025-Q4,33,0.55,0.45,1.5,0.28,Same
+jcet,2026-Q1,34,0.55,0.45,1.5,0.29,Same
+jcet,2026-Q2,35,0.55,0.45,1.5,0.30,Current snapshot
+powertech,2025-Q3,28,0.71,0.45,1.5,0.23,Memory packaging Taiwan
+powertech,2025-Q4,29,0.71,0.45,1.5,0.24,Same
+powertech,2026-Q1,30,0.71,0.45,1.5,0.25,Same
+powertech,2026-Q2,30,0.71,0.45,1.5,0.25,Current snapshot
+tongfu,2025-Q3,26,0.55,0.45,1.5,0.22,China advanced packaging
+tongfu,2025-Q4,27,0.55,0.45,1.5,0.23,Same
+tongfu,2026-Q1,28,0.55,0.45,1.5,0.24,Same
+tongfu,2026-Q2,28,0.55,0.45,1.5,0.24,Current snapshot
+aws,2025-Q3,32,0.50,0.40,1.3,0.28,Trainium and Inferentia
+aws,2025-Q4,34,0.50,0.40,1.3,0.30,Trainium2 production volumes
+aws,2026-Q1,36,0.50,0.40,1.3,0.32,Same
+aws,2026-Q2,38,0.50,0.40,1.3,0.33,Current snapshot
+microsoft,2025-Q3,30,0.50,0.40,1.3,0.26,Maia and Cobalt programs
+microsoft,2025-Q4,32,0.50,0.40,1.3,0.28,Same
+microsoft,2026-Q1,34,0.50,0.40,1.3,0.30,Same
+microsoft,2026-Q2,36,0.50,0.40,1.3,0.31,Current snapshot
+google,2025-Q3,36,0.50,0.40,1.3,0.32,TPU v5p ramp
+google,2025-Q4,39,0.50,0.40,1.3,0.34,TPU v6 sampling
+google,2026-Q1,41,0.50,0.40,1.3,0.36,Same
+google,2026-Q2,43,0.50,0.40,1.3,0.38,Current snapshot
+meta,2025-Q3,28,0.50,0.40,1.3,0.24,MTIA programs
+meta,2025-Q4,30,0.50,0.40,1.3,0.26,MTIA v2 production
+meta,2026-Q1,32,0.50,0.40,1.3,0.28,Same
+meta,2026-Q2,34,0.50,0.40,1.3,0.29,Current snapshot
+tesla,2025-Q3,18,0.50,0.35,1.3,0.15,EV + Dojo
+tesla,2025-Q4,19,0.50,0.35,1.3,0.16,Same
+tesla,2026-Q1,20,0.50,0.35,1.3,0.17,Same
+tesla,2026-Q2,20,0.50,0.35,1.3,0.17,Current snapshot
+nxp,2025-Q3,36,0.55,0.45,1.4,0.31,Automotive MCU
+nxp,2025-Q4,37,0.55,0.45,1.4,0.32,Same
+nxp,2026-Q1,38,0.55,0.45,1.4,0.33,Same
+nxp,2026-Q2,38,0.55,0.45,1.4,0.33,Current snapshot
+infineon,2025-Q3,40,0.55,0.45,1.4,0.34,Power + automotive
+infineon,2025-Q4,41,0.55,0.45,1.4,0.35,Same
+infineon,2026-Q1,42,0.55,0.45,1.4,0.36,Same
+infineon,2026-Q2,42,0.55,0.45,1.4,0.36,Current snapshot
+renesas,2025-Q3,34,0.71,0.45,1.4,0.29,Automotive MCU; Naka fab recovery legacy
+renesas,2025-Q4,35,0.71,0.45,1.4,0.30,Same
+renesas,2026-Q1,36,0.71,0.45,1.4,0.31,Same
+renesas,2026-Q2,36,0.71,0.45,1.4,0.31,Current snapshot
+stmicro,2025-Q3,34,0.55,0.45,1.4,0.29,Power + automotive
+stmicro,2025-Q4,35,0.55,0.45,1.4,0.30,Same
+stmicro,2026-Q1,36,0.55,0.45,1.4,0.31,Same
+stmicro,2026-Q2,36,0.55,0.45,1.4,0.31,Current snapshot
+onsemi,2025-Q3,28,0.50,0.45,1.4,0.24,Power and sensing
+onsemi,2025-Q4,29,0.50,0.45,1.4,0.25,Same
+onsemi,2026-Q1,30,0.50,0.45,1.4,0.26,Same
+onsemi,2026-Q2,30,0.50,0.45,1.4,0.26,Current snapshot
+wolfspeed,2025-Q3,24,0.50,0.55,1.4,0.20,SiC; Mohawk Valley ramp
+wolfspeed,2025-Q4,25,0.50,0.55,1.4,0.21,Same
+wolfspeed,2026-Q1,26,0.50,0.55,1.4,0.22,Same
+wolfspeed,2026-Q2,26,0.50,0.55,1.4,0.22,Current snapshot
+analog-devices,2025-Q3,34,0.50,0.45,1.4,0.29,Analog/mixed-signal
+analog-devices,2025-Q4,35,0.50,0.45,1.4,0.30,Same
+analog-devices,2026-Q1,36,0.50,0.45,1.4,0.31,Same
+analog-devices,2026-Q2,36,0.50,0.45,1.4,0.31,Current snapshot
+texas-instruments,2025-Q3,38,0.50,0.45,1.4,0.33,Analog/embedded; 300mm capacity ramp
+texas-instruments,2025-Q4,39,0.50,0.45,1.4,0.34,Same
+texas-instruments,2026-Q1,40,0.50,0.45,1.4,0.35,Same
+texas-instruments,2026-Q2,40,0.50,0.45,1.4,0.35,Current snapshot
+arista,2025-Q3,22,0.50,0.35,1.3,0.18,Networking systems; merchant silicon
+arista,2025-Q4,23,0.50,0.35,1.3,0.19,Same
+arista,2026-Q1,24,0.50,0.35,1.3,0.20,Same
+arista,2026-Q2,24,0.50,0.35,1.3,0.20,Current snapshot
+cisco,2025-Q3,28,0.50,0.40,1.3,0.24,Networking systems
+cisco,2025-Q4,29,0.50,0.40,1.3,0.25,Same
+cisco,2026-Q1,30,0.50,0.40,1.3,0.26,Same
+cisco,2026-Q2,30,0.50,0.40,1.3,0.25,Current snapshot

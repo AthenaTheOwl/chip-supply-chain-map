@@ -1,5 +1,6 @@
 import { SCENARIOS } from "../lib/scenarios";
 import { useGraphStore } from "../state/store";
+import { HistorySlider } from "./HistorySlider";
 
 export function ScenarioControls() {
   const activeScenarioIds = useGraphStore((state) => state.activeScenarioIds);
@@ -44,6 +45,7 @@ export function ScenarioControls() {
               );
             })}
           </div>
+          <HistorySlider />
         </div>
       </details>
     </aside>

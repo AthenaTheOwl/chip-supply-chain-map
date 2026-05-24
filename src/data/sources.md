@@ -84,3 +84,13 @@ Each data row uses a `source_id` below. Many relationship rows are directional h
 - **s80** - BCG Emerging Resilience in the Semiconductor Supply Chain. https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain
 - **s81** - SEMI Semiconductor Supply Chain Annual Survey Report page. https://discover.semi.org/supply-chain-scm-2024-report-registration.html
 - **s82** - Renesas announcement on Naka factory fire recovery. https://www.renesas.com/en/about/newsroom
+
+## scenario-history data
+
+`src/data/nodes_history.csv` carries quarterly chokepoint snapshots from
+2025-Q3 to 2026-Q2. The historical scores are synthetic, modeled by
+hand from public industry news for pedagogical use. No claim is made
+that the historical values were measured or pulled from a vendor feed.
+The synthesis methodology and the public news sources cited are in
+`docs/scoring-history.md`. The 2026-Q2 column matches the current
+snapshot the live app renders from `src/data/nodes.csv`.
