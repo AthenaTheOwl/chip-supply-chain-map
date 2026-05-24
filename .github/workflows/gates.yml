@@ -39,5 +39,8 @@ jobs:
       - name: validate_policies
         run: python scripts/validate_policies.py
 
+      - name: validate_dreams
+        run: python scripts/validate_dreams.py
+
       - name: check_data_freshness
         run: python scripts/check_data_freshness.py
