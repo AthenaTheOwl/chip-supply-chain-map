@@ -8,6 +8,43 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+    # Major-version bumps on the React + Vite + Cytoscape + Tailwind families
+    # require coordinated migrations across peer dependents. Minor + patch
+    # still flow through; major bumps land via a deliberate spec, not a
+    # surprise Dependabot PR.
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitejs/plugin-react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "cytoscape"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "cytoscape-fcose"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "cytoscape-popper"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/cytoscape"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@tailwindcss/typography"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "autoprefixer"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "postcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "zustand"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: "/"
