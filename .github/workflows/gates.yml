@@ -24,6 +24,9 @@ jobs:
       - name: voice_lint
         run: python scripts/voice_lint.py
 
+      - name: check_no_bom
+        run: python scripts/check_no_bom.py
+
       - name: spec_check
         run: python scripts/spec_check.py
 
