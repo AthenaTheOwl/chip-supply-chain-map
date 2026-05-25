@@ -17,6 +17,8 @@ who depends on whom and where the chokepoints concentrate.
 - Click a node to see dependencies, geography, lead times, the
   chokepoint score, investor sensitivity records, and the source IDs
   backing every claim.
+- Build an investor watchlist from graph nodes, review aggregate
+  exposure, and export a sourced JSON or markdown risk packet.
 - Toggle nine scenarios - Taiwan capacity shock, advanced packaging
   bottleneck, ABF substrate shortage, EUV equipment delay, Blackwell
   and MI supply drought, Taiwan AI cluster stress, HBM and CoWoS
@@ -63,8 +65,8 @@ If you are a **student or researcher**: every CSV row carries a
 class project or fork it to add your own scenario.
 
 If you are an **investor or analyst**: use the Investor sensitivity
-section in the node panel to connect a chokepoint or active scenario
-to static revenue, capex, backlog, and exposure claims.
+section and watchlist packet to connect chokepoints or active scenarios
+to static revenue, capex, backlog, dependency, and exposure claims.
 
 If you are a **builder considering Cytoscape vs react-flow vs
 d3-force**: the choice is recorded with full alternatives and
@@ -125,9 +127,10 @@ operating model: spec ledger plus decisions plus dreams plus
 
 - `specs/0001-cognitive-delivery-control-plane/` - the spec ledger
   for the CDCP install.
-- `decisions/` - nine DEC files: the bootstrap `DEC-CDCP-001`,
-  seven map architecture records, and `DEC-FIN-001` for the static
-  financial sensitivity layer.
+- `decisions/` - ten DEC files: the bootstrap `DEC-CDCP-001`,
+  seven map architecture records, `DEC-FIN-001` for the static
+  financial sensitivity layer, and `DEC-FIN-002` for watchlist risk
+  packet export.
 - `.agents/AGENTS.md` - the single contract a coding agent reads
   before acting on the repo; plus six role contracts under
   `.agents/roles/`, the tool registry at `.agents/tools.yaml`, six

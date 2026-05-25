@@ -14,7 +14,8 @@ Active specs:
 - `0001-cognitive-delivery-control-plane/` - CDCP scaffold install
   (R-CDCP-001..010).
 - `0002-earnings-sensitivity-overlay/` - static sourced financial
-  sensitivity records for investor readers (R-FIN-001).
+  sensitivity records and watchlist risk packets for investor readers
+  (R-FIN-001..002).
 
 Each spec folder carries the same six files:
 `requirements.md`, `design.md`, `tasks.md`, `acceptance.md`,

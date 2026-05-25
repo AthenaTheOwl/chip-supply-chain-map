@@ -14,8 +14,10 @@ interface NodeDetailPanelProps {
   financialSensitivityRecords: FinancialSensitivity[];
   graph: GraphData;
   node: SupplyNode | null;
+  onToggleWatchlist: (nodeId: string) => void;
   scores: ScoreMap;
   sources: Map<string, SourceRef>;
+  watchlistNodeIds: string[];
 }
 
 export function NodeDetailPanel({
@@ -23,8 +25,10 @@ export function NodeDetailPanel({
   financialSensitivityRecords,
   graph,
   node,
+  onToggleWatchlist,
   scores,
-  sources
+  sources,
+  watchlistNodeIds
 }: NodeDetailPanelProps) {
   if (!node) {
     const topNodes = [...graph.nodes]
@@ -70,6 +74,7 @@ export function NodeDetailPanel({
 
   const dependencies = getDependencyEdges(graph, node.id);
   const dependents = getDependentEdges(graph, node.id);
+  const isWatched = watchlistNodeIds.includes(node.id);
   const sensitivityRecords = financialSensitivityRecords
     .filter((record) => record.node_id === node.id)
     .sort((a, b) => {
@@ -93,7 +98,20 @@ export function NodeDetailPanel({
           </p>
           <h2 className="mt-1 text-2xl font-semibold">{node.name}</h2>
         </div>
-        <ChokepointScoreBadge score={scores.get(node.id) ?? 0} size="lg" />
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          <ChokepointScoreBadge score={scores.get(node.id) ?? 0} size="lg" />
+          <button
+            className={`whitespace-nowrap rounded border px-3 py-1.5 text-xs font-semibold ${
+              isWatched
+                ? "border-[#c9bbaa] bg-white text-[#4d4840]"
+                : "border-[#0f5f57] bg-[#0f766e] text-white"
+            }`}
+            onClick={() => onToggleWatchlist(node.id)}
+            type="button"
+          >
+            {isWatched ? "Remove watch" : "Watch node"}
+          </button>
+        </div>
       </div>
 
       <p className="mt-3 text-sm leading-6 text-[#4d4840]">{node.short_description}</p>

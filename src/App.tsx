@@ -14,6 +14,8 @@ export default function App() {
   const activeScenarioIds = useGraphStore((state) => state.activeScenarioIds);
   const selectedNodeId = useGraphStore((state) => state.selectedNodeId);
   const currentQuarter = useGraphStore((state) => state.currentQuarter);
+  const watchlistNodeIds = useGraphStore((state) => state.watchlistNodeIds);
+  const toggleWatchlistNode = useGraphStore((state) => state.toggleWatchlistNode);
 
   const liveScores = useMemo(
     () => computeChokepointScores(graphData, activeScenarioIds),
@@ -40,7 +42,13 @@ export default function App() {
     <div className="min-h-screen bg-[#ece7dd] text-ink">
       <Header />
       <main className="grid min-h-[calc(100vh-76px)] grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_360px]">
-        <ScenarioControls />
+        <ScenarioControls
+          financialSensitivityRecords={financialSensitivityRecords}
+          graph={graphData}
+          scoreBasis={currentQuarter}
+          scores={scores}
+          sources={sourceRefs}
+        />
         <section className="relative min-h-[620px] border-y border-line bg-[#f9f7f1] lg:border-x lg:border-y-0">
           <SupplyChainGraph
             graph={graphData}
@@ -54,8 +62,10 @@ export default function App() {
           financialSensitivityRecords={financialSensitivityRecords}
           graph={graphData}
           node={selectedNode}
+          onToggleWatchlist={toggleWatchlistNode}
           scores={scores}
           sources={sourceRefs}
+          watchlistNodeIds={watchlistNodeIds}
         />
       </main>
     </div>

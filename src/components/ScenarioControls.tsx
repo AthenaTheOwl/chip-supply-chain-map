@@ -1,21 +1,39 @@
+import type { FinancialSensitivity } from "../lib/financial";
 import { SCENARIOS } from "../lib/scenarios";
+import type { ScoreMap } from "../lib/scoring";
+import type { GraphData, SourceRef } from "../lib/types";
 import { useGraphStore } from "../state/store";
 import { HistorySlider } from "./HistorySlider";
+import { WatchlistPanel } from "./WatchlistPanel";
 
-export function ScenarioControls() {
+interface ScenarioControlsProps {
+  financialSensitivityRecords: FinancialSensitivity[];
+  graph: GraphData;
+  scoreBasis: string;
+  scores: ScoreMap;
+  sources: Map<string, SourceRef>;
+}
+
+export function ScenarioControls({
+  financialSensitivityRecords,
+  graph,
+  scoreBasis,
+  scores,
+  sources
+}: ScenarioControlsProps) {
   const activeScenarioIds = useGraphStore((state) => state.activeScenarioIds);
   const toggleScenario = useGraphStore((state) => state.toggleScenario);
 
   return (
-    <aside className="z-20 border-b border-line bg-panel lg:border-b-0">
-      <details className="group lg:sticky lg:top-0 lg:block" open>
+    <aside className="z-20 border-b border-line bg-panel lg:h-[calc(100vh-76px)] lg:overflow-auto lg:border-b-0">
+      <details className="group lg:block" open>
         <summary className="flex cursor-pointer list-none items-center justify-between border-b border-line px-4 py-4 font-semibold">
           <span>Scenarios</span>
           <span className="text-xs font-medium text-[#5f574e]">
             {activeScenarioIds.length} active
           </span>
         </summary>
-        <div className="max-h-[56vh] overflow-auto px-4 py-4 lg:max-h-[calc(100vh-77px)]">
+        <div className="px-4 py-4">
           <div className="space-y-3">
             {SCENARIOS.map((scenario) => {
               const checked = activeScenarioIds.includes(scenario.id);
@@ -48,6 +66,14 @@ export function ScenarioControls() {
           <HistorySlider />
         </div>
       </details>
+      <WatchlistPanel
+        activeScenarioIds={activeScenarioIds}
+        financialSensitivityRecords={financialSensitivityRecords}
+        graph={graph}
+        scoreBasis={scoreBasis}
+        scores={scores}
+        sources={sources}
+      />
     </aside>
   );
 }

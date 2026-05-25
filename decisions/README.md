@@ -62,6 +62,8 @@ Current DEC records include:
   data alert.
 - `DEC-FIN-001-static-sourced-sensitivity-over-live-market-data.md` -
   the static financial sensitivity layer.
+- `DEC-FIN-002-deterministic-watchlist-risk-packets.md` - the
+  watchlist risk packet export.
 
 Existing pre-CDCP choices (data model, sourcing discipline, no-deploy
 hand-off) are documented in the legacy `DECISIONS.md` flat file. The

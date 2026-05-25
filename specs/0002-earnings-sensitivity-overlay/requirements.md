@@ -23,3 +23,23 @@ Acceptance:
   scenario label, sensitivity band, note, and source link.
 - Active scenario matches are marked in the panel.
 - The 180-day freshness script checks the financial CSV.
+
+### R-FIN-002: investor watchlist risk packet export
+
+WHEN a user builds a small watchlist from graph nodes, THE SYSTEM
+SHALL show an aggregate exposure summary and export a deterministic
+risk packet assembled from existing graph and financial sensitivity
+facts.
+
+Acceptance:
+- The user can add and remove graph nodes without auth, persistence,
+  backend storage, or paid data feeds.
+- The watchlist summary shows watched-node count, average and maximum
+  chokepoint score when scores are present, top dependencies, top
+  regions, and sensitive graph links.
+- The export can be copied or downloaded as JSON or markdown.
+- The export includes source IDs and source labels or URLs for graph
+  nodes, edges, and financial sensitivity rows when those references
+  are available.
+- The export is derived from data fields already loaded in the app and
+  does not write analyst recommendations.

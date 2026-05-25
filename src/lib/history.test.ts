@@ -14,8 +14,7 @@
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { parseCsv } from "./csv";
 
 // Inlined so the test does not pull history.ts (which imports the CSV via
@@ -32,8 +31,7 @@ interface QuarterScores {
 }
 type HistoryByNode = Map<string, Map<Quarter, QuarterScores>>;
 
-const here = dirname(fileURLToPath(import.meta.url));
-const csvPath = resolve(here, "../data/nodes_history.csv");
+const csvPath = resolve("src/data/nodes_history.csv");
 const csvText = readFileSync(csvPath, "utf-8");
 
 function loadFromText(text: string): HistoryByNode {
