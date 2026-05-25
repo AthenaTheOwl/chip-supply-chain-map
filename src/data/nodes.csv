@@ -11,6 +11,13 @@ psmc,PSMC,foundry,mature-node,TW,Hsinchu,6770.TW,1994,Memory and logic foundry w
 hua-hong,Hua Hong Semiconductor,foundry,mature-node,CN,Shanghai,1347.HK,1996,China specialty foundry focused on embedded and power processes,s10
 nvidia,NVIDIA,fabless,gpu,US,Santa Clara,NVDA,1993,AI accelerator and GPU platform leader,s11
 amd,AMD,fabless,cpu-gpu,US,Santa Clara,AMD,1969,CPU GPU and accelerator designer,s12
+nvidia-blackwell-gb200,NVIDIA Blackwell GB200,fabless,ai-accelerator-platform,US,Santa Clara,NVDA,2024,Grace Blackwell GB200 platform for training and real time inference,s83
+amd-instinct-mi-family,AMD Instinct MI300X MI325X MI355X,fabless,ai-accelerator-platform,US,Santa Clara,AMD,2023,Instinct accelerator family for generative AI training and inference,s84
+cerebras-wse-cs,Cerebras WSE CS,fabless,wafer-scale-ai,US,Sunnyvale,private,2016,Wafer scale WSE and CS systems for frontier AI training,s86
+groq-lpu,Groq LPU,fabless,inference-accelerator,US,Mountain View,private,2016,Language Processing Unit platform for low latency AI inference,s87
+tenstorrent-ai,Tenstorrent AI accelerators,fabless,riscv-ai-accelerator,CA,Toronto,private,2016,RISC V AI accelerator cards and chiplets for edge to data center compute,s89
+sambanova-sn40l,SambaNova SN40L RDU,fabless,dataflow-ai-accelerator,US,Palo Alto,private,2017,Reconfigurable Dataflow Unit for enterprise AI training and inference,s91
+etched-sohu,Etched Sohu,fabless,transformer-asic,US,Cupertino,private,2022,Transformer specialized inference ASIC for LLM workloads,s92
 apple,Apple,fabless,consumer-soc,US,Cupertino,AAPL,1976,Custom SoC designer and major foundry customer,s13
 qualcomm,Qualcomm,fabless,mobile-soc,US,San Diego,QCOM,1985,Mobile and edge AI chip designer,s14
 broadcom,Broadcom,fabless,networking,US,Palo Alto,AVGO,1961,Networking ASIC and connectivity semiconductor supplier,s15
@@ -66,6 +73,8 @@ aws,AWS,hyperscaler,cloud-ai,US,Seattle,AMZN,2006,Cloud operator building custom
 microsoft,Microsoft,hyperscaler,cloud-ai,US,Redmond,MSFT,1975,Cloud and AI infrastructure operator with custom silicon,s65
 google,Google,hyperscaler,cloud-ai,US,Mountain View,GOOGL,1998,Cloud operator and TPU accelerator designer,s66
 meta,Meta,hyperscaler,cloud-ai,US,Menlo Park,META,2004,AI infrastructure operator building MTIA accelerators,s67
+oracle-cloud,Oracle Cloud Infrastructure,hyperscaler,cloud-ai,US,Austin,ORCL,1977,Cloud operator deploying NVIDIA Blackwell and AMD Instinct AI infrastructure,s96
+coreweave,CoreWeave,hyperscaler,gpu-cloud,US,Livingston,CRWV,2017,AI cloud operator offering large NVIDIA GPU clusters and GB200 instances,s97
 tesla,Tesla,auto-industrial,ev-ai,US,Austin,TSLA,2003,EV and autonomy company procuring AI and automotive chips,s68
 nxp,NXP,auto-industrial,automotive-mcu,NL,Eindhoven,NXPI,2006,Automotive and industrial semiconductor supplier,s69
 infineon,Infineon,auto-industrial,power-mcu,DE,Neubiberg,IFX.DE,1999,Power automotive and security semiconductor supplier,s70

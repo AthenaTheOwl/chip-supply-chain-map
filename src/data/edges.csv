@@ -86,11 +86,16 @@ ibiden,nvidia,supplies-substrates,critical,ABF substrates for AI accelerator pac
 ibiden,amd,supplies-substrates,critical,ABF substrates for chiplet packages,s49
 ibiden,apple,supplies-substrates,high,Advanced substrates for custom SoCs,s49
 ibiden,tsmc,supplies-substrates,critical,Substrate support for advanced packaging flow,s49
+ibiden,nvidia-blackwell-gb200,supplies-substrates,critical,ABF substrates for large Blackwell accelerator packages,s49
+ibiden,amd-instinct-mi-family,supplies-substrates,high,ABF substrates for Instinct chiplet accelerator packages,s49
 unimicron,nvidia,supplies-substrates,high,ABF substrates for accelerator packages,s50
 unimicron,amd,supplies-substrates,high,ABF substrates for chiplet packages,s50
 unimicron,broadcom,supplies-substrates,high,ABF substrates for networking ASICs,s50
+unimicron,nvidia-blackwell-gb200,supplies-substrates,high,ABF substrates for Blackwell accelerator packages,s50
+unimicron,amd-instinct-mi-family,supplies-substrates,high,ABF substrates for Instinct accelerator packages,s50
 shinko,nvidia,supplies-substrates,high,Package substrates for AI accelerators,s51
 shinko,intel-foundry,supplies-substrates,high,Package substrates and leadframes,s51
+shinko,nvidia-blackwell-gb200,supplies-substrates,high,Package substrates for Blackwell accelerator platforms,s51
 kyocera,onsemi,supplies-substrates,medium,Ceramic packages for power and sensing devices,s52
 kyocera,infineon,supplies-substrates,medium,Ceramic packages for power semiconductors,s52
 arm,apple,licenses-ip,critical,Arm architecture for Apple silicon,s21
@@ -112,6 +117,11 @@ siemens-eda,nxp,licenses-ip,medium,EDA tools for automotive chip design,s20
 tsmc,apple,manufactures-for,critical,Advanced-node custom SoC manufacturing,s1
 tsmc,nvidia,manufactures-for,critical,Advanced-node GPU and accelerator manufacturing,s1
 tsmc,amd,manufactures-for,critical,Advanced-node CPU GPU and chiplet manufacturing,s1
+tsmc,nvidia-blackwell-gb200,manufactures-for,critical,Advanced-node Blackwell GPU platform manufacturing,s103
+tsmc,amd-instinct-mi-family,manufactures-for,critical,TSMC process nodes for Instinct accelerator manufacturing,s85
+tsmc,cerebras-wse-cs,manufactures-for,high,TSMC 5nm process for WSE-3 and CS-3 systems,s86
+tsmc,sambanova-sn40l,manufactures-for,high,TSMC manufacturing for SN40L RDU,s91
+tsmc,etched-sohu,manufactures-for,medium,TSMC 4nm process for transformer inference ASIC,s93
 tsmc,qualcomm,manufactures-for,high,Advanced mobile SoC manufacturing,s1
 tsmc,broadcom,manufactures-for,critical,Networking and custom ASIC manufacturing,s1
 tsmc,mediatek,manufactures-for,high,Mobile SoC manufacturing,s1
@@ -121,6 +131,7 @@ tsmc,aws,manufactures-for,high,Custom cloud silicon manufacturing,s64
 samsung-foundry,qualcomm,manufactures-for,high,Advanced mobile SoC foundry capacity,s2
 samsung-foundry,google,manufactures-for,high,Custom mobile and AI silicon foundry capacity,s66
 samsung-foundry,nvidia,manufactures-for,medium,Advanced logic foundry capacity,s2
+samsung-foundry,tenstorrent-ai,manufactures-for,high,Samsung SF4X process for next generation Tenstorrent AI chiplets,s90
 intel-foundry,microsoft,manufactures-for,high,Custom foundry engagement for future chips,s65
 globalfoundries,nxp,manufactures-for,high,Automotive and RF specialty process capacity,s4
 globalfoundries,infineon,manufactures-for,high,Automotive and industrial specialty process capacity,s4
@@ -135,6 +146,8 @@ vanguard,nxp,manufactures-for,medium,Mature-node specialty foundry capacity,s8
 globalfoundries,cisco,manufactures-for,medium,RF and specialty process capacity for networking ecosystem,s4
 tsmc,nvidia,packages-for,critical,CoWoS advanced packaging for AI accelerators,s1
 tsmc,amd,packages-for,high,Advanced packaging for chiplet accelerators,s1
+tsmc,nvidia-blackwell-gb200,packages-for,critical,CoWoS class advanced packaging for GB200 AI systems,s100
+tsmc,amd-instinct-mi-family,packages-for,high,Advanced packaging for chiplet Instinct accelerators,s100
 ase,apple,packages-for,high,Assembly and test for high-volume devices,s59
 ase,qualcomm,packages-for,high,Assembly and test for mobile SoCs,s59
 ase,broadcom,packages-for,high,Advanced packaging and test for networking ASICs,s59
@@ -152,9 +165,13 @@ disco,powertech,supplies-equipment,high,Dicing and grinding equipment for memory
 sk-hynix,nvidia,supplies-memory,critical,HBM for AI accelerator platforms,s54
 micron,nvidia,supplies-memory,high,HBM and GDDR for accelerator platforms,s53
 samsung-memory,nvidia,supplies-memory,high,HBM and GDDR for accelerator platforms,s55
+sk-hynix,nvidia-blackwell-gb200,supplies-memory,critical,HBM3E memory for Blackwell AI platforms,s83
+micron,nvidia-blackwell-gb200,supplies-memory,high,HBM3E memory for Blackwell AI platforms,s101
 sk-hynix,amd,supplies-memory,high,HBM for accelerator platforms,s54
 micron,amd,supplies-memory,high,HBM for accelerator platforms,s53
 samsung-memory,amd,supplies-memory,high,HBM for accelerator platforms,s55
+sk-hynix,amd-instinct-mi-family,supplies-memory,high,HBM3E memory for Instinct accelerator platforms,s84
+micron,amd-instinct-mi-family,supplies-memory,high,HBM memory for Instinct accelerator platforms,s53
 kioxia,apple,supplies-memory,high,NAND flash for consumer devices,s56
 samsung-memory,apple,supplies-memory,high,Mobile DRAM and NAND supply,s55
 winbond,nxp,supplies-memory,medium,Specialty memory for embedded systems,s57
@@ -162,10 +179,18 @@ aws,nvidia,procures-from-fabless,critical,Cloud AI accelerator demand,s64
 microsoft,nvidia,procures-from-fabless,critical,Cloud AI accelerator demand,s65
 google,nvidia,procures-from-fabless,high,Cloud AI accelerator demand,s66
 meta,nvidia,procures-from-fabless,critical,AI training accelerator demand,s67
+aws,nvidia-blackwell-gb200,procures-from-fabless,critical,EC2 P6e GB200 UltraServers for AI training and inference,s94
+microsoft,nvidia-blackwell-gb200,procures-from-fabless,high,Azure Blackwell cloud demand and NVIDIA partnership,s102
+google,nvidia-blackwell-gb200,procures-from-fabless,critical,A4X VMs powered by NVIDIA GB200 NVL72,s95
+oracle-cloud,nvidia-blackwell-gb200,procures-from-fabless,critical,OCI GB200 NVL72 racks for reasoning and agentic AI,s96
+coreweave,nvidia-blackwell-gb200,procures-from-fabless,critical,Generally available GB200 NVL72 cloud instances,s97
 aws,amd,procures-from-fabless,high,Cloud accelerator and CPU demand,s64
 microsoft,amd,procures-from-fabless,high,Cloud accelerator and CPU demand,s65
+oracle-cloud,amd-instinct-mi-family,procures-from-fabless,high,OCI MI300X and MI355X accelerator shapes,s98
+microsoft,amd-instinct-mi-family,procures-from-fabless,high,Azure ND MI300X V5 instances and Azure OpenAI workloads,s99
 google,broadcom,procures-from-fabless,high,Custom TPU and networking ASIC ecosystem,s66
 meta,broadcom,procures-from-fabless,high,Custom AI and networking ASIC ecosystem,s67
+meta,groq-lpu,procures-from-fabless,medium,Official Llama API inference accelerated by Groq LPU,s88
 arista,broadcom,procures-from-fabless,critical,Switch ASIC dependency for cloud networking,s77
 arista,marvell,procures-from-fabless,high,Networking silicon dependency,s77
 cisco,broadcom,procures-from-fabless,high,Networking silicon dependency,s78

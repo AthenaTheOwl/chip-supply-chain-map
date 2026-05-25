@@ -10,11 +10,13 @@ decision: |
   each driving a fixed multiplier on a named list of nodes via the
   `impactOn` function in `SCENARIOS`. Multiple scenarios may run at
   once; their multipliers compose multiplicatively in
-  `scenarioMultiplier`. The six bundled scenarios are
+  `scenarioMultiplier`. The nine bundled scenarios are
   `taiwan-capacity-shock`, `advanced-packaging-bottleneck`,
-  `substrate-shortage`, `lithography-constraint`, `export-controls`,
-  and `ai-demand-spike`. The export-controls scenario also visually
-  suppresses equipment-to-China edges via the edge `suppressed` class.
+  `substrate-shortage`, `lithography-constraint`,
+  `blackwell-mi-supply-drought`, `taiwan-ai-cluster-stress`,
+  `hbm-cowos-crunch`, `export-controls`, and `ai-demand-spike`.
+  The export-controls scenario also visually suppresses
+  equipment-to-China edges via the edge `suppressed` class.
 alternatives:
   - label: continuous intensity slider per scenario
     rejected_because: |
@@ -56,7 +58,7 @@ rationale: |
   fine ones.
 
   The binary toggle keeps the control surface honest. A user sees
-  six scenarios, picks any subset, and reads the resulting
+  the curated scenario set, picks any subset, and reads the resulting
   chokepoint distribution. The export-controls scenario adds a
   second teaching signal: edges from US/JP/NL equipment makers into
   SMIC, YMTC, and Hua Hong render as suppressed dashed lines,

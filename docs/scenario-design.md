@@ -21,12 +21,14 @@ centrality, lead time, and advanced-node edge density.
 
 Trigger: CoWoS and high-end OSAT capacity becomes tighter for AI accelerators.
 
-Modeled: higher stress on TSMC, ASE, Amkor, Ibiden, Unimicron, and Shinko.
+Modeled: higher stress on TSMC, ASE, Amkor, Ibiden, Unimicron, Shinko,
+NVIDIA Blackwell GB200, and AMD Instinct MI family platform rows.
 
 Not modeled: exact CoWoS capacity, package mix, substrate allocation, or customer
 priority.
 
-Multiplier: 1.8 for the directly exposed packaging and substrate nodes.
+Multiplier: 1.8 for the directly exposed packaging, substrate, and accelerator
+platform nodes.
 
 ## ABF Substrate Shortage
 
@@ -52,6 +54,49 @@ node-specific lithography recipes.
 Multiplier: 1.9 because lithography delays affect expansion timing across both
 logic and memory.
 
+## Blackwell And MI Supply Drought
+
+Trigger: cloud demand exceeds available GB200 and AMD Instinct MI accelerator
+supply for a full allocation cycle.
+
+Modeled: higher stress on NVIDIA, AMD, the Blackwell GB200 and Instinct MI
+platform rows, TSMC, HBM suppliers, and the cloud operators most directly
+represented in the graph.
+
+Not modeled: exact allocation by customer, resale markets, cloud reservation
+terms, OEM server readiness, or rack power availability.
+
+Multiplier: 1.7 for directly exposed accelerator suppliers, HBM suppliers,
+foundry capacity, and cloud buyers.
+
+## Taiwan AI Cluster Stress
+
+Trigger: Taiwan foundry, OSAT, memory-package, and substrate flows are
+interrupted at the same time.
+
+Modeled: higher stress on TSMC, Taiwan mature-node foundries, ASE, Powertech,
+Unimicron, and the two largest current AI accelerator platform rows.
+
+Not modeled: inventory buffers, recovery sequencing by fab or package line,
+customer priority, or non-Taiwan substitution timing.
+
+Multiplier: 1.9 because this combines wafer and backend concentration for AI
+clusters without assuming a total Taiwan capacity outage.
+
+## HBM And CoWoS Crunch
+
+Trigger: HBM3E and CoWoS capacity lag the Blackwell and Instinct MI platform
+ramps used for training and inference clusters.
+
+Modeled: higher stress on TSMC, SK Hynix, Micron, Samsung Memory, ASE, Amkor,
+Ibiden, Unimicron, Shinko, NVIDIA Blackwell GB200, and AMD Instinct MI.
+
+Not modeled: HBM stack height, substrate layer count, known-good-stack yield,
+exact CoWoS line capacity, pricing, or customer allocation.
+
+Multiplier: 2.0 because HBM and advanced packaging are both required for
+current high-end accelerator platforms.
+
 ## Tightened Export Controls
 
 Trigger: US allied equipment access narrows for China-based advanced nodes.
@@ -70,8 +115,9 @@ Multiplier: 1.5 for affected China-based manufacturing nodes.
 Trigger: hyperscaler accelerator demand rises faster than HBM, advanced
 packaging, and advanced-node capacity.
 
-Modeled: higher stress on NVIDIA, AMD, Broadcom, Marvell, TSMC, SK Hynix,
-Micron, and Samsung Memory.
+Modeled: higher stress on NVIDIA, AMD, NVIDIA Blackwell GB200, AMD Instinct MI,
+Cerebras WSE CS, SambaNova SN40L, Etched Sohu, Broadcom, Marvell, TSMC, HBM
+suppliers, Oracle Cloud Infrastructure, and CoreWeave.
 
 Not modeled: cloud capex budgets, rack power, networking backlogs, or accelerator
 generation transitions.

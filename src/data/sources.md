@@ -84,6 +84,27 @@ Each data row uses a `source_id` below. Many relationship rows are directional h
 - **s80** - BCG Emerging Resilience in the Semiconductor Supply Chain. https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain
 - **s81** - SEMI Semiconductor Supply Chain Annual Survey Report page. https://discover.semi.org/supply-chain-scm-2024-report-registration.html
 - **s82** - Renesas announcement on Naka factory fire recovery. https://www.renesas.com/en/about/newsroom
+- **s83** - NVIDIA DGX GB200 official product page. https://www.nvidia.com/en-us/data-center/dgx-gb200/
+- **s84** - AMD Instinct accelerators official product page. https://www.amd.com/en/products/accelerators/instinct.html
+- **s85** - AMD Instinct MI325X official product specifications. https://www.amd.com/en/products/accelerators/instinct/mi300/mi325x.html
+- **s86** - Cerebras WSE-3 and CS-3 announcement. https://www.cerebras.ai/press-release/cerebras-announces-third-generation-wafer-scale-engine/
+- **s87** - Groq LPU architecture official page. https://groq.com/lpu-architecture
+- **s88** - Groq and Meta official Llama API inference announcement. https://groq.com/newsroom/meta-and-groq-collaborate-to-deliver-fast-inference-for-the-official-llama-api
+- **s89** - Tenstorrent Blackhole and Wormhole AI card product page. https://tenstorrent.com/hardware/blackhole
+- **s90** - Tenstorrent Samsung Foundry AI chiplet announcement. https://tenstorrent.com/newsroom/tenstorrent-selects-samsung-foundry-to-manufacture-next-generation-ai-chiplet
+- **s91** - SambaNova SN40L RDU announcement. https://sambanova.ai/press/sambanova-unveils-new-chip-the-sn40l
+- **s92** - Etched Sohu official product page. https://www.etched.com/
+- **s93** - TechCrunch Etched Sohu transformer ASIC report. https://techcrunch.com/2024/06/25/etched-is-building-an-ai-chip-that-only-runs-transformer-models/
+- **s94** - AWS EC2 P6e-GB200 UltraServers announcement. https://aws.amazon.com/about-aws/whats-new/2025/07/amazon-p6e-gb200-ultraservers-gpu-performance-ec2/
+- **s95** - Google Cloud A4X VMs with NVIDIA GB200 announcement. https://cloud.google.com/blog/products/compute/new-a4x-vms-powered-by-nvidia-gb200-gpus
+- **s96** - NVIDIA blog on Oracle Cloud Infrastructure GB200 deployment. https://blogs.nvidia.com/blog/oracle-cloud-infrastructure-blackwell-gpus-agentic-ai-reasoning-models/
+- **s97** - CoreWeave GB200 NVL72 instances announcement. https://www.coreweave.com/blog/coreweave-becomes-the-first-cloud-provider-with-generally-available-nvidia-gb200-nvl72-instances
+- **s98** - AMD and Oracle Instinct MI300X MI355X MI450 collaboration announcement. https://www.amd.com/en/newsroom/press-releases/oracle-and-amd-expand-partnership-to-help-customers-ach.html
+- **s99** - AMD Instinct MI300X on Microsoft Azure announcement. https://ir.amd.com/news-events/press-releases/detail/1198/amd-instinct-mi300x-accelerators-power-microsoft-azure-openai-service-workloads-and-new-azure-nd-mi300x-v5-vms
+- **s100** - TSMC CoWoS advanced packaging technology page. https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm
+- **s101** - Micron HBM3E and NVIDIA systems announcement. https://micron.gcs-web.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia
+- **s102** - NVIDIA Blackwell platform cloud provider announcement. https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing
+- **s103** - NVIDIA Blackwell architecture official page. https://www.nvidia.com/en-gb/data-center/technologies/blackwell-architecture/
 
 ## scenario-history data
 
