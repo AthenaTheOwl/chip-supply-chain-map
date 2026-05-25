@@ -105,6 +105,16 @@ Each data row uses a `source_id` below. Many relationship rows are directional h
 - **s101** - Micron HBM3E and NVIDIA systems announcement. https://micron.gcs-web.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia
 - **s102** - NVIDIA Blackwell platform cloud provider announcement. https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing
 - **s103** - NVIDIA Blackwell architecture official page. https://www.nvidia.com/en-gb/data-center/technologies/blackwell-architecture/
+- **s104** - NVIDIA fiscal 2026 financial results. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2026/
+- **s105** - AMD fiscal 2025 financial results. https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results
+- **s106** - TSMC 2025 Annual Report. https://investor.tsmc.com/static/annualReports/2025/english/index.html
+- **s107** - ASML 2025 Annual Report financials. https://www.asml.com/en/investors/annual-report/2025/financials
+- **s108** - SK hynix fiscal 2025 financial results. https://news.skhynix.com/sk-hynix-announces-fy25-financial-results/
+- **s109** - Samsung Electronics 4Q 2025 earnings presentation. https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2025_4Q_conference_eng.pdf
+- **s110** - Broadcom fiscal 2024 financial results. https://investors.broadcom.com/node/62701/pdf
+- **s111** - Marvell fiscal 2025 financial results. https://investor.marvell.com/news-events/press-releases/detail/109/marvell-technology-inc-reports-fourth-quarter-and-fiscal-year-2025-financial-results
+- **s112** - CoreWeave fiscal 2025 financial results. https://www.sec.gov/Archives/edgar/data/1769628/000176962826000094/coreweave4q25earningspress.htm
+- **s113** - Oracle fiscal 2025 Form 10-K. https://www.sec.gov/Archives/edgar/data/1341439/000095017025087926/orcl-20250531.htm
 
 ## scenario-history data
 

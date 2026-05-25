@@ -27,6 +27,7 @@ PATHS = (
     "src/data/nodes.csv",
     "src/data/edges.csv",
     "src/data/nodes_history.csv",
+    "src/data/financial_sensitivity.csv",
 )
 DEFAULT_THRESHOLD_DAYS = 180
 SECONDS_PER_DAY = 86400

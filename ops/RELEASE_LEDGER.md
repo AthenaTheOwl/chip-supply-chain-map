@@ -18,6 +18,27 @@ Each entry has the shape:
 
 ## Entries
 
+## 2026-05-25 - <pending> feature: add earnings sensitivity overlay for investor-facing chokepoints
+
+- scope: adds `src/data/financial_sensitivity.csv` with 12 sourced
+  public-company records, source IDs `s104` through `s113`, a
+  selected-node Investor sensitivity section, spec 0002, DEC-FIN-001,
+  and freshness-gate coverage for the new CSV.
+- proof:
+  - spec_check - 2 active specs
+  - voice_lint - governance copy clean
+  - validate_decisions - 9 DECs validated
+  - validate_roles - 6 roles validated
+  - validate_tools - 12 tools validated
+  - validate_policies - 6 policies validated
+  - check_schema_cache_freshness - 5 schemas checked
+  - check_data_freshness - node, edge, and history CSVs checked;
+    financial CSV path added for committed runs
+  - validate_dreams - 0 dreams found
+  - build - `npm.cmd run build` green
+  - browser smoke - local Vite app selected Broadcom and marked the
+    AI revenue record active after toggling AI accelerator demand 3x
+
 ## 2026-04-29 - 611e497 Build chip supply chain map
 
 - scope: full repo skeleton - React 18 plus Vite 5 plus

@@ -29,7 +29,7 @@ flowchart LR
 The six-file ledger (`requirements`, `design`, `tasks`, `acceptance`,
 `research`, `traceability`). Defines R-CDCP-001..010. This is the
 first spec in the repo; later specs adopt the same shape under their
-own R-* prefix (`MAP`, `GRAPH`, `DATA`, `UI`, `SCEN`, `OPS`).
+own R-* prefix (`MAP`, `GRAPH`, `DATA`, `FIN`, `UI`, `SCEN`, `OPS`).
 
 ### `decisions/`
 
@@ -80,7 +80,7 @@ Walks every R-* defined in `specs/NNNN-*/requirements.md` and
 enforces:
 - six required ledger files per spec,
 - R-* prefix from the allowed set (`CDCP`, `MAP`, `GRAPH`, `DATA`,
-  `UI`, `SCEN`, `OPS`),
+  `FIN`, `UI`, `SCEN`, `OPS`),
 - traceability coverage with no phantom IDs,
 - a DEC reference for every R-* or an allowlist entry (R-CDCP-*
   resolved collectively by `DEC-CDCP-001`).

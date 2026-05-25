@@ -15,11 +15,13 @@ who depends on whom and where the chokepoints concentrate.
   memory, advanced packaging, hyperscalers, and auto/industrial
   demand.
 - Click a node to see dependencies, geography, lead times, the
-  chokepoint score, and the source IDs backing every claim.
-- Toggle six scenarios - Taiwan capacity shock, advanced packaging
-  bottleneck, ABF substrate shortage, EUV equipment delay,
-  tightened export controls, and AI accelerator demand 3x. Multiple
-  scenarios compose multiplicatively.
+  chokepoint score, investor sensitivity records, and the source IDs
+  backing every claim.
+- Toggle nine scenarios - Taiwan capacity shock, advanced packaging
+  bottleneck, ABF substrate shortage, EUV equipment delay, Blackwell
+  and MI supply drought, Taiwan AI cluster stress, HBM and CoWoS
+  crunch, tightened export controls, and AI accelerator demand 3x.
+  Multiple scenarios compose multiplicatively.
 
 ![Scenario toggle preview](./public/screenshots/scenario-active.gif)
 
@@ -59,6 +61,10 @@ If you are a **student or researcher**: every CSV row carries a
 [src/data/sources.md](./src/data/sources.md). The 78-node /
 180-edge graph is a hand-curated 2024-2026 snapshot; copy it for a
 class project or fork it to add your own scenario.
+
+If you are an **investor or analyst**: use the Investor sensitivity
+section in the node panel to connect a chokepoint or active scenario
+to static revenue, capex, backlog, and exposure claims.
 
 If you are a **builder considering Cytoscape vs react-flow vs
 d3-force**: the choice is recorded with full alternatives and
@@ -101,6 +107,9 @@ documented in [docs/scenario-design.md](./docs/scenario-design.md).
 
 - `src/data/nodes.csv` - 78 companies and high-level attributes.
 - `src/data/edges.csv` - 180 directional dependencies.
+- `src/data/financial_sensitivity.csv` - sourced public-company
+  revenue, capex, backlog, and exposure records keyed by node and
+  scenario.
 - `src/data/sources.md` - source IDs used by the CSV files.
 
 Sources favor official annual reports, SEC and company pages, and
@@ -116,10 +125,9 @@ operating model: spec ledger plus decisions plus dreams plus
 
 - `specs/0001-cognitive-delivery-control-plane/` - the spec ledger
   for the CDCP install.
-- `decisions/` - six DEC files: the bootstrap `DEC-CDCP-001` plus
-  five architectural DECs (cytoscape, fcose, the chokepoint
-  heuristic, scenario toggles, and the 180-day data-freshness
-  gate).
+- `decisions/` - nine DEC files: the bootstrap `DEC-CDCP-001`,
+  seven map architecture records, and `DEC-FIN-001` for the static
+  financial sensitivity layer.
 - `.agents/AGENTS.md` - the single contract a coding agent reads
   before acting on the repo; plus six role contracts under
   `.agents/roles/`, the tool registry at `.agents/tools.yaml`, six
@@ -129,9 +137,10 @@ operating model: spec ledger plus decisions plus dreams plus
   every candidate is human-gated.
 - `ops/RELEASE_LEDGER.md` and `ops/RESET_LEDGER.md` - the release
   and rollback audit trail.
-- `scripts/` - six python gates (`spec_check`, `voice_lint`,
+- `scripts/` - python gates (`spec_check`, `voice_lint`,
   `validate_decisions`, `validate_roles`, `validate_tools`,
-  `validate_policies`) wired into
+  `validate_policies`, data freshness, schema-cache freshness, and
+  dreams validation) wired into
   `.github/workflows/gates.yml`.
 
 The 180-day data-freshness gate (DEC-MAP-005) is wired into
@@ -143,8 +152,9 @@ portfolio-manifest threshold.
 - Real-time data feeds. Data is hand-curated CSV with source
   attestation; the 180-day freshness gate opens an issue when the
   dataset goes stale.
-- Financial models or earnings projections. The chokepoint score is
-  a decision-support heuristic, not a forecast.
+- Live market data or earnings projections. The investor sensitivity
+  section uses static sourced company claims; it does not forecast
+  EPS, valuation, or event probability.
 - A complete model of the industry. Honest deferrals named in
   [docs/known-limitations.md](./docs/known-limitations.md).
 - Capacity simulation. The graph carries no wafer-start, HBM-stack,

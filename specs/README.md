@@ -13,6 +13,8 @@ Active specs:
 
 - `0001-cognitive-delivery-control-plane/` - CDCP scaffold install
   (R-CDCP-001..010).
+- `0002-earnings-sensitivity-overlay/` - static sourced financial
+  sensitivity records for investor readers (R-FIN-001).
 
 Each spec folder carries the same six files:
 `requirements.md`, `design.md`, `tasks.md`, `acceptance.md`,
@@ -25,6 +27,7 @@ Allowed R-* prefixes:
   scenarios, data-freshness)
 - `GRAPH` - graph rendering surface
 - `DATA` - data CSV contract, freshness, sources
+- `FIN` - static financial sensitivity records
 - `UI` - app surface, panels, controls
 - `SCEN` - scenario design and toggles
 - `OPS` - ops, deployment, CI gates

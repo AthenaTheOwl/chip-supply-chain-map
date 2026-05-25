@@ -30,6 +30,8 @@ features:
 - `DEC-MAP-006` - synthetic historical data for pedagogy
   (Scenario History mode).
 - `DEC-MAP-007` - HistorySlider mounted inside ScenarioControls.
+- `DEC-FIN-001` - static sourced financial sensitivity records
+  (earnings sensitivity overlay).
 
 When a future spec defines the `R-MAP-*` requirement IDs, the
 existing DEC files satisfy coverage automatically via their

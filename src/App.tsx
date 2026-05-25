@@ -4,6 +4,7 @@ import { Legend } from "./components/Legend";
 import { NodeDetailPanel } from "./components/NodeDetailPanel";
 import { ScenarioControls } from "./components/ScenarioControls";
 import { SupplyChainGraph } from "./components/SupplyChainGraph";
+import { financialSensitivityRecords } from "./lib/financial";
 import { graphData, sourceRefs } from "./lib/graph";
 import { getScoreMapForQuarter } from "./lib/history";
 import { computeChokepointScores } from "./lib/scoring";
@@ -49,6 +50,8 @@ export default function App() {
           <Legend />
         </section>
         <NodeDetailPanel
+          activeScenarioIds={activeScenarioIds}
+          financialSensitivityRecords={financialSensitivityRecords}
           graph={graphData}
           node={selectedNode}
           scores={scores}

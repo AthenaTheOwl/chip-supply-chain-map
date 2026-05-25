@@ -56,13 +56,14 @@ REQUIRED_FILES = (
 # R-* prefixes reserved for chip-supply-chain-map specs. CDCP covers
 # the cognitive delivery control plane install (spec 0001). MAP covers
 # the chip supply-chain map architecture (Cytoscape, fcose, scoring,
-# scenarios, data-freshness). Future specs may add prefixes; add them
-# here.
+# scenarios, data-freshness). FIN covers investor-facing financial
+# sensitivity records.
 ALLOWED_PREFIXES = {
     "CDCP",  # 0001 cognitive delivery control plane
     "MAP",   # supply-chain map architecture (Cytoscape, fcose, scoring, scenarios, data)
     "GRAPH", # graph rendering surface
     "DATA",  # data CSV contract, freshness, sources
+    "FIN",   # static financial sensitivity records
     "UI",    # app surface, panels, controls
     "SCEN",  # scenario design and toggles
     "OPS",   # ops, deployment, CI gates

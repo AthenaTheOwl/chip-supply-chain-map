@@ -46,7 +46,7 @@ A DEC may document a past decision that landed without a record.
 Backfill DECs use the same shape; the `date` field carries the date
 the decision was originally taken (or the closest recorded date).
 
-The repo's first six DECs:
+Current DEC records include:
 
 - `DEC-CDCP-001-install-cdcp-governance.md` - the meta-decision to
   install the CDCP scaffold.
@@ -60,6 +60,8 @@ The repo's first six DECs:
   control surface.
 - `DEC-MAP-005-data-freshness-gate-180-days.md` - the 180-day stale-
   data alert.
+- `DEC-FIN-001-static-sourced-sensitivity-over-live-market-data.md` -
+  the static financial sensitivity layer.
 
 Existing pre-CDCP choices (data model, sourcing discipline, no-deploy
 hand-off) are documented in the legacy `DECISIONS.md` flat file. The

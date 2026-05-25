@@ -1,0 +1,13 @@
+company,ticker,node_id,scenario_id,metric_name,metric_value,period,source_id,sensitivity_band,note
+NVIDIA,NVDA,nvidia,blackwell-mi-supply-drought,Data Center revenue,USD 193.7B,FY2026,s104,high,Blackwell shipment timing is tied to HBM and advanced packaging availability
+AMD,AMD,amd,blackwell-mi-supply-drought,Data Center revenue,USD 16.6B,FY2025,s105,high,Instinct and EPYC growth put accelerator supply near the earnings surface
+AMD,AMD,amd-instinct-mi-family,hbm-cowos-crunch,Data Center revenue,USD 16.6B,FY2025,s105,medium,Instinct shipment ramps depend on HBM and advanced packaging supply
+TSMC,TSM,tsmc,taiwan-ai-cluster-stress,Consolidated revenue,USD 122.42B,FY2025,s106,high,Taiwan leading edge and packaging concentration ties regional stress to revenue timing
+TSMC,TSM,tsmc,hbm-cowos-crunch,Advanced technology wafer revenue share,74%,FY2025,s106,high,Advanced nodes and packaging carry AI accelerator wafer demand
+ASML,ASML,asml,lithography-constraint,Net system sales,EUR 24.5B,FY2025,s107,high,Lithography delivery timing maps directly into system shipment revenue
+SK hynix,000660.KS,sk-hynix,hbm-cowos-crunch,Revenue,KRW 97.1467T,FY2025,s108,high,HBM revenue more than doubled as AI memory became a larger profit driver
+Samsung Electronics,005930.KS,samsung-memory,hbm-cowos-crunch,Memory sales,KRW 104.1T,FY2025,s109,high,Memory growth came with higher HBM and server product mix
+Broadcom,AVGO,broadcom,ai-demand-spike,AI revenue,USD 12.2B,FY2024,s110,medium,Custom AI XPU and Ethernet demand link cloud builds to semiconductor revenue
+Marvell,MRVL,marvell,ai-demand-spike,Data center quarterly revenue,USD 1.3658B,4Q FY2025,s111,medium,Cloud AI systems and switching made data center the main quarterly mix
+CoreWeave,CRWV,coreweave,blackwell-mi-supply-drought,Revenue backlog,USD 66.8B,Dec. 31 2025,s112,high,Contracted AI cloud demand depends on timely GPU cluster capacity
+Oracle,ORCL,oracle-cloud,blackwell-mi-supply-drought,Capital expenditures,USD 21.2B,FY2025,s113,medium,Cloud data center buildout turns accelerator supply into capex timing
