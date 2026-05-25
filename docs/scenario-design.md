@@ -54,7 +54,7 @@ node-specific lithography recipes.
 Multiplier: 1.9 because lithography delays affect expansion timing across both
 logic and memory.
 
-## Blackwell And MI Supply Drought
+## Blackwell and MI Supply Drought
 
 Trigger: cloud demand exceeds available GB200 and AMD Instinct MI accelerator
 supply for a full allocation cycle.
@@ -83,7 +83,7 @@ customer priority, or non-Taiwan substitution timing.
 Multiplier: 1.9 because this combines wafer and backend concentration for AI
 clusters without assuming a total Taiwan capacity outage.
 
-## HBM And CoWoS Crunch
+## HBM and CoWoS Crunch
 
 Trigger: HBM3E and CoWoS capacity lag the Blackwell and Instinct MI platform
 ramps used for training and inference clusters.
