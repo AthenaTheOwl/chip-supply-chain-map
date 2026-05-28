@@ -51,5 +51,8 @@ jobs:
       - name: validate_run_evidence
         run: python scripts/validate_run_evidence.py
 
+      - name: validate_run_evidence_tests
+        run: python -m unittest scripts.test_validate_run_evidence
+
       - name: check_data_freshness
         run: python scripts/check_data_freshness.py

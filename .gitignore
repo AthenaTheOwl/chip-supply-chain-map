@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Python bytecode cache from the validator test suite.
+__pycache__/
+*.pyc
+
 # Watchlist export output (the canonical sample lives in ops/run-records/
 # + ops/event-ledger/; the export pipeline regenerates the packet file
 # on every run, so the packet itself is not source-controlled).
