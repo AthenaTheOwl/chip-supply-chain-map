@@ -36,7 +36,7 @@
   ],
   "prompt_snapshot_hash": "d54f07b870659ed5a7431cce6e4fef2ab883f7e6a177b232d8f5b411962af000",
   "runtime": "chip-supply-chain-map-export",
-  "sandbox_image_ref": "E:/claude_code/random-apps/chip-supply-chain-map@ef79a7ff76d4f97e7cb1f74e2f1f2a41f4bbf862",
+  "sandbox_image_ref": "E:/claude_code/random-apps/chip-supply-chain-map@4814747eb6cd48be0a66da1f797d7014894d7f33",
   "spec_id": "specs/0002-earnings-sensitivity-overlay/",
   "started_at": "2026-05-28T11:46:35Z",
   "status": "done",

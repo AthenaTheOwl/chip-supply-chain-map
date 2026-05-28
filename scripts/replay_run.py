@@ -343,7 +343,7 @@ def emit_replay_event(
     replay_event_id: str,
     replay_equivalent: bool,
     replay_method: str,
-    packet_ref: str | None,
+    packet_ref: str,
     timestamp: str,
     ledger_dir: Path,
 ) -> Path:
@@ -431,7 +431,10 @@ def replay(
 
     if input_mismatches:
         # Skip the actual re-export; the inputs already diverged, so
-        # any output hash comparison is downstream noise.
+        # any output hash comparison is downstream noise. The replay
+        # event still carries ``packet_ref`` pointing at the committed
+        # packet so the schema-required field stays populated.
+        mismatch_packet_ref = _safe_rel(committed_packet)
         report = {
             "comparison": {
                 "input_mismatches": input_mismatches,
@@ -442,6 +445,7 @@ def replay(
                     "tool_schemas_snapshot_hash"
                 ),
             },
+            "packet_ref": mismatch_packet_ref,
             "recorded_sandbox_sha": recorded_sha,
             "replay_equivalent": False,
             "replay_event_id": replay_event_id,
@@ -455,7 +459,7 @@ def replay(
             replay_event_id,
             False,
             "deterministic",
-            None,
+            mismatch_packet_ref,
             timestamp,
             ledger_dir,
         )
@@ -480,8 +484,10 @@ def replay(
                 f"stdout:\n{stdout}\nstderr:\n{stderr}",
                 file=sys.stderr,
             )
+            fallback_packet_ref = _safe_rel(committed_packet)
             report = {
                 "comparison": {"export_stderr": stderr, "export_stdout": stdout},
+                "packet_ref": fallback_packet_ref,
                 "recorded_sandbox_sha": recorded_sha,
                 "replay_equivalent": False,
                 "replay_event_id": replay_event_id,
@@ -495,7 +501,7 @@ def replay(
                 replay_event_id,
                 False,
                 "deterministic",
-                None,
+                fallback_packet_ref,
                 timestamp,
                 ledger_dir,
             )
@@ -511,8 +517,12 @@ def replay(
     replay_equivalent = bool(equal)
     verdict = "byte_equal" if equal else "byte_diff"
 
-    # Locate sibling trace-to-eval packet if present.
-    packet_ref: str | None = None
+    # Locate the packet ref this replay is verifying against. Prefer
+    # the sibling trace-to-eval packet if it exists (so the event
+    # points at the consumer-side artifact that mirrors this run);
+    # otherwise fall back to the committed producer-side packet so
+    # ``packet_ref`` is always populated. The event schema requires a
+    # non-empty string here.
     sibling_packet = (
         repo_root.parent
         / "trace-to-eval-harness"
@@ -521,12 +531,12 @@ def replay(
         / f"{run_id}.packet.json"
     )
     if sibling_packet.is_file():
-        # Keep the ref as a workspace-relative URI so a reader can
-        # locate the sibling without leaking absolute paths.
         packet_ref = (
             "../trace-to-eval-harness/examples/run_evidence/"
             f"{run_id}.packet.json"
         )
+    else:
+        packet_ref = _safe_rel(committed_packet)
 
     # Step 9: emit replay event + report.
     ledger_path = emit_replay_event(
