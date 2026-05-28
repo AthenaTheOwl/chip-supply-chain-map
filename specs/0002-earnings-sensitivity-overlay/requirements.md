@@ -134,3 +134,71 @@ Acceptance:
   list on stderr.
 - The validator runs offline against the cached schemas; no network
   call is required.
+
+### R-FIN-009: tool.call.completed payloads carry tool_name
+
+WHEN the watchlist export CLI emits a `tool.call.completed` event,
+THE SYSTEM SHALL populate the payload's `tool_name` field (matching
+the typed payload schema added in Round 2) and SHALL NOT populate a
+legacy `tool_id` field.
+
+Acceptance:
+- The two call sites in `scripts/export_watchlist/main.ts`
+  (`computeChokepointScores` and `buildWatchlistRiskPacket`) emit
+  `tool_name`.
+- The cached `event.schema.json`'s `tool.call.completed` branch
+  requires `tool_name`; a payload missing the key fails validation.
+
+### R-FIN-010: gate.run.evidence_recorded payloads carry fields_populated
+
+WHEN the watchlist export CLI emits a `gate.run.evidence_recorded`
+event, THE SYSTEM SHALL populate the payload's `fields_populated`
+field with the sorted set of replay-equivalence fields populated on
+the Run record, and SHALL NOT populate a legacy `populated_fields`
+field.
+
+Acceptance:
+- Both success and failure call sites in
+  `scripts/export_watchlist/main.ts` emit `fields_populated`.
+- The cached `event.schema.json`'s `gate.run.evidence_recorded`
+  branch requires `fields_populated`.
+
+### R-FIN-011: pipeline.done carries a cloned gate_results_summary
+
+WHEN the watchlist export CLI emits the terminal `pipeline.done`
+event, THE SYSTEM SHALL clone the Run record's
+`gate_results_summary` into the event payload so the rollup is
+auditable from the ledger alone.
+
+Acceptance:
+- The `pipeline.done` payload carries the same
+  `gates_passed` / `gates_failed` / `all_passed` shape as the Run
+  record's `gate_results_summary`.
+- A downstream mutation of the event payload cannot reach back into
+  the Run record (cloned by value, not by reference).
+
+### R-FIN-012: validator enforces done-Run cross-checks
+
+WHEN `scripts/validate_run_evidence.py` runs against a done Run
+record, THE SYSTEM SHALL exit 1 if any of the following cross-checks
+fails:
+
+Acceptance:
+- Required fields populated on the Run record:
+  `prompt_snapshot_hash`, `tool_schemas_snapshot_hash`,
+  `sandbox_image_ref`, `gate_results_summary`.
+- At least one `gate.run.evidence_recorded` event in the ledger for
+  the same run_id.
+- `pipeline.start.payload.prompt_snapshot_hash` agrees with the Run
+  record's field of the same name.
+- `pipeline.start.payload.tool_schemas_snapshot_hash` agrees with
+  the Run record's field of the same name.
+- `gate.run.evidence_recorded.payload.fields_populated` (sorted)
+  equals the sorted set of replay-equivalence fields populated on
+  the Run record.
+- `Run.gate_results_summary` matches the scan of
+  `gate.check.passed` / `gate.check.failed` events: `gates_passed`
+  and `gates_failed` are the sorted lists of `payload.gate_name`;
+  `all_passed` is true iff `gates_failed` is empty.
+- Each violation prints a message naming the run-id and the specific
+  check.

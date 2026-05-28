@@ -36,6 +36,22 @@
 - [x] Add `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md`.
 - [x] Ship a canonical sample Run record + event ledger under `ops/`.
 
+## Run-evidence Round 3 (typed payloads + cross-checks)
+
+- [x] Rename `tool_id` to `tool_name` in the two `tool.call.completed`
+  emissions in `scripts/export_watchlist/main.ts`.
+- [x] Rename `populated_fields` to `fields_populated` on both the
+  success and failure `gate.run.evidence_recorded` emissions.
+- [x] Clone `gate_results_summary` into the `pipeline.done` payload.
+- [x] Extend `scripts/validate_run_evidence.py` with the five
+  done-Run cross-checks.
+- [x] Add `scripts/test_validate_run_evidence.py` (1 positive + 7
+  negative cases) and wire it into `.github/workflows/gates.yml`.
+- [x] Regenerate the canonical sample (`run-6a665b303138`) and
+  retire the obsolete one (`run-efeb29900de3`).
+- [x] Add `R-FIN-009` through `R-FIN-012`.
+- [x] Add `DEC-FIN-004-watchlist-export-run-evidence-cross-checks.md`.
+
 ## Verification
 
 - [x] Add aggregation and export tests.

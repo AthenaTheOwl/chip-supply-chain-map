@@ -12,11 +12,16 @@
 - `python scripts/check_data_freshness.py` exits 0.
 - `python scripts/validate_dreams.py` exits 0.
 - `python scripts/validate_run_evidence.py` exits 0.
+- `python -m unittest scripts.test_validate_run_evidence` exits 0
+  (one positive case plus seven negative cases covering the
+  Round-3 done-Run cross-checks).
 - `npm test` exits 0 when a test script is configured.
 - `npm run build` exits 0.
 - `npm run lint` exits 0.
 - `node scripts/export_watchlist.mjs` exits 0 and writes a valid Run
-  record plus event ledger under `ops/`.
+  record plus event ledger under `ops/` whose payloads use the
+  Round-2 typed keys (`tool_name`, `fields_populated`) and whose
+  `pipeline.done` event carries a cloned `gate_results_summary`.
 
 ## Done means
 
