@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Watchlist export output (the canonical sample lives in ops/run-records/
+# + ops/event-ledger/; the export pipeline regenerates the packet file
+# on every run, so the packet itself is not source-controlled).
+ops/exports/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
