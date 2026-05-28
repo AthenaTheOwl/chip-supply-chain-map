@@ -13,13 +13,32 @@
 # in the same commit.
 
 deferred:
-  # No deferred R-* IDs as of 2026-05-24. The only R-* IDs defined in
-  # any specs/*/requirements.md today are R-CDCP-001..010, covered
+  # The only R-* IDs defined in specs/*/requirements.md before the
+  # Phase D run-evidence rollout were R-CDCP-001..010 (covered
   # collectively by DEC-CDCP-001 via the bootstrap exemption rule in
-  # scripts/spec_check.py. The five architectural DECs that shipped in
-  # the install pass (DEC-MAP-001 through DEC-MAP-005) carry
-  # placeholder requirement IDs R-MAP-001..R-MAP-005; those IDs are
-  # not defined as requirements yet (no spec 0002-graph-render exists
-  # today), so they do not trigger the spec_check coverage rule. When
-  # the next spec lands and defines the R-MAP-* IDs, the existing
-  # DEC-MAP-* files satisfy coverage automatically.
+  # scripts/spec_check.py) plus R-FIN-001..002 (covered by
+  # DEC-FIN-001 and DEC-FIN-002 respectively). The five
+  # architectural DECs that shipped in the install pass
+  # (DEC-MAP-001 through DEC-MAP-005) carry placeholder requirement
+  # IDs R-MAP-001..R-MAP-005; those IDs are not defined as
+  # requirements yet, so they do not trigger the spec_check coverage
+  # rule.
+  #
+  # Phase D / 2026-05-27 added R-FIN-003..008 for the watchlist
+  # export run-evidence emission. R-FIN-003 is resolved by
+  # DEC-FIN-003-watchlist-export-emits-conformant-run-evidence
+  # directly via the front-matter requirement field. R-FIN-004..008
+  # are resolved collectively by the same DEC; the DEC's
+  # `## coverage` section enumerates them. This mirrors the
+  # supplier-risk-rag-agent allowlist pattern for DEC-EVL-006 +
+  # R-EVL-007..011 (Phase D precedent).
+  - id: R-FIN-004
+    note: covered collectively by DEC-FIN-003-watchlist-export-emits-conformant-run-evidence
+  - id: R-FIN-005
+    note: covered collectively by DEC-FIN-003-watchlist-export-emits-conformant-run-evidence
+  - id: R-FIN-006
+    note: covered collectively by DEC-FIN-003-watchlist-export-emits-conformant-run-evidence
+  - id: R-FIN-007
+    note: covered collectively by DEC-FIN-003-watchlist-export-emits-conformant-run-evidence
+  - id: R-FIN-008
+    note: covered collectively by DEC-FIN-003-watchlist-export-emits-conformant-run-evidence

@@ -64,6 +64,8 @@ Current DEC records include:
   the static financial sensitivity layer.
 - `DEC-FIN-002-deterministic-watchlist-risk-packets.md` - the
   watchlist risk packet export.
+- `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` -
+  the run-evidence rollout for the watchlist export pipeline.
 
 Existing pre-CDCP choices (data model, sourcing discipline, no-deploy
 hand-off) are documented in the legacy `DECISIONS.md` flat file. The

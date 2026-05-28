@@ -1,6 +1,12 @@
 # traceability: earnings sensitivity overlay
 
-| Requirement | Design surface | Planned proof | Owner role |
-|---|---|---|---|
-| R-FIN-001 | `src/data/financial_sensitivity.csv`, `src/lib/financial.ts`, `src/components/NodeDetailPanel.tsx`, `src/data/sources.md` | full python gate list plus `npm run build` | `owner_role: engineering.implementation` |
-| R-FIN-002 | `src/lib/riskPacket.ts`, `src/components/WatchlistPanel.tsx`, `src/state/store.ts`, `src/components/NodeDetailPanel.tsx` | `npm test`, full python gate list, `npm run build`, `npm run lint` | `owner_role: engineering.implementation` |
+| Requirement | Design surface | Decision | Planned proof | Owner role |
+|---|---|---|---|---|
+| R-FIN-001 | `src/data/financial_sensitivity.csv`, `src/lib/financial.ts`, `src/components/NodeDetailPanel.tsx`, `src/data/sources.md` | `DEC-FIN-001-static-sourced-sensitivity-over-live-market-data.md` | full python gate list plus `npm run build` | `owner_role: engineering.implementation` |
+| R-FIN-002 | `src/lib/riskPacket.ts`, `src/components/WatchlistPanel.tsx`, `src/state/store.ts`, `src/components/NodeDetailPanel.tsx` | `DEC-FIN-002-deterministic-watchlist-risk-packets.md` | `npm test`, full python gate list, `npm run build`, `npm run lint` | `owner_role: engineering.implementation` |
+| R-FIN-003 | `src/lib/runEvidence.ts` `emitEvent` plus the per-step event emission in `scripts/export_watchlist/main.ts` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | a pipeline execution's `ops/event-ledger/<run-id>.jsonl` validates against `event.schema.json` | `owner_role: science.proof-gate-runner` |
+| R-FIN-004 | `src/lib/runEvidence.ts` `emitRun` plus the Run record assembly in `scripts/export_watchlist/main.ts` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | a pipeline execution's `ops/run-records/<run-id>.json` validates against `run.schema.json` | `owner_role: science.proof-gate-runner` |
+| R-FIN-005 | `canonicalizeInputs` + `canonicalizeHeuristicConfig` + `buildRunEvidenceFields` in `src/lib/runEvidence.ts` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | each Run record carries SHA-256 hex digests in `prompt_snapshot_hash` and `tool_schemas_snapshot_hash` | `owner_role: science.proof-gate-runner` |
+| R-FIN-006 | `deriveSandboxImageRef` in `src/lib/runEvidence.ts` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | each Run record carries `sandbox_image_ref` as `<repo-path>@<HEAD-SHA>` | `owner_role: science.proof-gate-runner` |
+| R-FIN-007 | `aggregateGateResults` in `src/lib/runEvidence.ts` plus the `gate.check.*` emission in `scripts/export_watchlist/main.ts` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | the pipeline's `gate.check.*` event names match the `gate_results_summary` lists in the Run record | `owner_role: science.proof-gate-runner` |
+| R-FIN-008 | `scripts/validate_run_evidence.py` + the `validate_run_evidence` step in `.github/workflows/gates.yml` | `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md` | a CI run shows the gate's pass output and a schema-violating record produces a red gate | `owner_role: control.coordinator` |

@@ -24,6 +24,18 @@
 - [x] Add `DEC-FIN-002-deterministic-watchlist-risk-packets.md`.
 - [x] Update README reader guidance.
 
+## Run-evidence rollout (Phase D)
+
+- [x] Mirror `ops/schemas-cache/event.schema.json` from athena-site.
+- [x] Add `src/lib/runEvidence.ts` emitter module + tests.
+- [x] Add `scripts/validate_run_evidence.py` validator gate.
+- [x] Wire the validator into `.github/workflows/gates.yml`.
+- [x] Add `scripts/export_watchlist/main.ts` CLI + `scripts/export_watchlist.mjs` launcher.
+- [x] Add `npm run export:watchlist` script.
+- [x] Add `R-FIN-003` through `R-FIN-008`.
+- [x] Add `DEC-FIN-003-watchlist-export-emits-conformant-run-evidence.md`.
+- [x] Ship a canonical sample Run record + event ledger under `ops/`.
+
 ## Verification
 
 - [x] Add aggregation and export tests.
