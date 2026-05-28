@@ -48,5 +48,8 @@ jobs:
       - name: check_schema_cache_freshness
         run: python scripts/check_schema_cache_freshness.py
 
+      - name: validate_run_evidence
+        run: python scripts/validate_run_evidence.py
+
       - name: check_data_freshness
         run: python scripts/check_data_freshness.py
