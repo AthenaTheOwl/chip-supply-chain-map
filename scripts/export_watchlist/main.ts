@@ -455,7 +455,7 @@ function main(argv: string[]): number {
     type: "tool.call.completed",
     actor,
     payload: {
-      tool_id: "lib.scoring.computeChokepointScores",
+      tool_name: "computeChokepointScores",
       node_count: inputs.graph.nodes.length,
       scored_node_count: scores.size,
       active_scenarios: args.scenarios
@@ -480,7 +480,7 @@ function main(argv: string[]): number {
     type: "tool.call.completed",
     actor,
     payload: {
-      tool_id: "lib.riskPacket.buildWatchlistRiskPacket",
+      tool_name: "buildWatchlistRiskPacket",
       watched_nodes: packet.summary.watched_node_count,
       dependency_count: packet.summary.dependency_count,
       region_count: packet.summary.region_count,
@@ -567,7 +567,7 @@ function main(argv: string[]): number {
     actor,
     payload: {
       run_id: runId,
-      populated_fields: finalEvidence.populated,
+      fields_populated: finalEvidence.populated,
       record_path: relativeFromRepo(args.repoRoot, recordPath),
       ledger_path: relativeFromRepo(args.repoRoot, ledgerPath)
     },
@@ -581,10 +581,23 @@ function main(argv: string[]): number {
     emitRun(run, recordPath);
   }
 
+  const donePayload: Record<string, unknown> = {
+    status: "done",
+    finished_at: finishedAt
+  };
+  if (run.gate_results_summary !== undefined) {
+    // Clone so a downstream mutation of the event payload cannot reach
+    // back into the Run record.
+    donePayload.gate_results_summary = {
+      gates_passed: [...run.gate_results_summary.gates_passed],
+      gates_failed: [...run.gate_results_summary.gates_failed],
+      all_passed: run.gate_results_summary.all_passed
+    };
+  }
   const doneEvent = makeEvent({
     type: "pipeline.done",
     actor,
-    payload: { status: "done", finished_at: finishedAt },
+    payload: donePayload,
     runId,
     specId: SPEC_ID,
     parentEventId: evidenceRecordedEvent.event_id,
@@ -641,7 +654,7 @@ function finalizeFailedRun(
   const failedEvent = makeEvent({
     type: "gate.run.evidence_recorded",
     actor: { kind: "system", id: RUNTIME_LABEL },
-    payload: { run_id: runId, populated_fields: finalEvidence.populated, failure_reason: reason },
+    payload: { run_id: runId, fields_populated: finalEvidence.populated, failure_reason: reason },
     runId,
     specId: SPEC_ID,
     createdAt: finishedAt

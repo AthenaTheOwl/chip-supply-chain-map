@@ -188,6 +188,66 @@ try {
     "same canonical inputs must produce identical tool-surface hash"
   );
 
+  // -------------------------------------------------------------- schema-aligned payload keys
+  //
+  // Round 3 renamed the schema keys carried by two canonical event
+  // types. The TS emitter module itself is field-agnostic, but the
+  // payloads assembled in scripts/export_watchlist/main.ts use the
+  // names below. These assertions pin the convention so a future
+  // rename has to update the tests too.
+  const toolEvent = makeEvent({
+    type: "tool.call.completed",
+    actor: { kind: "system", id: "test-runner" },
+    payload: {
+      tool_name: "computeChokepointScores",
+      node_count: 87
+    }
+  });
+  assert.equal(
+    toolEvent.payload.tool_name,
+    "computeChokepointScores",
+    "tool.call.completed payload uses tool_name (schema-required) not tool_id"
+  );
+  assert.equal(
+    toolEvent.payload.tool_id,
+    undefined,
+    "tool.call.completed payload must not carry the legacy tool_id key"
+  );
+
+  const evidenceEvent = makeEvent({
+    type: "gate.run.evidence_recorded",
+    actor: { kind: "system", id: "test-runner" },
+    payload: {
+      run_id: "run-deadbeef0000",
+      fields_populated: built.populated
+    }
+  });
+  assert.deepEqual(
+    evidenceEvent.payload.fields_populated,
+    built.populated,
+    "gate.run.evidence_recorded uses fields_populated (schema-required) not populated_fields"
+  );
+  assert.equal(
+    evidenceEvent.payload.populated_fields,
+    undefined,
+    "gate.run.evidence_recorded must not carry the legacy populated_fields key"
+  );
+
+  const doneEvent = makeEvent({
+    type: "pipeline.done",
+    actor: { kind: "system", id: "test-runner" },
+    payload: {
+      status: "done",
+      finished_at: "2026-05-28T02:30:03Z",
+      gate_results_summary: summary
+    }
+  });
+  assert.deepEqual(
+    doneEvent.payload.gate_results_summary,
+    summary,
+    "pipeline.done carries a cloned gate_results_summary for cross-check against the Run record"
+  );
+
   console.log(
     `runEvidence.test OK: ${lines.length} ledger line(s), ${built.populated.length} field(s) populated.`
   );
