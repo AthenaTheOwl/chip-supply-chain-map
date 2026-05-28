@@ -15,6 +15,12 @@
 - `python -m unittest scripts.test_validate_run_evidence` exits 0
   (one positive case plus seven negative cases covering the
   Round-3 done-Run cross-checks).
+- `python -m unittest scripts.test_replay_run` exits 0 (one
+  positive case plus three negative cases covering HEAD
+  mismatch, missing Run record, and input drift).
+- `python scripts/replay_run.py --run-id run-6a665b303138` exits 0
+  with `replay_equivalent=True` when run against the committed
+  sample at the recorded sandbox SHA.
 - `npm test` exits 0 when a test script is configured.
 - `npm run build` exits 0.
 - `npm run lint` exits 0.

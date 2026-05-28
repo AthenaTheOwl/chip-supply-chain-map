@@ -202,3 +202,75 @@ Acceptance:
   `all_passed` is true iff `gates_failed` is empty.
 - Each violation prints a message naming the run-id and the specific
   check.
+
+### R-FIN-013: replay command enforces HEAD-strict checkout
+
+WHEN `scripts/replay_run.py` runs against a recorded Run record,
+THE SYSTEM SHALL parse the `@<sha>` suffix from
+`Run.sandbox_image_ref` and compare it to the working-tree
+`git rev-parse HEAD`. IF the SHAs differ, the script SHALL exit 1
+with the message
+`replay requires checkout of <sha>; current HEAD is <current-sha>.
+Run: git checkout <sha>` and SHALL NOT auto-checkout.
+
+Acceptance:
+- The script exits 1 when HEAD does not match the recorded SHA.
+- The error message names both the recorded SHA and the current
+  HEAD, and includes the exact `git checkout <sha>` command.
+- The script does not modify the working tree on mismatch.
+
+### R-FIN-014: replay command verifies input hash agreement
+
+WHEN `scripts/replay_run.py` runs after a successful HEAD check,
+THE SYSTEM SHALL recompute `prompt_snapshot_hash` (from the
+scoring heuristic config) and `tool_schemas_snapshot_hash` (from
+the canonicalized contents of the four input files) and SHALL
+assert equality with the values recorded on the Run record before
+invoking the export.
+
+Acceptance:
+- The recompute uses a byte-equivalent canonicalization of the
+  TypeScript emitter: heuristic-config keys sorted at every
+  nesting level, inputs sorted by path, JSON.stringify with no
+  whitespace, UTF-8 SHA-256 of the canonical bytes.
+- On mismatch the script exits 1, writes a replay record with
+  `verdict: input_hash_mismatch`, emits a
+  `run.evidence.replayed` event with `replay_equivalent: false`,
+  and does not invoke the export.
+
+### R-FIN-015: replay command verifies byte-equivalent output
+
+WHEN `scripts/replay_run.py` runs after a successful input-hash
+check, THE SYSTEM SHALL shell out to
+`node scripts/export_watchlist.mjs --no-emit-evidence
+--output=<tmp>` and compare the produced packet's SHA-256 to the
+committed packet's SHA-256 at
+`ops/exports/chip-watchlist-risk-packet.json`.
+
+Acceptance:
+- The export sub-process runs with `--no-emit-evidence` so it does
+  not write to `ops/event-ledger/` or `ops/run-records/`.
+- The replay record carries both hashes
+  (`replayed_packet_hash`, `committed_packet_hash`) and a
+  `verdict` field (`byte_equal` or `byte_diff`).
+- The script exits 0 iff the hashes are equal.
+
+### R-FIN-016: replay command emits a per-replay ledger and record
+
+WHEN `scripts/replay_run.py` runs end-to-end, THE SYSTEM SHALL
+emit a `run.evidence.replayed` event to a fresh per-replay
+ledger at
+`ops/event-ledger/replay-<run-id>-<ISO-timestamp>.jsonl` and
+write a replay report at
+`ops/replay-records/<run-id>/<replay-event-id>.json`.
+
+Acceptance:
+- The per-replay ledger is a new file per replay (the source
+  `<run-id>.jsonl` ledger is never modified).
+- The `run.evidence.replayed` event payload carries `run_id`,
+  `packet_ref` (the sibling trace-to-eval packet path or the
+  committed producer packet as fallback), `replay_equivalent`,
+  and `replay_method` (always `deterministic` for this repo).
+- The replay record carries the recomputed hashes, the
+  recorded sandbox SHA, the verdict, and a workspace-relative
+  pointer to the matching per-replay ledger.

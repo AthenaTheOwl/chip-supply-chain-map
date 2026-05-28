@@ -52,6 +52,21 @@
 - [x] Add `R-FIN-009` through `R-FIN-012`.
 - [x] Add `DEC-FIN-004-watchlist-export-run-evidence-cross-checks.md`.
 
+## Run-evidence Round 5 (deterministic replay command)
+
+- [x] Add `scripts/replay_run.py` with HEAD-strict checkout,
+  input-hash agreement, byte-equivalent output comparison, and
+  per-replay ledger + record emission.
+- [x] Add `scripts/test_replay_run.py` (1 positive + 3 negative
+  cases: HEAD mismatch, missing Run record, input drift).
+- [x] Bump the canonical sample's `sandbox_image_ref` so the replay
+  command runs against the current HEAD.
+- [x] Ship the canonical replay artifact pair under
+  `ops/event-ledger/replay-run-6a665b303138-*.jsonl` and
+  `ops/replay-records/run-6a665b303138/`.
+- [x] Add `R-FIN-013` through `R-FIN-016`.
+- [x] Add `DEC-FIN-005-watchlist-replay-command.md`.
+
 ## Verification
 
 - [x] Add aggregation and export tests.
