@@ -1,0 +1,21 @@
+{
+  "comparison": {
+    "committed_packet_hash": "5e4c0d341e05f1effe4108b40be3ae74c52726e7ff8c09984ef3384250254f23",
+    "committed_packet_ref": "ops/exports/chip-watchlist-risk-packet.json",
+    "recomputed_prompt_snapshot_hash": "d54f07b870659ed5a7431cce6e4fef2ab883f7e6a177b232d8f5b411962af000",
+    "recomputed_tool_schemas_snapshot_hash": "d1f1b314103bddfeca11183e8a7d19bfb2a7e03052d568a51018eb418a2cd7ae",
+    "recorded_prompt_snapshot_hash": "d54f07b870659ed5a7431cce6e4fef2ab883f7e6a177b232d8f5b411962af000",
+    "recorded_tool_schemas_snapshot_hash": "d1f1b314103bddfeca11183e8a7d19bfb2a7e03052d568a51018eb418a2cd7ae",
+    "replayed_packet_hash": "5e4c0d341e05f1effe4108b40be3ae74c52726e7ff8c09984ef3384250254f23"
+  },
+  "event_ledger_event_count": 8,
+  "packet_ref": "../trace-to-eval-harness/examples/run_evidence/run-6a665b303138.packet.json",
+  "recorded_sandbox_sha": "86d22482fb8a7425b3edfad99020f83deefec734",
+  "replay_equivalent": true,
+  "replay_event_id": "ea53ba2f-c1ea-4c59-abfa-a6249db173ae",
+  "replay_ledger_ref": "ops/event-ledger/replay-run-6a665b303138-20260529T180406Z.jsonl",
+  "replay_method": "deterministic",
+  "run_id": "run-6a665b303138",
+  "timestamp": "2026-05-29T18:04:06Z",
+  "verdict": "byte_equal"
+}
