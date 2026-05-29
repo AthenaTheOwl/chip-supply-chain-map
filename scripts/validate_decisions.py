@@ -133,6 +133,17 @@ def main() -> int:
         return 0
 
     violations: list[str] = []
+    warnings: list[str] = []
+    # Per DEC-CDCP-020 in athena-site: four optional fields land on the
+    # decision schema. The validator emits a warning (not failure) when a
+    # DEC with status: approved is missing any of the four. After 30 days,
+    # an amendment DEC ratchets the warning to a failure.
+    SYSTEMS_THINKING_FIELDS = (
+        "systems_map",
+        "transferable_principle",
+        "falsification_test",
+        "adoption_ladder",
+    )
     for dec_path in decisions:
         rel = dec_path.relative_to(ROOT).as_posix()
         data, err = parse_front_matter(dec_path)
@@ -153,12 +164,29 @@ def main() -> int:
         for err_obj in errors:
             location = "/".join(str(part) for part in err_obj.absolute_path) or "<root>"
             violations.append(f"{rel}: {location}: {err_obj.message}")
+        if data.get("status") == "approved":
+            missing = [f for f in SYSTEMS_THINKING_FIELDS if f not in data]
+            if missing:
+                warnings.append(
+                    f"{rel}: missing systems-thinking field(s): "
+                    f"{', '.join(missing)} (DEC-CDCP-020; warning today, "
+                    f"failure after 30-day amendment)"
+                )
 
     if violations:
         print("validate_decisions: violations found", file=sys.stderr)
         for v in violations:
             print(f"  - {v}", file=sys.stderr)
         return 1
+
+    if warnings:
+        print(
+            f"validate_decisions: {len(warnings)} systems-thinking warning(s) "
+            f"(DEC-CDCP-020)",
+            file=sys.stderr,
+        )
+        for w in warnings:
+            print(f"  - {w}", file=sys.stderr)
 
     print(f"validate_decisions OK ({len(decisions)} decision(s))")
     return 0
