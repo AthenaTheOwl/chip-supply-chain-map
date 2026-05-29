@@ -13,19 +13,19 @@
   "inputs": [
     {
       "kind": "dataset",
-      "ref": "repo://chip-supply-chain-map@PENDING/src/data/nodes.csv"
+      "ref": "repo://chip-supply-chain-map@86d22482fb8a7425b3edfad99020f83deefec734/src/data/nodes.csv"
     },
     {
       "kind": "dataset",
-      "ref": "repo://chip-supply-chain-map@PENDING/src/data/edges.csv"
+      "ref": "repo://chip-supply-chain-map@86d22482fb8a7425b3edfad99020f83deefec734/src/data/edges.csv"
     },
     {
       "kind": "dataset",
-      "ref": "repo://chip-supply-chain-map@PENDING/src/data/sources.md"
+      "ref": "repo://chip-supply-chain-map@86d22482fb8a7425b3edfad99020f83deefec734/src/data/sources.md"
     },
     {
       "kind": "dataset",
-      "ref": "repo://chip-supply-chain-map@PENDING/src/data/financial_sensitivity.csv"
+      "ref": "repo://chip-supply-chain-map@86d22482fb8a7425b3edfad99020f83deefec734/src/data/financial_sensitivity.csv"
     }
   ],
   "outputs": [
@@ -36,7 +36,7 @@
   ],
   "prompt_snapshot_hash": "d54f07b870659ed5a7431cce6e4fef2ab883f7e6a177b232d8f5b411962af000",
   "runtime": "chip-supply-chain-map-export",
-  "sandbox_image_ref": "repo://chip-supply-chain-map@PENDING/",
+  "sandbox_image_ref": "repo://chip-supply-chain-map@86d22482fb8a7425b3edfad99020f83deefec734/",
   "spec_id": "specs/0002-earnings-sensitivity-overlay/",
   "started_at": "2026-05-29T12:36:41Z",
   "status": "done",
