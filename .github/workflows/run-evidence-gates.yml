@@ -1,0 +1,126 @@
+name: Run-evidence gates
+
+# Implements the CI enforcement contract locked by DEC-CDCP-015
+# (athena-site). The universal validators (schema cache freshness,
+# voice lint, BOM, spec check, decisions, typed event payload + Run
+# /Event cross-checks, language tests) already run in
+# `.github/workflows/gates.yml` and `.github/workflows/build.yml`.
+# This workflow adds the product-side gates that close the chain:
+#
+#   8. packet-generation-from-canonical-sample
+#   9. packet-validation
+#   10. replay-smoke
+#
+# Canonical sample: run-6a665b303138.
+# Sibling repo dependency: AthenaTheOwl/trace-to-eval-harness.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  packet-and-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out chip-supply-chain-map
+        uses: actions/checkout@v4
+        with:
+          path: chip-supply-chain-map
+          fetch-depth: 0
+
+      - name: Check out trace-to-eval-harness (sibling)
+        uses: actions/checkout@v4
+        with:
+          repository: AthenaTheOwl/trace-to-eval-harness
+          path: trace-to-eval-harness
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: chip-supply-chain-map/package-lock.json
+
+      - name: Install trace-to-eval-harness
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ./trace-to-eval-harness
+
+      - name: Install chip-supply-chain-map node deps
+        working-directory: chip-supply-chain-map
+        run: npm ci
+
+      - name: Resolve canonical sample
+        id: sample
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          RUN_ID="run-6a665b303138"
+          LEDGER="ops/event-ledger/${RUN_ID}.jsonl"
+          RECORD="ops/run-records/${RUN_ID}.json"
+          test -f "$LEDGER" || { echo "missing ledger: $LEDGER"; exit 1; }
+          test -f "$RECORD" || { echo "missing run record: $RECORD"; exit 1; }
+          echo "run_id=$RUN_ID"     >> "$GITHUB_OUTPUT"
+          echo "ledger=$LEDGER"     >> "$GITHUB_OUTPUT"
+          echo "record=$RECORD"     >> "$GITHUB_OUTPUT"
+
+      - name: packet-generation-from-canonical-sample
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/packets"
+          python -m trace_to_eval evidence from-cdcp-events \
+            "${{ steps.sample.outputs.ledger }}" \
+            --out "$RUNNER_TEMP/packets/${{ steps.sample.outputs.run_id }}.packet.json" \
+            --portfolio-root "${{ github.workspace }}"
+
+      - name: packet-validation
+        run: |
+          set -euo pipefail
+          python -m trace_to_eval evidence validate \
+            "$RUNNER_TEMP/packets/${{ steps.sample.outputs.run_id }}.packet.json"
+
+      - name: Extract recorded sandbox SHA
+        id: sandbox
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq jq >/dev/null
+          SANDBOX_URI=$(jq -r .sandbox_image_ref "${{ steps.sample.outputs.record }}")
+          echo "sandbox_uri=$SANDBOX_URI"
+          # Accept repo://<repo>@<sha>/ (portable form) and legacy <abs-path>@<sha>.
+          SANDBOX_SHA=$(echo "$SANDBOX_URI" | grep -oE '[a-f0-9]{40}' | head -n 1)
+          if [ -z "$SANDBOX_SHA" ]; then
+            echo "could not extract 40-char SHA from sandbox_image_ref: $SANDBOX_URI" >&2
+            exit 1
+          fi
+          echo "sandbox_sha=$SANDBOX_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: replay-smoke
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          SANDBOX_SHA="${{ steps.sandbox.outputs.sandbox_sha }}"
+          RECORD="${{ steps.sample.outputs.record }}"
+          # Preserve the finalized Run record from main HEAD. The Run
+          # record bytes at the sandbox SHA may carry the PENDING
+          # placeholder if the finalizer landed in a later commit; the
+          # replay command (correctly) refuses PENDING. We restore the
+          # finalized record after checkout so the producer code+inputs
+          # at the sandbox SHA replay against the truth.
+          SAVED_RECORD="$RUNNER_TEMP/saved-run-record.json"
+          cp "$RECORD" "$SAVED_RECORD"
+          git -c advice.detachedHead=false checkout "$SANDBOX_SHA"
+          cp "$SAVED_RECORD" "$RECORD"
+          python scripts/replay_run.py --run-id "${{ steps.sample.outputs.run_id }}"
