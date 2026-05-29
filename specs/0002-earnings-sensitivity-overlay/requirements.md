@@ -595,3 +595,92 @@ Acceptance:
   score deltas under each scenario, and a normalized-rank
   snapshot. The fixture is wired into `npm test` via
   `scripts/run_ts_tests.mjs`.
+
+### R-FIN-031: chaos test suite covers seven mutation classes
+
+WHEN `scripts/validate_run_evidence.py` runs against the canonical
+sample, THE SYSTEM SHALL also run a chaos test suite at
+`scripts/test_chaos_run_evidence.py` that loads the canonical
+sample pair, applies one mutation per Round-2 / Round-3 invariant
+to a copy in a temp tree, runs the validator against the mutated
+copy, and asserts the validator exits non-zero with a stderr line
+that names the right check.
+
+Acceptance:
+- `scripts/test_chaos_run_evidence.py` carries seven mutation
+  classes M1 through M7 mapped one-to-one onto the validator
+  invariants:
+  - M1 flips `Run.prompt_snapshot_hash` to a different
+    valid-shape sha256-hex; cross-check #3 (hash agreement vs
+    `pipeline.start`) must fire.
+  - M2 flips `Run.tool_schemas_snapshot_hash` likewise; the same
+    hash-agreement check must fire on the second field.
+  - M3 appends a phantom gate name to
+    `Run.gate_results_summary.gates_passed`; cross-check #5
+    (gate-results agreement) must fire.
+  - M4 strips the terminal `gate.run.evidence_recorded` event
+    from the ledger; cross-check #2 (required terminal event)
+    must fire.
+  - M5 drops `prompt_snapshot_hash` from the `pipeline.start`
+    event's payload; the typed-payload `oneOf` branch on
+    `pipeline.start` must fire.
+  - M6 adds `determinism` to
+    `gate.run.evidence_recorded.payload.fields_populated` while
+    the Run record does not populate that field; cross-check #4
+    (fields_populated agreement) must fire.
+  - M7 removes `sandbox_image_ref` from the Run record while
+    `Run.status` stays `"done"`; cross-check #1
+    (required-for-done field) must fire.
+- Each chaos test reads the canonical sample from
+  `ops/run-records/run-6a665b303138.json` and
+  `ops/event-ledger/run-6a665b303138.jsonl`, applies its mutation
+  in memory, writes the mutated copy to a `TemporaryDirectory`,
+  monkey-patches the validator module's `ROOT` /
+  `EVENT_LEDGER_DIR` / `RUN_RECORDS_DIR` to point at the temp
+  tree, and runs `main`. The canonical sample on disk is never
+  modified.
+- Every chaos test asserts the validator returns exit code 1 and
+  the stderr names the right check (or, for M5, names the
+  mutated ledger file and a typed-payload schema rejection).
+
+### R-FIN-032: chaos suite carries sanity + manifest assertions
+
+WHEN the chaos test suite runs, THE SYSTEM SHALL also assert that
+the unmutated canonical pair validates clean inside the harness
+and that the mutation-class count stays pinned at seven.
+
+Acceptance:
+- The suite carries a `ChaosSanityCheck` class with a
+  `test_unmutated_canonical_pair_passes` method that loads the
+  canonical pair, writes it to the temp tree unmodified, runs
+  the validator, and asserts exit code 0 plus
+  `validate_run_evidence OK` in stdout. A failure here means the
+  canonical sample broke (clear), not the harness leaked state
+  (confusing).
+- The suite carries a `MutationCoverageManifest` class with a
+  `test_seven_mutation_classes_present` method that walks the
+  module's globals for `TestCase` subclasses whose name starts
+  with `M` plus a digit, sorts them, and asserts the sorted
+  result equals the documented seven-class manifest. The
+  assertion also pins the count at seven so a future class drop
+  fails at test time, not in CI silence.
+
+### R-FIN-033: chaos suite runs in CI as a contract gate
+
+WHEN the CI workflow set runs, THE SYSTEM SHALL execute the
+chaos test suite as a contract gate in both
+`.github/workflows/gates.yml` and
+`.github/workflows/run-evidence-gates.yml` with no
+`continue-on-error: true` and no failure-masking conditionals.
+
+Acceptance:
+- `.github/workflows/gates.yml` carries a
+  `chaos_run_evidence_tests` step that runs
+  `python -m unittest scripts.test_chaos_run_evidence` next to
+  the existing `validate_run_evidence_tests` step.
+- `.github/workflows/run-evidence-gates.yml` carries a dedicated
+  `chaos-validation` job that runs on `ubuntu-latest` with
+  Python 3.11, installs the gate dependencies (`jsonschema`),
+  and runs `python -m unittest scripts.test_chaos_run_evidence`.
+- Neither workflow step or job carries `continue-on-error: true`
+  or `if: ${{ failure() }}` or `if: always()` on the chaos step.
