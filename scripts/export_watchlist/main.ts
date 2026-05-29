@@ -540,12 +540,20 @@ function main(argv: string[]): number {
     gateEvents: events
   });
 
-  // Build the inputs URI list. Each input ref carries the recorded
-  // sandbox SHA. At first emit this is the PENDING placeholder; the
-  // finalizer rewrites every PENDING token across the Run record once
-  // the data commit lands. See DEC-FIN-006.
-  const sandboxRef = finalEvidence.fields.sandbox_image_ref
-    ?? pendingSandboxImageRef();
+  // Build the inputs URI list. The emitter records the PENDING
+  // placeholder at first emit, NOT the git rev-parse HEAD result;
+  // the finalizer (scripts/finalize_sandbox_ref.py) rewrites every
+  // @PENDING/ token across the Run record after the data commit
+  // lands. Writing the placeholder unconditionally is the systemic
+  // fix for the sandbox_image_ref off-by-one bug: emitting the
+  // pre-commit HEAD here would record the PARENT of the commit
+  // that contains the sample. See DEC-FIN-006.
+  //
+  // finalEvidence.fields.sandbox_image_ref is left attached to the
+  // gate.run.evidence_recorded ledger event so an auditor can see
+  // which SHA the emitter observed at emit time; only the Run
+  // record's authoritative sandbox_image_ref uses the placeholder.
+  const sandboxRef = pendingSandboxImageRef();
   const sandboxSha = parseSandboxSha(sandboxRef);
 
   const run: RunRecord = {
@@ -648,8 +656,10 @@ function finalizeFailedRun(
     repoPath: args.repoRoot,
     gateEvents: events
   });
-  const sandboxRef = finalEvidence.fields.sandbox_image_ref
-    ?? pendingSandboxImageRef();
+  // Failure path uses the same PENDING placeholder strategy as the
+  // success path so the finalizer can rewrite both shapes uniformly.
+  // See DEC-FIN-006.
+  const sandboxRef = pendingSandboxImageRef();
   const sandboxSha = parseSandboxSha(sandboxRef);
 
   const run: RunRecord = {
