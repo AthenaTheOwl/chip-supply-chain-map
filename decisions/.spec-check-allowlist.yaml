@@ -79,3 +79,16 @@ deferred:
     note: covered collectively by DEC-FIN-006-watchlist-export-portable-repo-uri-migration
   - id: R-FIN-020
     note: covered collectively by DEC-FIN-006-watchlist-export-portable-repo-uri-migration
+  # Round 7 Phase 2 / 2026-05-29 added R-FIN-021..024 for the CI
+  # workflow set that enforces the DEC-CDCP-015 run-evidence chain
+  # contract. R-FIN-021 is resolved by
+  # DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain
+  # directly via the front-matter requirement field. R-FIN-022..024
+  # are resolved collectively by the same DEC; the DEC's
+  # `## coverage` section enumerates them.
+  - id: R-FIN-022
+    note: covered collectively by DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain
+  - id: R-FIN-023
+    note: covered collectively by DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain
+  - id: R-FIN-024
+    note: covered collectively by DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain

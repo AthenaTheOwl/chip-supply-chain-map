@@ -352,3 +352,86 @@ Acceptance:
   with the "no PENDING tokens" message.
 - A missing Run record file produces exit 1 with a clear "not
   found" message.
+
+### R-FIN-021: CI workflow set triggers on every PR + push to main
+
+WHEN a pull request targets the `main` branch OR a push lands on
+`main`, THE SYSTEM SHALL run the chip-supply-chain-map CI workflow
+set on `ubuntu-latest` with Python 3.11 and Node 20.
+
+Acceptance:
+- `.github/workflows/gates.yml`,
+  `.github/workflows/build.yml`, and
+  `.github/workflows/run-evidence-gates.yml` each declare
+  `on.pull_request:` with no branch filter and
+  `on.push.branches: [main]`.
+- Every job in the workflow set runs on `ubuntu-latest`.
+- Python jobs set up `python-version: "3.11"`.
+- Node jobs set up `node-version: "20"`.
+
+### R-FIN-022: CI enforces the DEC-CDCP-015 contract gates
+
+WHEN the CI workflow set runs, THE SYSTEM SHALL execute every
+contract gate named in DEC-CDCP-015 and SHALL fail the build if
+any gate fails.
+
+Acceptance:
+- Universal gates run via `gates.yml`:
+  `check_schema_cache_freshness.py`, `voice_lint.py`,
+  `check_no_bom.py`, `spec_check.py`, `validate_decisions.py`,
+  `validate_roles.py`, `validate_tools.py`,
+  `validate_policies.py`, `validate_dreams.py`, and
+  `validate_run_evidence.py`.
+- The Python test runner (`python -m unittest
+  scripts.test_validate_run_evidence`, `scripts.test_replay_run`)
+  runs via `gates.yml`.
+- The TypeScript test runner (`npm test`) runs via `build.yml`.
+- The product-side gates run via `run-evidence-gates.yml`:
+  packet-generation-from-canonical-sample (clones the
+  trace-to-eval bridge repo as a sibling and runs
+  `python -m trace_to_eval evidence from-cdcp-events` over the
+  canonical sample ledger with `--portfolio-root` pointed at the
+  GitHub workspace), packet-validation
+  (`python -m trace_to_eval evidence validate`), and
+  replay-smoke (`python scripts/replay_run.py --run-id
+  run-6a665b303138` after checking out the recorded sandbox SHA).
+- The canonical sample is `run-6a665b303138`.
+
+### R-FIN-023: replay-smoke checks out the recorded sandbox SHA
+
+WHEN the replay-smoke gate runs, THE SYSTEM SHALL extract the
+40-char sandbox SHA from `Run.sandbox_image_ref`, check out that
+SHA, restore the finalized Run record over the working tree at
+that SHA, and run `scripts/replay_run.py` to exit 0 with
+`replay_equivalent: true`.
+
+Acceptance:
+- The job uses `actions/checkout@v4` with `fetch-depth: 0` so the
+  recorded SHA is reachable.
+- The SHA is extracted from the `sandbox_image_ref` URI via
+  `jq -r .sandbox_image_ref` plus a regex that accepts both
+  `repo://<repo>@<sha>/` and legacy `<abs-path>@<sha>` forms.
+- The job copies the canonical Run record to the runner temp dir
+  before checkout and restores it over the working tree after
+  checkout, so the replay command receives the finalized record
+  even when the bytes at the recorded SHA still carry PENDING.
+- The replay command exits 0 with `replay_equivalent: true`.
+
+### R-FIN-024: no escape hatch on any contract gate
+
+WHEN any contract gate runs in CI, THE SYSTEM SHALL NOT carry a
+`continue-on-error: true` flag, an `if: ${{ failure() }}` marker,
+or any other shortcut that turns a gate failure into a build
+pass.
+
+Acceptance:
+- `.github/workflows/gates.yml`,
+  `.github/workflows/build.yml`, and
+  `.github/workflows/run-evidence-gates.yml` carry zero
+  `continue-on-error: true` lines on any contract gate.
+- No step uses `if: ${{ failure() }}` or `if: always()` to mask
+  failures on a contract gate.
+- No path filter on `pull_request` or `push` excludes paths that
+  would hide contract-gate failures.
+- Documented developer and CI flows omit the `--no-verify`
+  commit-hook bypass.
