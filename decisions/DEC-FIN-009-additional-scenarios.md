@@ -165,6 +165,39 @@ rollback: |
   out of `requirements.md` and `traceability.md` in the same
   revert.
 owner: control.coordinator
+systems_map: |
+  Scenario design as a typed extension point on a pure-function scoring
+  pipeline. The system under change is the impact-modeling surface:
+  scenarios layer richer callbacks (edgeImpact, nodeAttributeImpact) on
+  top of the existing impactOn multiplier, and the scoring function
+  reads through those callbacks instead of special-casing each id.
+transferable_principle: |
+  When a domain model needs richer modes, extend the existing interface
+  with optional callbacks that compose with the baseline; do not fork
+  the function. The scoring layer reads through the interface, not the
+  scenario ids, so adding the eighth scenario costs no scoring change.
+falsification_test: |
+  If the scoring deltas under the two new scenarios produce ranks that
+  domain reviewers reject as unrealistic (e.g. TSMC ranks below a
+  non-leading-edge node under the lithography scenario), the multiplier
+  or callback weights are wrong; the scenarios.test.ts snapshot is the
+  ground-truth surface.
+adoption_ladder:
+  minimum_viable: |
+    Two new scenarios in SCENARIOS array with impactOn lists only;
+    edgeImpact and nodeAttributeImpact return undefined.
+  mid_adoption: |
+    Both callbacks populated for the two scenarios; scoring.ts folds
+    the lead-time bumps and reads scenarioEdgePressure; tests cover
+    the deltas.
+  full_adoption: |
+    Every scenario in the registry populates all three hooks where
+    they apply; docs/scenario-design.md carries the analog for each;
+    the test snapshot pins the normalized rank under each toggle.
+  monitoring_signals:
+    - scenarios.test.ts pass/fail per CI run
+    - new scenario PRs include matching docs/scenario-design.md section
+    - normalized-rank snapshot drift across scoring changes
 ---
 
 ## decision

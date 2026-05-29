@@ -185,6 +185,39 @@ rollback: |
   canonical sample on disk needs no edits because the chaos
   suite never modified it.
 owner: control.coordinator
+systems_map: |
+  Inverse-coverage chaos testing of a validator against its shipped
+  canonical sample. The system under test is the chain of trust between
+  the run-evidence producer (export CLI) and every downstream consumer
+  (replay, packet generation, packet validation); each mutation class
+  models a silent regression mode in that chain.
+transferable_principle: |
+  Any validator that gates a downstream artifact graph should ship an
+  inverse-coverage chaos suite — one mutation per invariant against the
+  canonical sample — so a regression in the validator is caught at test
+  time, not by a quietly accepted bad artifact downstream.
+falsification_test: |
+  If the seven mutation classes pass against a validator build that
+  later admits a hand-crafted real-world mutation (a different mutation
+  class found in the wild), the seven-class manifest is incomplete and
+  the suite needs an M8 extension; the test count is the falsification
+  surface.
+adoption_ladder:
+  minimum_viable: |
+    Seven mutation classes M1..M7 plus the unmutated sanity check, run
+    via python -m unittest in the Gates job.
+  mid_adoption: |
+    A dedicated chaos-validation CI job in run-evidence-gates.yml plus a
+    manifest assertion pinning the class count at seven.
+  full_adoption: |
+    Every new validator cross-check ships with a paired chaos mutation
+    class in the same PR; the manifest count moves with the cross-check
+    count and CI fails on drift.
+  monitoring_signals:
+    - chaos suite green or red per CI run
+    - mutation-class count vs validator cross-check count (manifest test)
+    - any new field added to the canonical sample without a paired
+      mutation class
 ---
 
 ## decision

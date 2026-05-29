@@ -188,6 +188,37 @@ rollback: |
   `run-evidence-gates.yml` keep running. No TypeScript source
   code changed.
 owner: control.coordinator
+systems_map: |
+  Multi-rerun determinism proof for a replay pipeline. The system under
+  test is the byte-equivalence guarantee of replay_run.py across
+  repeated invocations at the same sandbox SHA; the fixture canonicalizes
+  the three replay-equivalence hashes per rerun and asserts SHA-256
+  agreement across the set.
+transferable_principle: |
+  Any deterministic pipeline that ships a single-shot integration test
+  is one rerun-loop away from a determinism fixture; the producer-side
+  contract test (single replay) and the determinism fixture (N replays)
+  cover different invariants and belong as sibling test files.
+falsification_test: |
+  If three reruns of the canonical sample at the recorded sandbox SHA
+  ever produce a tuple-hash divergence, the determinism claim is
+  falsified; the fixture writes a failbundle naming the first two
+  diverging traces so the diff is the empirical evidence.
+adoption_ladder:
+  minimum_viable: |
+    A single fixture file running RERUNS=2 against the canonical
+    sample, asserting tuple-hash equality.
+  mid_adoption: |
+    RERUNS=3 default, failbundle generation on divergence, dedicated CI
+    job stanza separate from the smoke-test job.
+  full_adoption: |
+    Every shipped Run record has a determinism job covering it;
+    failbundles auto-upload to artifacts on failure; the CI job time
+    budget pins the upper-bound RERUNS that fits.
+  monitoring_signals:
+    - replay-determinism CI job pass/fail
+    - failbundle uploads per week
+    - per-rerun wall-clock time trend (cost of the contract)
 ---
 
 ## decision
