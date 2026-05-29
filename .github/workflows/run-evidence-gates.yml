@@ -124,3 +124,53 @@ jobs:
           git -c advice.detachedHead=false checkout "$SANDBOX_SHA"
           cp "$SAVED_RECORD" "$RECORD"
           python scripts/replay_run.py --run-id "${{ steps.sample.outputs.run_id }}"
+
+  replay-determinism:
+    name: replay determinism (canonical sample)
+    runs-on: ubuntu-latest
+    # The determinism fixture replays the canonical sample RERUNS
+    # times (default 3) and asserts the three replay-equivalence
+    # hashes (replayed_packet_hash,
+    # recomputed_prompt_snapshot_hash,
+    # recomputed_tool_schemas_snapshot_hash) hash to the same
+    # canonical SHA-256 on every replay. Catches drift in input
+    # fingerprints, heuristic config, or the produced packet
+    # between two nominally-identical replay invocations. Independent
+    # job per DEC-FIN-008: contract gate, no continue-on-error.
+    steps:
+      - name: Check out chip-supply-chain-map
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install gate dependencies
+        run: python -m pip install --upgrade pip pyyaml "jsonschema>=4.21"
+
+      - name: Install chip-supply-chain-map node deps
+        run: npm ci
+
+      - name: replay-determinism
+        env:
+          RERUNS: "3"
+        run: python -m unittest scripts.test_replay_determinism
+
+      - name: Upload failure bundle on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: replay-determinism-failbundle
+          path: artifacts/failbundles/
+          if-no-files-found: ignore
