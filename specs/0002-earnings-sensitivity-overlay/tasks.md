@@ -96,6 +96,24 @@
 - [x] Add `R-FIN-017` through `R-FIN-020`.
 - [x] Add `DEC-FIN-006-watchlist-export-portable-repo-uri-migration.md`.
 
+## Scenario coverage (2026-05-29)
+
+- [x] Add `cowos-l-bottleneck` scenario in `src/lib/scenarios.ts`
+  with the `edgeImpact` and `nodeAttributeImpact` callbacks.
+- [x] Add `lithography-equipment-constraint` scenario in
+  `src/lib/scenarios.ts` with the `edgeImpact` and
+  `nodeAttributeImpact` callbacks.
+- [x] Extend `Scenario` in `src/lib/types.ts` with
+  `ScenarioEdgeAdjustment` and `ScenarioNodeAttributeAdjustment`.
+- [x] Fold scenario lead-time bumps plus a
+  `scenarioEdgePressure` factor into `chokepointScore` in
+  `src/lib/scoring.ts`.
+- [x] Add `src/lib/scenarios.test.ts` and wire it into
+  `npm test` via `scripts/run_ts_tests.mjs`.
+- [x] Update `docs/scenario-design.md` with the two new sections.
+- [x] Add `R-FIN-028` through `R-FIN-030`.
+- [x] Add `DEC-FIN-009-additional-scenarios.md`.
+
 ## Verification
 
 - [x] Add aggregation and export tests.

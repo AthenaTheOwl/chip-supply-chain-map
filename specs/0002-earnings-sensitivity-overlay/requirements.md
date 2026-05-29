@@ -514,3 +514,84 @@ Acceptance:
 - A failure-bundle upload step runs only on failure to capture
   `artifacts/failbundles/` for review and does not mask the
   underlying job failure.
+
+### R-FIN-028: cowos-l-bottleneck scenario
+
+WHEN a user toggles the `cowos-l-bottleneck` scenario, THE SYSTEM
+SHALL apply a 2.1 chokepoint multiplier to the directly exposed
+packaging cluster, bump packaging and substrate edges into the
+accelerator platform rows one strength step, and add a six-month
+lead-time bump on TSMC and the ABF substrate subtype nodes.
+
+Acceptance:
+- The scenario entry sits in the `SCENARIOS` array in
+  `src/lib/scenarios.ts` with id `cowos-l-bottleneck`, label
+  `CoWoS-L bottleneck (deepened)`, and the documented multiplier
+  list (TSMC, ASE, Amkor, Ibiden, Unimicron, Shinko,
+  `nvidia-blackwell-gb200`, `amd-instinct-mi-family`).
+- The scenario's `edgeImpact` callback returns a one-step strength
+  bump on edges whose `relation` is `packages-for`,
+  `supplies-substrates`, or `manufactures-for` and whose `target`
+  is `nvidia-blackwell-gb200` or `amd-instinct-mi-family`.
+- The scenario's `nodeAttributeImpact` callback returns a
+  six-month lead-time bump on the node id `tsmc` and on any node
+  whose `subtype` is `abf-substrate`.
+- The scenario appears as a toggle in
+  `src/components/ScenarioControls.tsx` without UI wiring changes
+  because the component iterates the `SCENARIOS` array.
+
+### R-FIN-029: lithography-equipment-constraint scenario
+
+WHEN a user toggles the `lithography-equipment-constraint`
+scenario, THE SYSTEM SHALL apply a 2.0 chokepoint multiplier to the
+directly exposed lithography and leading-edge cluster, bump
+`supplies-equipment` edges from the four lithography suppliers into
+the three leading-edge foundries one strength step, and add
+nine-month and six-month lead-time bumps on ASML and Lasertec
+respectively.
+
+Acceptance:
+- The scenario entry sits in the `SCENARIOS` array in
+  `src/lib/scenarios.ts` with id
+  `lithography-equipment-constraint`, label
+  `Lithography equipment constraint`, and the documented
+  multiplier list (ASML, Lasertec, Nikon, Canon, TSMC,
+  `samsung-foundry`, `intel-foundry`, `sk-hynix`, Micron).
+- The scenario's `edgeImpact` callback returns a one-step strength
+  bump on edges whose `relation` is `supplies-equipment`, whose
+  `source` is one of `asml`, `nikon`, `canon`, or `lasertec`, and
+  whose `target` is one of `tsmc`, `samsung-foundry`, or
+  `intel-foundry`.
+- The scenario's `nodeAttributeImpact` callback returns a
+  nine-month lead-time bump on the node id `asml` and a six-month
+  lead-time bump on the node id `lasertec`.
+- The scenario appears as a toggle in
+  `src/components/ScenarioControls.tsx` without UI wiring changes
+  because the component iterates the `SCENARIOS` array.
+
+### R-FIN-030: scoring folds scenario edge and node bumps
+
+WHEN `src/lib/scoring.ts::chokepointScore` runs against an active
+scenario set that includes `cowos-l-bottleneck` or
+`lithography-equipment-constraint`, THE SYSTEM SHALL fold the
+scenario lead-time bumps into the lead-time term and read the
+scenario edge-strength bumps through a `scenarioEdgePressure`
+factor that returns 1.0 when no scenario is active.
+
+Acceptance:
+- The lead-time term in `chokepointScore` is
+  `1 + (baseLeadTime + scenarioLeadTimeBumpMonths(node, ids)) / 12`
+  so the lead-time bump composes with the baseline lead-time.
+- The `scenarioEdgePressure` factor compares the scenario-on
+  weighted-edge sum (sum over incident edges of
+  `scenarioEdgeWeightMultiplier(edge, graph, ids)`) against the
+  scenario-off baseline (sum over the same edges with empty ids)
+  and returns the ratio; the factor is 1.0 when `ids` is empty so
+  the baseline chokepoint score is unchanged.
+- The test fixture at `src/lib/scenarios.test.ts` covers registry
+  plumbing for both new scenarios, per-node multiplier target
+  sets, edge-strength bumps with both compounding and
+  ceiling-at-critical behavior, lead-time bumps, raw chokepoint
+  score deltas under each scenario, and a normalized-rank
+  snapshot. The fixture is wired into `npm test` via
+  `scripts/run_ts_tests.mjs`.

@@ -104,3 +104,14 @@ deferred:
     note: covered collectively by DEC-FIN-008-chip-map-dedicated-determinism-fixture
   - id: R-FIN-027
     note: covered collectively by DEC-FIN-008-chip-map-dedicated-determinism-fixture
+  # 2026-05-29 added R-FIN-028..030 for the two new scenarios
+  # (cowos-l-bottleneck + lithography-equipment-constraint) plus the
+  # scoring change that folds the scenario lead-time bumps and
+  # edge-strength bumps. R-FIN-028 is resolved by
+  # DEC-FIN-009-additional-scenarios directly via the front-matter
+  # requirement field. R-FIN-029..030 are resolved collectively by
+  # the same DEC; the DEC's `## coverage` section enumerates them.
+  - id: R-FIN-029
+    note: covered collectively by DEC-FIN-009-additional-scenarios
+  - id: R-FIN-030
+    note: covered collectively by DEC-FIN-009-additional-scenarios
