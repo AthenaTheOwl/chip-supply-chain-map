@@ -414,12 +414,17 @@ def emit_replay_event(
     """Write a single ``run.evidence.replayed`` event to a fresh ledger.
 
     The per-replay ledger is named
-    ``replay-<run-id>-<ISO-timestamp>.jsonl`` so multiple replays do
-    not collide. The source ledger is never touched.
+    ``replay-<run-id>-<ISO-timestamp>-<replay-event-id>.jsonl`` so
+    rapid back-to-back replays cannot collide on the second-resolution
+    timestamp. The source ledger is never touched.
     """
     ledger_dir.mkdir(parents=True, exist_ok=True)
     safe_ts = timestamp.replace(":", "").replace("-", "")
-    ledger_path = ledger_dir / f"replay-{run_id}-{safe_ts}.jsonl"
+    # Suffix the event UUID so two replays inside the same wall-clock
+    # second land on distinct filenames. Earlier shape was
+    # ``replay-<run-id>-<safe_ts>.jsonl`` which collided under the
+    # multi-rerun determinism fixture.
+    ledger_path = ledger_dir / f"replay-{run_id}-{safe_ts}-{replay_event_id}.jsonl"
     event = {
         "actor": {"id": "chip-supply-chain-map-replay", "kind": "system"},
         "created_at": timestamp,
