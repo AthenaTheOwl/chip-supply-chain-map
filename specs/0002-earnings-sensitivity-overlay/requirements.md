@@ -684,3 +684,77 @@ Acceptance:
   and runs `python -m unittest scripts.test_chaos_run_evidence`.
 - Neither workflow step or job carries `continue-on-error: true`
   or `if: ${{ failure() }}` or `if: always()` on the chaos step.
+
+### R-FIN-034: schemas-cache mirrors DEC-CDCP-020's four new fields
+
+WHEN a contributor opens `ops/schemas-cache/decision.schema.json`,
+`ops/schemas-cache/dream-output.schema.json`, or
+`ops/schemas-cache/run.schema.json`, THE SYSTEM SHALL carry the four
+optional fields specified by DEC-CDCP-020 in athena-site:
+`systems_map`, `transferable_principle`, `falsification_test`, and
+`adoption_ladder` (object with `minimum_viable`, `mid_adoption`,
+`full_adoption`, `monitoring_signals`).
+
+Acceptance:
+- Each cached schema mirrors the athena-site source byte-for-byte.
+- `scripts/check_schema_cache_freshness.py` exits 0.
+- The four fields are optional (not in `required`); their `minLength`
+  is 10 on the three string fields; `adoption_ladder` is an object
+  with the four named sub-properties.
+
+### R-FIN-035: AGENTS.md names the systems-thinking discipline
+
+WHEN a coding agent reads `.agents/AGENTS.md` before acting on this
+repo, THE SYSTEM SHALL surface a top-level section titled "Systems-
+thinking discipline (per DEC-CDCP-020)" that names the four fields,
+the optional-with-warning contract, and the 30-day ratchet to a
+hard failure.
+
+Acceptance:
+- The section sits before the "Coding style" section so it reads as
+  a load-bearing rule.
+- The section names all four fields (`systems_map`,
+  `transferable_principle`, `falsification_test`,
+  `adoption_ladder`).
+- The section names the bootstrap-warning contract and the 30-day
+  amendment ratchet.
+- The section names the pure-design escape hatch (document why a
+  field does not apply instead of fabricating content).
+
+### R-FIN-036: validate_decisions emits warnings on missing fields
+
+WHEN `scripts/validate_decisions.py` runs against a DEC with
+`status: approved` that is missing any of the four DEC-CDCP-020
+fields, THE SYSTEM SHALL emit a stderr warning naming the file, the
+missing fields, and the source DEC. THE SYSTEM SHALL NOT fail the
+build during the 30-day bootstrap window.
+
+Acceptance:
+- The validator's `main` walks every DEC and checks for the four
+  fields against any DEC whose `status` equals `approved`.
+- The warning text names the file path, the missing field list, and
+  cites `DEC-CDCP-020`.
+- Exit code stays 0 when the only findings are missing-field
+  warnings.
+- Schema-shape violations still produce exit code 1 (the warning
+  block does not mask validation failures).
+
+### R-FIN-037: three most-recent FIN DECs carry the four fields
+
+WHEN a reviewer reads the three most-recent FIN-family DECs
+(DEC-FIN-008, DEC-FIN-009, DEC-FIN-010), THE SYSTEM SHALL carry the
+four DEC-CDCP-020 fields with substantive content on each DEC.
+
+Acceptance:
+- Each of DEC-FIN-008, DEC-FIN-009, and DEC-FIN-010 carries
+  `systems_map`, `transferable_principle`, `falsification_test`, and
+  `adoption_ladder` in the front-matter.
+- Each `systems_map` names the underlying mechanism in one or two
+  sentences (not a paraphrase of the local rationale).
+- Each `adoption_ladder` populates all four sub-properties
+  (`minimum_viable`, `mid_adoption`, `full_adoption`,
+  `monitoring_signals`).
+- `python scripts/validate_decisions.py` against the post-retrofit
+  corpus of 19 DECs reports 15 missing-field warnings (four DECs
+  populate the fields: DEC-FIN-008, DEC-FIN-009, DEC-FIN-010, and
+  DEC-FIN-011 which is self-applying).
