@@ -174,3 +174,33 @@ jobs:
           name: replay-determinism-failbundle
           path: artifacts/failbundles/
           if-no-files-found: ignore
+
+  chaos-validation:
+    name: chaos validation (validator mutation coverage)
+    runs-on: ubuntu-latest
+    # The chaos suite (DEC-FIN-010) loads the canonical sample Run
+    # record + ledger, applies one mutation per Round-2 / Round-3
+    # invariant to a copy in a temp tree, runs
+    # scripts/validate_run_evidence.py against the mutated copy, and
+    # asserts the validator EXITS NON-ZERO with a stderr line that
+    # names the right check. Seven mutation classes M1..M7 plus a
+    # sanity check on the unmutated copy and a manifest assertion on
+    # the class count. Catches silent regressions in the validator
+    # itself: a mutation slipping through (exit 0) fails the test
+    # loudly so a reviewer notices the gap before the bad artifact
+    # ships. Contract gate, no continue-on-error.
+    steps:
+      - name: Check out chip-supply-chain-map
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install gate dependencies
+        run: python -m pip install --upgrade pip "jsonschema>=4.21"
+
+      - name: chaos-validation
+        run: python -m unittest scripts.test_chaos_run_evidence

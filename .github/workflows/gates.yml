@@ -54,6 +54,9 @@ jobs:
       - name: validate_run_evidence_tests
         run: python -m unittest scripts.test_validate_run_evidence
 
+      - name: chaos_run_evidence_tests
+        run: python -m unittest scripts.test_chaos_run_evidence
+
       - name: replay_run_tests
         run: python -m unittest scripts.test_replay_run
 
