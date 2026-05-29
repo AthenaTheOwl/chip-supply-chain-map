@@ -1,0 +1,109 @@
+# meta - 2026-W22 Friday dream pass (engineering-grade run-evidence retrospective)
+# auto-written by the learning.dream-orchestrator role; edit in place when the dream gets revised.
+
+id: dream-2026-W22
+week: 2026-W22
+generated_at: 2026-05-29T18:00:00Z
+generated_by: learning.dream-orchestrator (claude-opus-4-7, hosted in Claude Code session)
+
+scope:
+  repos:
+    - chip-supply-chain-map
+  lookback_days: 7
+  window_start: 2026-05-22
+  window_end: 2026-05-29
+  sources_scanned:
+    - kind: git_log
+      ref: "git log --since=2026-05-22 --until=2026-05-30"
+      count: 17
+    - kind: spec_dir
+      ref: specs/0002-earnings-sensitivity-overlay/
+      count: 1
+    - kind: decision_dir
+      ref: decisions/
+      count: 16
+    - kind: traceability
+      ref: specs/0002-earnings-sensitivity-overlay/traceability.md
+      count: 1
+    - kind: run_record
+      ref: ops/run-records/run-6a665b303138.json
+      count: 1
+    - kind: replay_record
+      ref: ops/replay-records/run-6a665b303138/
+      count: 1
+    - kind: event_ledger
+      ref: ops/event-ledger/run-6a665b303138.jsonl
+      count: 1
+    - kind: ci_workflow
+      ref: .github/workflows/run-evidence-gates.yml
+      count: 1
+    - kind: ci_workflow
+      ref: .github/workflows/gates.yml
+      count: 1
+    - kind: ci_workflow
+      ref: .github/workflows/build.yml
+      count: 1
+    - kind: schema_cache
+      ref: ops/schemas-cache/event.schema.json
+      count: 1
+    - kind: schema_cache
+      ref: ops/schemas-cache/run.schema.json
+      count: 1
+
+modes:
+  run:
+    - memory_consolidation
+    - failure_clustering
+    - adversarial_simulation
+    - skill_extraction
+    - golden_test_generation
+  skipped:
+    - id: prompt_patch_generation
+      reason: no versioned prompt files exist in the repo yet; the watchlist export ships pure deterministic code
+    - id: architecture_drift_detection
+      reason: the spec ledger and decision trail tracked the v2 rollout commit-for-commit; no drift surfaced
+
+candidates_produced:
+  total: 5
+  by_kind:
+    backlog_item: 2
+    test_generation: 1
+    skill_patch: 1
+    memory_update: 1
+  files:
+    - candidates/memory-001-pending-sandbox-placeholder-convention.md
+    - candidates/backlog-001-replay-diff-mode-on-divergence.md
+    - candidates/eval-001-run-evidence-emitter-adversarial-input-matrix.md
+    - candidates/skill-001-graduate-typed-event-payload-contract.md
+    - candidates/backlog-002-replay-non-determinism-probe.md
+
+report_path: dreams/2026-W22/report.md
+
+human_review_required: true
+
+cost:
+  model: claude-opus-4-7
+  tokens_input_estimated: 31000
+  tokens_output_estimated: 8200
+  cost_usd_estimated: 1.05
+  note: |
+    Single Claude Code session reading commits, decisions, traceability,
+    run/event/replay records, CI workflows, and the schema cache. The
+    parallel sibling dream passes in other product repos run under
+    separate sessions; their costs land in their own meta files.
+
+handoff:
+  next_role: control.coordinator
+  workflow: .agents/workflows/weekly-dream.yaml
+  step: human-review
+  gate: candidates_human_gated
+
+notes:
+  - "Second weekly dream pass in this repo; the first lands here in W22
+    because the repo missed the W21 cycle while shipping the v2
+    engineering-grade run-evidence stack across rounds 1-8."
+  - "Five of seven modes run, two deferred. Each deferral names the
+    precondition that would graduate the mode to run in W23."
+  - "The retrospective window covers the rounds-1-through-8 emitter +
+    validator + replay command + URI migration + CI contract work that
+    landed between 2026-05-22 and 2026-05-29."
