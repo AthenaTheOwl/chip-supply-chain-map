@@ -307,5 +307,55 @@ class ReplayTests(unittest.TestCase):
         self.assertFalse(event["payload"]["replay_equivalent"])
 
 
+class ReplayUriTests(unittest.TestCase):
+    """Round-6 / DEC-CDCP-014 + DEC-FIN-006: replay accepts repo:// URIs.
+
+    The replay command must extract the recorded SHA from both the
+    legacy ``<abs-path>@<sha>`` form and the new
+    ``repo://chip-supply-chain-map@<sha>/`` URI form. The PENDING
+    placeholder must short-circuit with a clear "run the finalizer"
+    message.
+    """
+
+    def test_parse_sandbox_sha_uri_form(self) -> None:
+        sha = "a" * 40
+        uri = f"repo://chip-supply-chain-map@{sha}/"
+        self.assertEqual(RR._parse_sandbox_sha(uri), sha)
+
+    def test_parse_sandbox_sha_uri_with_trailing_path(self) -> None:
+        # The grammar allows a non-empty path after the trailing /.
+        # The parser must still extract the SHA only.
+        sha = "b" * 40
+        uri = f"repo://chip-supply-chain-map@{sha}/some/leftover/path"
+        self.assertEqual(RR._parse_sandbox_sha(uri), sha)
+
+    def test_parse_sandbox_sha_legacy_form(self) -> None:
+        legacy = "/tmp/test-workspace@cafebabe"
+        self.assertEqual(RR._parse_sandbox_sha(legacy), "cafebabe")
+
+    def test_parse_sandbox_sha_pending(self) -> None:
+        uri = "repo://chip-supply-chain-map@PENDING/"
+        self.assertEqual(RR._parse_sandbox_sha(uri), "PENDING")
+
+    def test_resolve_uri_repo(self) -> None:
+        sha = "c" * 40
+        uri = f"repo://chip-supply-chain-map@{sha}/src/data/foo.csv"
+        self.assertEqual(
+            RR.resolve_uri(uri, portfolio_root=Path("/tmp/p")),
+            Path("/tmp/p/chip-supply-chain-map/src/data/foo.csv"),
+        )
+
+    def test_resolve_uri_artifact(self) -> None:
+        self.assertIsNone(
+            RR.resolve_uri("artifact://chip-supply-chain-map/some-id")
+        )
+
+    def test_resolve_uri_legacy(self) -> None:
+        self.assertEqual(
+            RR.resolve_uri("src/data/foo.csv"),
+            Path("src/data/foo.csv"),
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -274,3 +274,81 @@ Acceptance:
 - The replay record carries the recomputed hashes, the
   recorded sandbox SHA, the verdict, and a workspace-relative
   pointer to the matching per-replay ledger.
+
+### R-FIN-017: emitter produces portable repo:// URIs
+
+WHEN the watchlist export CLI emits a Run record, THE SYSTEM SHALL
+populate the `sandbox_image_ref`, `inputs[].ref`, and
+`outputs[].artifact_id` fields using the portable URI grammar
+defined in DEC-CDCP-014, and SHALL populate `workspace_id` with the
+bare repo name `chip-supply-chain-map`.
+
+Acceptance:
+- `sandbox_image_ref` matches `^repo://chip-supply-chain-map@
+  ([a-f0-9]{40}|PENDING)/$`.
+- Every `inputs[].ref` matches `^repo://chip-supply-chain-map@
+  ([a-f0-9]{40}|PENDING)/.+$` with the relative path of the
+  source file inside the repo (e.g.
+  `src/data/nodes.csv`).
+- Each `outputs[].artifact_id` matches `^artifact://
+  chip-supply-chain-map/.+$` (logical artifact reference, not a
+  file path).
+- `workspace_id` equals `chip-supply-chain-map` (no scheme prefix,
+  no SHA, no absolute filesystem path).
+
+### R-FIN-018: validator resolves repo:// and accepts legacy paths
+
+WHEN `scripts/validate_run_evidence.py` walks Run records and
+events, THE SYSTEM SHALL expose a `resolve_uri(uri, portfolio_root)`
+helper that resolves `repo://` URIs to local paths, returns None for
+`artifact://` URIs, and returns the input as `Path(uri)` for legacy
+local paths (DEC-CDCP-014 interop clause).
+
+Acceptance:
+- `repo://<repo>@<sha>/<rel-path>` resolves to
+  `<portfolio_root>/<repo>/<rel-path>` with the default
+  `portfolio_root = e:/claude_code/random-apps`.
+- `artifact://<repo>/<id>` returns None.
+- Legacy local paths (e.g. `src/data/nodes.csv`) return
+  `Path(<path>)`.
+- The PENDING placeholder SHA is accepted by the grammar and
+  resolves the same way as a 40-char SHA (the validator does
+  not refuse PENDING; the replay command does).
+
+### R-FIN-019: replay accepts repo:// URIs and refuses PENDING
+
+WHEN `scripts/replay_run.py` extracts the recorded SHA from
+`Run.sandbox_image_ref`, THE SYSTEM SHALL accept both the
+`repo://chip-supply-chain-map@<sha>/` URI form and the legacy
+`<abs-path>@<sha>` form. IF the recorded SHA is the literal
+`PENDING` placeholder, THE SYSTEM SHALL exit 1 with a message
+naming `scripts/finalize_sandbox_ref.py` as the command to run
+before replay can proceed.
+
+Acceptance:
+- The replay command extracts the SHA via the URI regex when
+  the ref starts with `repo://`, else falls back to the legacy
+  `@<sha>` suffix.
+- A PENDING placeholder triggers a clean refusal; the script
+  does not run `git rev-parse HEAD`, does not run the export,
+  and does not write a replay record.
+
+### R-FIN-020: finalizer rewrites PENDING to the post-commit SHA
+
+WHEN `scripts/finalize_sandbox_ref.py --run-id <id>` runs against
+a Run record carrying the PENDING placeholder, THE SYSTEM SHALL
+read the current `git rev-parse HEAD` SHA and rewrite every
+`@PENDING/` token in `sandbox_image_ref` and every `inputs[].ref`
+to `@<head-sha>/` in place. The rewrite SHALL be idempotent on
+records that already carry a resolved SHA.
+
+Acceptance:
+- The finalizer touches only `sandbox_image_ref` and
+  `inputs[].ref`; other string fields containing the literal
+  `PENDING` (notes, payloads, free-form text) are untouched.
+- The rewritten file ends with one trailing newline and uses
+  sort-keys + 2-space indent (matches the emitter's shape).
+- A second invocation on the same file is a no-op that exits 0
+  with the "no PENDING tokens" message.
+- A missing Run record file produces exit 1 with a clear "not
+  found" message.

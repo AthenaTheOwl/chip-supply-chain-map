@@ -86,3 +86,47 @@ producing commit; the `gate_results_summary` captures the
 `input_validation` and `packet_shape` gate outcomes. `determinism`
 and `checkpoint_ref` are omitted because the pipeline has no sampler
 and no resumable checkpoint store.
+
+## Portable repo:// URI scheme + off-by-one fix (Round 6)
+
+Round 6 migrates the emitter onto the portable URI grammar defined
+in DEC-CDCP-014 (athena-site):
+
+```
+repo://<repo-name>@<sha>/<rel-path>
+artifact://<repo-name>/<artifact-id>
+```
+
+The Run record's `sandbox_image_ref` becomes
+`repo://chip-supply-chain-map@<sha>/`; every `inputs[].ref` becomes
+`repo://chip-supply-chain-map@<sha>/<rel-path>`; every
+`outputs[].artifact_id` becomes
+`artifact://chip-supply-chain-map/<id>`; `workspace_id` becomes the
+bare repo name `chip-supply-chain-map`. Consumers
+(`validate_run_evidence.py`, `replay_run.py`, downstream
+trace-to-eval packets) resolve the URI via the new `resolve_uri`
+helper; legacy local paths continue to pass through unchanged for
+the migration window per DEC-CDCP-014's interop clause.
+
+The same round fixes the systemic `sandbox_image_ref` off-by-one
+bug. The emitter previously computed `git rev-parse HEAD` BEFORE
+the commit that contained the sample landed; the recorded SHA was
+therefore one commit BEHIND the truth. Every Round-5 sample-level
+patch re-introduced the same fragility on the next regenerate.
+
+Round 6 splits the SHA recording into two passes:
+
+1. The emitter writes the placeholder
+   `repo://chip-supply-chain-map@PENDING/` at first emit.
+2. The data + Run record + ledger get committed together (the
+   "regenerate commit").
+3. `scripts/finalize_sandbox_ref.py` reads
+   `git rev-parse HEAD` (which now points at the regenerate
+   commit) and rewrites every `@PENDING/` token in the Run
+   record to `@<head-sha>/`.
+4. The finalizer's rewrite gets committed (the "finalize commit").
+
+The replay command refuses to process a Run record still carrying
+the PENDING placeholder; the canonical message names the finalizer.
+The validator accepts PENDING (the audit trail must survive the
+emit-then-finalize window).

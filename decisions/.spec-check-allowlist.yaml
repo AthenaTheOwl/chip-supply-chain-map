@@ -66,3 +66,16 @@ deferred:
     note: covered collectively by DEC-FIN-005-watchlist-replay-command
   - id: R-FIN-016
     note: covered collectively by DEC-FIN-005-watchlist-replay-command
+  # Round 6 / 2026-05-29 added R-FIN-017..020 for the portable
+  # repo:// URI migration plus the sandbox_image_ref off-by-one
+  # fix. R-FIN-017 is resolved by
+  # DEC-FIN-006-watchlist-export-portable-repo-uri-migration
+  # directly via the front-matter requirement field. R-FIN-018..020
+  # are resolved collectively by the same DEC; the DEC's
+  # `## coverage` section enumerates them.
+  - id: R-FIN-018
+    note: covered collectively by DEC-FIN-006-watchlist-export-portable-repo-uri-migration
+  - id: R-FIN-019
+    note: covered collectively by DEC-FIN-006-watchlist-export-portable-repo-uri-migration
+  - id: R-FIN-020
+    note: covered collectively by DEC-FIN-006-watchlist-export-portable-repo-uri-migration

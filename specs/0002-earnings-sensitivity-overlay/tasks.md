@@ -67,6 +67,35 @@
 - [x] Add `R-FIN-013` through `R-FIN-016`.
 - [x] Add `DEC-FIN-005-watchlist-replay-command.md`.
 
+## Run-evidence Round 6 (portable repo:// URIs + off-by-one fix)
+
+- [x] Add `REPO_NAME`, `buildRepoUri`, `buildArtifactUri`,
+  `pendingSandboxImageRef` exports to `src/lib/runEvidence.ts`.
+- [x] Migrate `deriveSandboxImageRef` to return the
+  `repo://chip-supply-chain-map@<sha>/` URI form.
+- [x] Update `scripts/export_watchlist/main.ts` to wire URI shape
+  into `sandbox_image_ref`, `inputs[].ref`,
+  `outputs[].artifact_id`, and to set `workspace_id` to the bare
+  repo name.
+- [x] Add `resolve_uri` helper + URI regexes to
+  `scripts/validate_run_evidence.py`.
+- [x] Update `scripts/replay_run.py` `_parse_sandbox_sha` to
+  accept both URI and legacy forms; refuse PENDING placeholder
+  with a finalizer-pointing message.
+- [x] Add `scripts/finalize_sandbox_ref.py` CLI helper that
+  rewrites `@PENDING/` tokens to the post-commit head SHA.
+- [x] Extend test matrices in
+  `scripts/test_validate_run_evidence.py` and
+  `scripts/test_replay_run.py` for the new URI helpers.
+- [x] Add `scripts/test_finalize_sandbox_ref.py` (4 cases:
+  positive, idempotent, missing, partial).
+- [x] Update `src/lib/runEvidence.test.ts` to cover the URI
+  helpers and the migrated Run record shape.
+- [x] Regenerate the canonical sample (`run-6a665b303138`)
+  carrying the URI form with the finalizer-resolved SHA.
+- [x] Add `R-FIN-017` through `R-FIN-020`.
+- [x] Add `DEC-FIN-006-watchlist-export-portable-repo-uri-migration.md`.
+
 ## Verification
 
 - [x] Add aggregation and export tests.

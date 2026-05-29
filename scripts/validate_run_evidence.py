@@ -52,6 +52,7 @@ the network, and treats a missing schema cache file as a hard error.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -60,6 +61,56 @@ ROOT = Path(__file__).resolve().parents[1]
 CACHE_DIR = ROOT / "ops" / "schemas-cache"
 EVENT_LEDGER_DIR = ROOT / "ops" / "event-ledger"
 RUN_RECORDS_DIR = ROOT / "ops" / "run-records"
+
+# Portable repo:// / artifact:// URI grammar lands in DEC-CDCP-014
+# (athena-site). Round 6 migrates emitters in the portfolio onto this
+# scheme. The resolver here accepts both URI forms AND legacy local
+# paths during the migration window (interop clause from DEC-CDCP-014).
+#
+#   repo://<repo-name>@<sha>/<rel-path>
+#   artifact://<repo-name>/<artifact-id>
+#
+# <sha> for an emitted (finalized) URI is 40 lowercase-hex. The
+# PENDING placeholder shape recorded at first emit (before the
+# regenerate commit lands) is permitted too; the
+# finalize_sandbox_ref.py helper rewrites PENDING to the resolved SHA.
+_REPO_URI_RE = re.compile(
+    r"^repo://(?P<repo>[a-z][a-z0-9-]*)@(?P<sha>[a-f0-9]{40}|PENDING)/(?P<path>.*)$"
+)
+_ARTIFACT_URI_RE = re.compile(
+    r"^artifact://(?P<repo>[a-z][a-z0-9-]*)/(?P<id>.+)$"
+)
+
+PORTFOLIO_ROOT_DEFAULT = Path("e:/claude_code/random-apps")
+
+
+def resolve_uri(uri: str, portfolio_root: Path | None = None) -> Path | None:
+    """Resolve a repo:// URI to a local path inside the portfolio.
+
+    Behavior:
+
+    - ``repo://<repo>@<sha>/<rel-path>`` returns
+      ``<portfolio_root>/<repo>/<rel-path>``. The ``<sha>`` segment
+      is advisory metadata; HEAD-strict verification is the replay
+      command's job, not the validator's.
+    - ``artifact://<repo>/<id>`` returns ``None`` because logical
+      artifact ids are not file paths. The caller decides whether
+      this is a violation or expected.
+    - Anything else (legacy local path) returns ``Path(uri)`` so the
+      validator continues to accept pre-migration records during the
+      Round-6 cutover window. DEC-CDCP-014's interop clause.
+
+    The default ``portfolio_root`` matches the workflow's
+    ``e:/claude_code/random-apps`` layout. Tests pass a temp tree.
+    """
+    root = portfolio_root if portfolio_root is not None else PORTFOLIO_ROOT_DEFAULT
+    repo_match = _REPO_URI_RE.match(uri)
+    if repo_match:
+        return root / repo_match["repo"] / repo_match["path"]
+    artifact_match = _ARTIFACT_URI_RE.match(uri)
+    if artifact_match:
+        return None
+    return Path(uri)
 
 EVENT_SCHEMA_PATH = CACHE_DIR / "event.schema.json"
 RUN_SCHEMA_PATH = CACHE_DIR / "run.schema.json"

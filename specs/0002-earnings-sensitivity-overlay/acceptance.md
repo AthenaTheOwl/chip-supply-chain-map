@@ -17,7 +17,11 @@
   Round-3 done-Run cross-checks).
 - `python -m unittest scripts.test_replay_run` exits 0 (one
   positive case plus three negative cases covering HEAD
-  mismatch, missing Run record, and input drift).
+  mismatch, missing Run record, and input drift, plus the Round-6
+  `ReplayUriTests` covering URI parsing and `resolve_uri`).
+- `python -m unittest scripts.test_finalize_sandbox_ref` exits 0
+  (four cases: positive rewrite, idempotent re-run, missing
+  record, partial rewrite).
 - `python scripts/replay_run.py --run-id run-6a665b303138` exits 0
   with `replay_equivalent=True` when run against the committed
   sample at the recorded sandbox SHA.

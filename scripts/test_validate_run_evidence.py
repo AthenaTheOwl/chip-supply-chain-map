@@ -313,5 +313,102 @@ class CrossCheckTests(unittest.TestCase):
         )
 
 
+class ResolveUriTests(unittest.TestCase):
+    """Round-6 / DEC-CDCP-014 + DEC-FIN-006: resolve_uri helper.
+
+    The validator must accept BOTH the new repo:// URI form and
+    legacy local paths during the migration window. These tests
+    pin the four-case truth table from DEC-CDCP-014.
+    """
+
+    def test_repo_uri_resolves_under_portfolio_root(self) -> None:
+        sha = "a" * 40
+        uri = f"repo://chip-supply-chain-map@{sha}/src/data/nodes.csv"
+        resolved = VRE.resolve_uri(uri, portfolio_root=Path("/tmp/portfolio"))
+        self.assertEqual(
+            resolved,
+            Path("/tmp/portfolio/chip-supply-chain-map/src/data/nodes.csv"),
+        )
+
+    def test_repo_uri_with_pending_sha_resolves(self) -> None:
+        # The PENDING placeholder must round-trip through resolve_uri
+        # so the validator does not reject placeholder records before
+        # finalize_sandbox_ref.py runs.
+        uri = "repo://chip-supply-chain-map@PENDING/src/data/edges.csv"
+        resolved = VRE.resolve_uri(uri, portfolio_root=Path("/tmp/portfolio"))
+        self.assertEqual(
+            resolved,
+            Path("/tmp/portfolio/chip-supply-chain-map/src/data/edges.csv"),
+        )
+
+    def test_artifact_uri_returns_none(self) -> None:
+        uri = "artifact://chip-supply-chain-map/watchlist-packet@run-abc"
+        self.assertIsNone(VRE.resolve_uri(uri))
+
+    def test_legacy_local_path_returns_path_as_is(self) -> None:
+        legacy = "src/data/nodes.csv"
+        self.assertEqual(VRE.resolve_uri(legacy), Path(legacy))
+
+    def test_malformed_uri_treated_as_legacy_path(self) -> None:
+        # A string starting with `repo://` but not matching the
+        # grammar (e.g. uppercase repo name) must fall through to the
+        # legacy branch, not raise. The validator never rejects a
+        # path-shaped string outright; the schema rejects unrelated
+        # malformed values upstream.
+        malformed = "repo://Chip-Supply@deadbeef/foo"
+        self.assertEqual(VRE.resolve_uri(malformed), Path(malformed))
+
+    def test_uri_record_passes_validation(self) -> None:
+        """A done Run record carrying repo:// URIs validates clean."""
+        sha = "f" * 40
+        sandbox_uri = f"repo://chip-supply-chain-map@{sha}/"
+        input_uri = f"repo://chip-supply-chain-map@{sha}/src/data/nodes.csv"
+        artifact_uri = "artifact://chip-supply-chain-map/watchlist-packet@run-uritest0001"
+
+        run_id = "run-uritest0001"
+        run = _good_run(run_id)
+        run["sandbox_image_ref"] = sandbox_uri
+        run["workspace_id"] = "chip-supply-chain-map"
+        run["inputs"] = [{"kind": "dataset", "ref": input_uri}]
+        run["outputs"] = [
+            {"artifact_id": artifact_uri, "type": "watchlist_risk_packet"}
+        ]
+
+        # Drive the same temp-tree validator harness CrossCheckTests
+        # uses, scoped to one method.
+        tmp = TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        ledger_dir = root / "ops" / "event-ledger"
+        records_dir = root / "ops" / "run-records"
+        ledger_dir.mkdir(parents=True)
+        records_dir.mkdir(parents=True)
+        orig_root, orig_l, orig_r = VRE.ROOT, VRE.EVENT_LEDGER_DIR, VRE.RUN_RECORDS_DIR
+        VRE.ROOT = root
+        VRE.EVENT_LEDGER_DIR = ledger_dir
+        VRE.RUN_RECORDS_DIR = records_dir
+        try:
+            (ledger_dir / f"{run_id}.jsonl").write_text(
+                "\n".join(
+                    json.dumps(e, sort_keys=True) for e in _good_events(run_id)
+                ) + "\n",
+                encoding="utf-8",
+            )
+            (records_dir / f"{run_id}.json").write_text(
+                json.dumps(run, sort_keys=True, indent=2), encoding="utf-8"
+            )
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                code = VRE.main()
+            self.assertEqual(
+                code, 0,
+                msg=f"URI record should validate; stderr={stderr.getvalue()}",
+            )
+        finally:
+            VRE.ROOT = orig_root
+            VRE.EVENT_LEDGER_DIR = orig_l
+            VRE.RUN_RECORDS_DIR = orig_r
+
+
 if __name__ == "__main__":
     unittest.main()

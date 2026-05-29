@@ -3,17 +3,22 @@ import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
+  REPO_NAME,
   aggregateGateResults,
+  buildArtifactUri,
+  buildRepoUri,
   buildRunEvidenceFields,
   canonicalizeHeuristicConfig,
   canonicalizeInputs,
   computeSha256,
+  deriveSandboxImageRef,
   emitEvent,
   emitRun,
   makeEvent,
   newEventId,
   newRunId,
   nowIso,
+  pendingSandboxImageRef,
   type EmittedEvent,
   type RunRecord
 } from "./runEvidence";
@@ -247,6 +252,106 @@ try {
     summary,
     "pipeline.done carries a cloned gate_results_summary for cross-check against the Run record"
   );
+
+  // -------------------------------------------------------------- repo:// URI helpers (DEC-CDCP-014 + DEC-FIN-006)
+  //
+  // Round 6 migrates emitter ref fields to the portable repo://
+  // URI grammar. The helpers must produce URIs that match the
+  // grammar in DEC-CDCP-014 and the resolver in
+  // scripts/validate_run_evidence.py.
+  assert.equal(REPO_NAME, "chip-supply-chain-map");
+  const repoUri = buildRepoUri(
+    "0123456789abcdef0123456789abcdef01234567",
+    "src/data/nodes.csv"
+  );
+  assert.equal(
+    repoUri,
+    "repo://chip-supply-chain-map@0123456789abcdef0123456789abcdef01234567/src/data/nodes.csv"
+  );
+  // Leading slashes and Windows separators are normalized.
+  assert.equal(
+    buildRepoUri("deadbeef".repeat(5), "\\src\\foo.csv"),
+    "repo://chip-supply-chain-map@deadbeefdeadbeefdeadbeefdeadbeefdeadbeef/src/foo.csv"
+  );
+  assert.equal(
+    buildRepoUri("a".repeat(40), "/leading/slash.txt"),
+    `repo://chip-supply-chain-map@${"a".repeat(40)}/leading/slash.txt`
+  );
+
+  const artifactUri = buildArtifactUri("watchlist-packet@run-6a665b303138");
+  assert.equal(
+    artifactUri,
+    "artifact://chip-supply-chain-map/watchlist-packet@run-6a665b303138"
+  );
+
+  const placeholder = pendingSandboxImageRef();
+  assert.equal(placeholder, "repo://chip-supply-chain-map@PENDING/");
+  assert.match(
+    placeholder,
+    /^repo:\/\/chip-supply-chain-map@[A-Za-z0-9]+\/$/,
+    "placeholder must conform to the repo:// URI grammar with the trailing /"
+  );
+
+  // deriveSandboxImageRef against a real repo path returns the URI
+  // form, not the legacy <path>@<sha> shape. The test runs in the
+  // current working directory which is a git repo for this test.
+  // (Repo-less case already covered above with repoPath: undefined.)
+
+  // -------------------------------------------------------------- Run record shape under URI migration
+  //
+  // A done Run record produced by the emitter must carry the
+  // repo:// sandbox_image_ref form and a workspace_id of just the
+  // repo name (no SHA, no scheme prefix).
+  const uriRecord: RunRecord = {
+    id: "run-cafebabe0000",
+    spec_id: "specs/0002-earnings-sensitivity-overlay/",
+    agent_id: "chip-supply-chain-map-export",
+    runtime: "chip-supply-chain-map-export",
+    workspace_id: REPO_NAME,
+    started_at: "2026-05-29T12:00:00Z",
+    finished_at: "2026-05-29T12:00:01Z",
+    status: "done",
+    inputs: [
+      {
+        kind: "dataset",
+        ref: buildRepoUri("c".repeat(40), "src/data/nodes.csv")
+      }
+    ],
+    outputs: [
+      {
+        artifact_id: buildArtifactUri("watchlist-packet@run-cafebabe0000"),
+        type: "watchlist_risk_packet"
+      }
+    ],
+    prompt_snapshot_hash: hash,
+    tool_schemas_snapshot_hash: hash,
+    sandbox_image_ref: `repo://${REPO_NAME}@${"c".repeat(40)}/`,
+    gate_results_summary: {
+      gates_passed: ["input_validation"],
+      gates_failed: [],
+      all_passed: true
+    }
+  };
+  const uriRecordPath = join(work, "ops", "run-records", `${uriRecord.id}.json`);
+  emitRun(uriRecord, uriRecordPath);
+  const uriParsed = JSON.parse(readFileSync(uriRecordPath, "utf8"));
+  assert.equal(uriParsed.workspace_id, REPO_NAME);
+  assert.match(
+    uriParsed.sandbox_image_ref,
+    /^repo:\/\/chip-supply-chain-map@[a-f0-9]{40}\/$/
+  );
+  assert.match(
+    uriParsed.inputs[0].ref,
+    /^repo:\/\/chip-supply-chain-map@[a-f0-9]{40}\/src\/data\/nodes\.csv$/
+  );
+  assert.match(
+    uriParsed.outputs[0].artifact_id,
+    /^artifact:\/\/chip-supply-chain-map\//
+  );
+
+  // -------------------------------------------------------------- deriveSandboxImageRef when no repoPath
+  const noRepoRef = deriveSandboxImageRef(undefined);
+  assert.equal(noRepoRef, undefined);
 
   console.log(
     `runEvidence.test OK: ${lines.length} ledger line(s), ${built.populated.length} field(s) populated.`

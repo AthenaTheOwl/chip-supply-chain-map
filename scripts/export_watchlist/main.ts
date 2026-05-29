@@ -56,6 +56,9 @@ import {
   type WatchlistRiskPacket
 } from "../../src/lib/riskPacket";
 import {
+  REPO_NAME,
+  buildArtifactUri,
+  buildRepoUri,
   buildRunEvidenceFields,
   emitEvent,
   emitRun,
@@ -63,6 +66,7 @@ import {
   newEventId,
   newRunId,
   nowIso,
+  pendingSandboxImageRef,
   type EmittedEvent,
   type RunRecord
 } from "../../src/lib/runEvidence";
@@ -536,28 +540,41 @@ function main(argv: string[]): number {
     gateEvents: events
   });
 
+  // Build the inputs URI list. Each input ref carries the recorded
+  // sandbox SHA. At first emit this is the PENDING placeholder; the
+  // finalizer rewrites every PENDING token across the Run record once
+  // the data commit lands. See DEC-FIN-006.
+  const sandboxRef = finalEvidence.fields.sandbox_image_ref
+    ?? pendingSandboxImageRef();
+  const sandboxSha = parseSandboxSha(sandboxRef);
+
   const run: RunRecord = {
     id: runId,
     spec_id: SPEC_ID,
     agent_id: RUNTIME_LABEL,
     runtime: RUNTIME_LABEL,
-    workspace_id: args.repoRoot.replace(/\\/g, "/"),
+    // workspace_id is an identity string, not a file ref. Per
+    // DEC-CDCP-014 + DEC-FIN-006 it carries the portable repo name.
+    workspace_id: REPO_NAME,
     started_at: startedAt,
     finished_at: finishedAt,
     status: "done",
-    inputs: canonicalInputs.map((entry) => ({ kind: "dataset", ref: entry.path })),
+    inputs: canonicalInputs.map((entry) => ({
+      kind: "dataset",
+      ref: buildRepoUri(sandboxSha, entry.path)
+    })),
     outputs: [
       {
-        artifact_id: `watchlist-packet@${runId}`,
+        // The watchlist packet is a logical artifact (not strictly a
+        // file ref). The artifact:// URI scheme covers logical ids.
+        artifact_id: buildArtifactUri(`watchlist-packet@${runId}`),
         type: "watchlist_risk_packet"
       }
     ],
     prompt_snapshot_hash: finalEvidence.fields.prompt_snapshot_hash,
-    tool_schemas_snapshot_hash: finalEvidence.fields.tool_schemas_snapshot_hash
+    tool_schemas_snapshot_hash: finalEvidence.fields.tool_schemas_snapshot_hash,
+    sandbox_image_ref: sandboxRef
   };
-  if (finalEvidence.fields.sandbox_image_ref !== undefined) {
-    run.sandbox_image_ref = finalEvidence.fields.sandbox_image_ref;
-  }
   if (finalEvidence.fields.gate_results_summary !== undefined) {
     run.gate_results_summary = finalEvidence.fields.gate_results_summary;
   }
@@ -631,22 +648,27 @@ function finalizeFailedRun(
     repoPath: args.repoRoot,
     gateEvents: events
   });
+  const sandboxRef = finalEvidence.fields.sandbox_image_ref
+    ?? pendingSandboxImageRef();
+  const sandboxSha = parseSandboxSha(sandboxRef);
+
   const run: RunRecord = {
     id: runId,
     spec_id: SPEC_ID,
     agent_id: RUNTIME_LABEL,
     runtime: RUNTIME_LABEL,
-    workspace_id: args.repoRoot.replace(/\\/g, "/"),
+    workspace_id: REPO_NAME,
     started_at: startedAt,
     finished_at: finishedAt,
     status: "failed",
-    inputs: canonicalInputs.map((entry) => ({ kind: "dataset", ref: entry.path })),
+    inputs: canonicalInputs.map((entry) => ({
+      kind: "dataset",
+      ref: buildRepoUri(sandboxSha, entry.path)
+    })),
     prompt_snapshot_hash: finalEvidence.fields.prompt_snapshot_hash,
-    tool_schemas_snapshot_hash: finalEvidence.fields.tool_schemas_snapshot_hash
+    tool_schemas_snapshot_hash: finalEvidence.fields.tool_schemas_snapshot_hash,
+    sandbox_image_ref: sandboxRef
   };
-  if (finalEvidence.fields.sandbox_image_ref !== undefined) {
-    run.sandbox_image_ref = finalEvidence.fields.sandbox_image_ref;
-  }
   if (finalEvidence.fields.gate_results_summary !== undefined) {
     run.gate_results_summary = finalEvidence.fields.gate_results_summary;
   }
@@ -666,6 +688,29 @@ function finalizeFailedRun(
   }
   console.error(`export_watchlist FAILED: ${reason} (run=${runId})`);
   return 1;
+}
+
+/**
+ * Extract the SHA segment from a sandbox_image_ref URI.
+ *
+ * Accepts the new repo:// grammar
+ * (`repo://chip-supply-chain-map@<sha>/`) and falls back to the
+ * trailing-@<sha> shape from earlier rounds for during-migration
+ * resilience. Returns `PENDING` if the URI is the placeholder shape
+ * the emitter records when the finalizer has not run yet.
+ */
+function parseSandboxSha(sandboxImageRef: string): string {
+  const repoUriMatch = /^repo:\/\/[a-z][a-z0-9-]*@([A-Za-z0-9]+)\//.exec(
+    sandboxImageRef
+  );
+  if (repoUriMatch) {
+    return repoUriMatch[1];
+  }
+  const atIdx = sandboxImageRef.lastIndexOf("@");
+  if (atIdx >= 0) {
+    return sandboxImageRef.slice(atIdx + 1);
+  }
+  return "PENDING";
 }
 
 function relativeFromRepo(repoRoot: string, absolutePath: string): string {

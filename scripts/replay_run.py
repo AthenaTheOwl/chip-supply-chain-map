@@ -59,6 +59,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -72,6 +73,36 @@ RUN_RECORDS_DIR = ROOT / "ops" / "run-records"
 EVENT_LEDGER_DIR = ROOT / "ops" / "event-ledger"
 REPLAY_RECORDS_DIR = ROOT / "ops" / "replay-records"
 COMMITTED_PACKET = ROOT / "ops" / "exports" / "chip-watchlist-risk-packet.json"
+
+# Round 6 / DEC-CDCP-014 + DEC-FIN-006 - portable repo:// URI grammar.
+# The replay command accepts both the new URI form and the legacy
+# `<abs-path>@<sha>` form during the migration window.
+_REPO_URI_RE = re.compile(
+    r"^repo://(?P<repo>[a-z][a-z0-9-]*)@(?P<sha>[a-f0-9]{40}|PENDING)/(?P<path>.*)$"
+)
+_ARTIFACT_URI_RE = re.compile(
+    r"^artifact://(?P<repo>[a-z][a-z0-9-]*)/(?P<id>.+)$"
+)
+
+PORTFOLIO_ROOT_DEFAULT = Path("e:/claude_code/random-apps")
+
+
+def resolve_uri(uri: str, portfolio_root: Path | None = None) -> Path | None:
+    """Resolve a repo:// URI to a local path (see validate_run_evidence.resolve_uri).
+
+    Behavior parity with the validator is intentional so the two
+    helpers can be unified in a later round. For now they live in
+    both scripts because importing one Python file from another at
+    repo root would couple the gate scripts to a shared module path.
+    """
+    root = portfolio_root if portfolio_root is not None else PORTFOLIO_ROOT_DEFAULT
+    repo_match = _REPO_URI_RE.match(uri)
+    if repo_match:
+        return root / repo_match["repo"] / repo_match["path"]
+    artifact_match = _ARTIFACT_URI_RE.match(uri)
+    if artifact_match:
+        return None
+    return Path(uri)
 
 # Canonical input files for the watchlist export. Mirrors the
 # ``canonicalInputs`` array in scripts/export_watchlist/main.ts.
@@ -158,13 +189,32 @@ def _canonicalize_heuristic_config(config: dict[str, Any]) -> str:
 
 
 def _parse_sandbox_sha(sandbox_image_ref: str) -> str:
-    """Return the SHA after ``@`` in ``<repo-path>@<sha>``."""
+    """Return the SHA segment of a ``sandbox_image_ref``.
+
+    Accepts the new repo:// URI form
+    (``repo://chip-supply-chain-map@<sha>/``) and the legacy
+    ``<abs-path>@<sha>`` form. Both shapes coexist during the Round-6
+    migration window per the DEC-CDCP-014 interop clause.
+
+    Returns ``"PENDING"`` when the recorded URI is the placeholder
+    that the emitter records before ``scripts/finalize_sandbox_ref.py``
+    runs (the systemic off-by-one fix in DEC-FIN-006). The caller
+    decides whether PENDING is a runtime-time error (replay refuses)
+    or an audit-time pass-through (the validator accepts).
+    """
+    repo_match = _REPO_URI_RE.match(sandbox_image_ref)
+    if repo_match:
+        return repo_match["sha"]
     idx = sandbox_image_ref.rfind("@")
     if idx < 0:
         raise SystemExit(
             f"replay_run: sandbox_image_ref {sandbox_image_ref!r} has no @<sha> suffix"
         )
     sha = sandbox_image_ref[idx + 1 :]
+    # Legacy `<abs-path>@<sha>` form may carry a trailing slash on the
+    # path segment that ended up after a partial URI; strip any
+    # trailing slash to match the URI form's semantics.
+    sha = sha.rstrip("/")
     if not sha:
         raise SystemExit(
             f"replay_run: sandbox_image_ref {sandbox_image_ref!r} has empty SHA"
@@ -224,6 +274,20 @@ def verify_head(run: dict[str, Any], repo_root: Path) -> str:
             f"cannot verify HEAD"
         )
     recorded_sha = _parse_sandbox_sha(sandbox_image_ref)
+    if recorded_sha == "PENDING":
+        # The emitter recorded a placeholder; the finalizer
+        # (scripts/finalize_sandbox_ref.py) was supposed to swap
+        # PENDING for the post-commit SHA. Refuse to replay a Run
+        # record that still carries the placeholder; the audit trail
+        # would lie about which commit the sample came from.
+        print(
+            f"replay_run: Run record {run.get('id')!r} carries the PENDING "
+            f"sandbox_image_ref placeholder; run "
+            f"scripts/finalize_sandbox_ref.py to set the post-commit SHA "
+            f"before replay.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
     current_sha = _git_head_sha(repo_root)
     if current_sha != recorded_sha:
         print(

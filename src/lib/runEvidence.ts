@@ -39,8 +39,17 @@
  *   "deterministic by construction".
  * - `checkpoint_ref`: omitted. The pipeline runs in-process with no
  *   resumable checkpoint store.
- * - `sandbox_image_ref`: populated as `<repo-path>@<HEAD-SHA>` so a
- *   reviewer can pin replay context to the producing commit.
+ * - `sandbox_image_ref`: populated as
+ *   `repo://chip-supply-chain-map@<HEAD-SHA>/` so a reviewer can pin
+ *   replay context to the producing commit. The URI grammar lands
+ *   in DEC-CDCP-014 (athena-site). Note: at first-emit the recorded
+ *   SHA is the PARENT of the commit that ultimately contains the
+ *   sample on disk; `scripts/finalize_sandbox_ref.py` rewrites this
+ *   field to the post-commit SHA so HEAD-strict replay is satisfiable
+ *   on first emit. See DEC-FIN-006 for the off-by-one fix rationale.
+ *   The placeholder shape on first emit is
+ *   `repo://chip-supply-chain-map@PENDING/`; the finalizer replaces
+ *   PENDING with the resolved 40-char SHA.
  * - `gate_results_summary`: aggregated from `gate.check.*` events
  *   fired during the run (input-validation gate, schema-shape gate).
  *
@@ -156,11 +165,38 @@ export function computeSha256(canonical: string): string {
 // ----------------------------------------------------------------- sandbox ref
 
 /**
- * Return `<repo-path>@<head-sha>` for a real git repo, else undefined.
+ * The portfolio-stable repo name for chip-supply-chain-map. The
+ * repo:// URI grammar defined in DEC-CDCP-014 requires a portable
+ * lowercase-kebab repo identifier here, never an absolute filesystem
+ * path. This is the workspace_id and the repo segment of every
+ * repo:// URI this emitter produces.
+ */
+export const REPO_NAME = "chip-supply-chain-map";
+
+/**
+ * Placeholder SHA the emitter records at first emit. The finalizer
+ * (`scripts/finalize_sandbox_ref.py`) rewrites this to the actual
+ * 40-char post-commit SHA once the data files have landed on disk.
+ * The placeholder is the lowest-friction fix for the systemic
+ * sandbox_image_ref off-by-one bug: emitting `git rev-parse HEAD`
+ * at emit-time records the PARENT of the commit that ultimately
+ * contains the sample, so HEAD-strict replay is unsatisfiable on
+ * first emit. See DEC-FIN-006 for the rationale.
+ */
+export const PENDING_SANDBOX_SHA = "PENDING";
+
+/**
+ * Return `repo://chip-supply-chain-map@<head-sha>/` for a real git
+ * repo, else `repo://chip-supply-chain-map@PENDING/` when a repoPath
+ * was supplied but the git lookup failed, else undefined.
  *
  * An undefined return tells the caller to omit `sandbox_image_ref`
  * from the Run record entirely. The schema treats absence as "not
  * derivable".
+ *
+ * The PENDING placeholder branch is reserved for tests and for the
+ * regenerate flow that splits emission from the data commit; see
+ * DEC-FIN-006.
  */
 export function deriveSandboxImageRef(repoPath: string | undefined): string | undefined {
   if (!repoPath) {
@@ -175,10 +211,45 @@ export function deriveSandboxImageRef(repoPath: string | undefined): string | un
     if (!head) {
       return undefined;
     }
-    return `${repoPath.replace(/\\/g, "/")}@${head}`;
+    return `repo://${REPO_NAME}@${head}/`;
   } catch {
     return undefined;
   }
+}
+
+/**
+ * Build a placeholder sandbox_image_ref URI to record on first emit.
+ *
+ * Callers use this when they intend a downstream finalizer step to
+ * rewrite the SHA after the regenerate commit lands. The URI
+ * conforms to the repo:// grammar with PENDING in the SHA slot;
+ * `finalize_sandbox_ref.py` swaps PENDING for the post-commit SHA.
+ */
+export function pendingSandboxImageRef(): string {
+  return `repo://${REPO_NAME}@${PENDING_SANDBOX_SHA}/`;
+}
+
+/**
+ * Build a `repo://chip-supply-chain-map@<sha>/<rel-path>` URI.
+ *
+ * The relative path is preserved as-is (forward-slash POSIX). The
+ * caller is responsible for stripping the repo root from any
+ * absolute path before passing it in.
+ */
+export function buildRepoUri(sha: string, relPath: string): string {
+  // Normalize Windows separators first, then strip any leading slash
+  // so the URI shape is `repo://<repo>@<sha>/<rel-path>` with exactly
+  // one slash between the SHA and the relative path.
+  const cleanedPath = relPath.replace(/\\/g, "/").replace(/^\/+/, "");
+  return `repo://${REPO_NAME}@${sha}/${cleanedPath}`;
+}
+
+/**
+ * Build an `artifact://chip-supply-chain-map/<id>` URI for logical
+ * artifact references that are not file paths.
+ */
+export function buildArtifactUri(artifactId: string): string {
+  return `artifact://${REPO_NAME}/${artifactId}`;
 }
 
 // ----------------------------------------------------------------- gate aggregation
