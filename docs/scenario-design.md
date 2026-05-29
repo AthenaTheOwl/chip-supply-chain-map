@@ -30,6 +30,31 @@ priority.
 Multiplier: 1.8 for the directly exposed packaging, substrate, and accelerator
 platform nodes.
 
+## CoWoS-L Bottleneck (Deepened)
+
+Scenario id: `cowos-l-bottleneck`.
+
+Trigger: CoWoS-L line capacity for the largest reticles is rationed, on top of
+the broader advanced-packaging bottleneck.
+
+Modeled: higher stress on TSMC, ASE, Amkor, Ibiden, Unimicron, Shinko,
+NVIDIA Blackwell GB200, and AMD Instinct MI family. The scenario also bumps
+the strength of packaging and substrate edges that feed accelerator platforms
+one step (low to medium, medium to high, high to critical) and adds a six-month
+lead-time bump on TSMC and ABF substrate nodes so the heuristic reads the
+backend stretch.
+
+Not modeled: exact CoWoS-L line count, mask-set sequencing, or per-customer
+allocation.
+
+Multiplier: 2.1 for the directly exposed nodes.
+
+Edge impact: packages-for, supplies-substrates, and manufactures-for edges into
+Blackwell or MI rows get a one-step strength bump.
+
+Node attribute impact: TSMC plus ABF-substrate subtype nodes receive a six-month
+lead-time bump.
+
 ## ABF Substrate Shortage
 
 Trigger: ABF substrate supply cannot keep pace with advanced CPU, GPU, AI, and
@@ -53,6 +78,32 @@ node-specific lithography recipes.
 
 Multiplier: 1.9 because lithography delays affect expansion timing across both
 logic and memory.
+
+## Lithography Equipment Constraint
+
+Scenario id: `lithography-equipment-constraint`.
+
+Trigger: High-NA EUV plus mask-inspection capacity is rationed. The constraint
+sits one layer deeper than the broad EUV delay: rather than missing slot dates
+on tools already on order, the equipment vendors cannot expand the throughput
+of the tools they ship.
+
+Modeled: higher stress on ASML, Lasertec, Nikon, Canon, TSMC, Samsung Foundry,
+Intel Foundry, SK hynix, and Micron. The scenario bumps the strength of
+equipment edges from the four lithography suppliers into leading-edge foundries
+(TSMC, Samsung Foundry, Intel Foundry) one step, and adds lead-time bumps of
+nine months on ASML and six months on Lasertec.
+
+Not modeled: per-tool throughput, second-source field upgrades, EUV pellicle
+yields, or customer slot trading.
+
+Multiplier: 2.0 for the directly exposed nodes.
+
+Edge impact: supplies-equipment edges from ASML, Nikon, Canon, or Lasertec into
+leading-edge foundries get a one-step strength bump.
+
+Node attribute impact: ASML lead time bumps by nine months; Lasertec lead time
+bumps by six months.
 
 ## Blackwell and MI Supply Drought
 

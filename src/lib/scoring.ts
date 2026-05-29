@@ -1,4 +1,9 @@
-import { isEdgeSuppressedByScenarios, scenarioMultiplier } from "./scenarios";
+import {
+  isEdgeSuppressedByScenarios,
+  scenarioEdgeWeightMultiplier,
+  scenarioLeadTimeBumpMonths,
+  scenarioMultiplier
+} from "./scenarios";
 import type { GraphData, SupplyNode } from "./types";
 
 export type ScoreMap = Map<string, number>;
@@ -55,16 +60,46 @@ export function chokepointScore(
   const geoConcentration = 1 + topRegionShare(node, graph);
   const alternatives = countAlternatives(graph, node);
   const substitutability = 1 / (1 + Math.log(1 + alternatives));
-  const leadTime = 1 + leadTimeMonths(node) / 12;
+  const baseLeadTime = leadTimeMonths(node);
+  const bumpMonths = scenarioLeadTimeBumpMonths(node, activeScenarioIds);
+  const leadTime = 1 + (baseLeadTime + bumpMonths) / 12;
   const scenarioFactor = scenarioMultiplier(node, activeScenarioIds);
+  const edgePressure = scenarioEdgePressure(node, graph, activeScenarioIds);
 
   return (
     centralityFactor *
     geoConcentration *
     substitutability *
     leadTime *
-    scenarioFactor
+    scenarioFactor *
+    edgePressure
   );
+}
+
+function scenarioEdgePressure(
+  node: SupplyNode,
+  graph: GraphData,
+  activeScenarioIds: string[]
+) {
+  if (activeScenarioIds.length === 0) {
+    return 1;
+  }
+  const incident = graph.edges.filter(
+    (edge) => edge.source === node.id || edge.target === node.id
+  );
+  if (incident.length === 0) {
+    return 1;
+  }
+  let baseline = 0;
+  let active = 0;
+  for (const edge of incident) {
+    baseline += scenarioEdgeWeightMultiplier(edge, graph, []);
+    active += scenarioEdgeWeightMultiplier(edge, graph, activeScenarioIds);
+  }
+  if (baseline === 0) {
+    return 1;
+  }
+  return active / baseline;
 }
 
 export function betweennessCentrality(graph: GraphData): ScoreMap {

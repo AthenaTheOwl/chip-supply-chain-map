@@ -65,9 +65,31 @@ export interface SourceRef {
   url: string;
 }
 
+export interface ScenarioEdgeAdjustment {
+  /** Strength override applied when the scenario is active. */
+  strength?: Strength;
+  /** Optional edge-weight multiplier the chokepoint heuristic reads. */
+  weightMultiplier?: number;
+}
+
+export interface ScenarioNodeAttributeAdjustment {
+  /** Lead-time month bump added on top of the node's baseline. */
+  leadTimeBumpMonths?: number;
+}
+
 export interface Scenario {
   id: string;
   label: string;
   description: string;
   impactOn: (node: SupplyNode) => number;
+  /**
+   * Optional richer modeling: per-edge strength overrides applied when the
+   * scenario is active. Returning `undefined` leaves the edge unchanged.
+   */
+  edgeImpact?: (edge: SupplyEdge, graph: GraphData) => ScenarioEdgeAdjustment | undefined;
+  /**
+   * Optional richer modeling: per-node attribute overrides applied when the
+   * scenario is active (e.g. equipment lead-time bumps).
+   */
+  nodeAttributeImpact?: (node: SupplyNode) => ScenarioNodeAttributeAdjustment | undefined;
 }
