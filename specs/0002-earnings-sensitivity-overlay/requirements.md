@@ -435,3 +435,82 @@ Acceptance:
   would hide contract-gate failures.
 - Documented developer and CI flows omit the `--no-verify`
   commit-hook bypass.
+
+### R-FIN-025: dedicated multi-rerun replay determinism fixture
+
+WHEN the replay determinism gate runs, THE SYSTEM SHALL execute a
+dedicated unittest fixture at `scripts/test_replay_determinism.py`
+that replays the canonical sample `run-6a665b303138` RERUNS times
+(default 3 via env) at the recorded sandbox SHA and asserts every
+replay produces an identical canonicalized SHA-256 over the tuple
+`(replayed_packet_hash, recomputed_prompt_snapshot_hash,
+recomputed_tool_schemas_snapshot_hash)`.
+
+Acceptance:
+- The fixture reads
+  `ops/run-records/run-6a665b303138.json`, extracts the sandbox
+  SHA from `sandbox_image_ref` via the DEC-FIN-006 `repo://` URI
+  parser, saves the finalized Run record from the original HEAD,
+  checks out the recorded sandbox SHA, restores the saved record
+  over the working tree at that SHA, runs
+  `python scripts/replay_run.py --run-id run-6a665b303138` RERUNS
+  times, and reads each fresh replay record under
+  `ops/replay-records/run-6a665b303138/<replay-event-id>.json`.
+- Every replay carries `verdict == "byte_equal"` AND every
+  `replayed_packet_hash` matches the recorded
+  `committed_packet_hash`.
+- The canonical hash is computed by JSON-encoding the three-field
+  tuple with `sort_keys=True` and `separators=(",", ":")` and
+  taking SHA-256 of the byte string; every rerun produces the
+  same hash.
+- On hash divergence the fixture writes
+  `artifacts/failbundles/determinism_failure.json` plus
+  `trace_0.json` and `trace_1.json` for the first two diverging
+  canonical traces and fails the test with the bundle path.
+- Teardown restores the original HEAD and removes any replay
+  records and per-replay ledger files the fixture created so the
+  working tree returns to its starting state.
+- The fixture lives at `scripts/test_replay_determinism.py`
+  (Python unittest, matching the existing
+  `scripts/test_replay_run.py` convention) and is distinct from
+  the producer-side integration test in `test_replay_run.py`.
+
+### R-FIN-026: per-replay ledger filename carries the replay UUID
+
+WHEN `scripts/replay_run.py` writes the per-replay ledger entry in
+`emit_replay_event`, THE SYSTEM SHALL include the per-replay UUID
+in the ledger filename so two replays inside the same wall-clock
+second land on distinct files.
+
+Acceptance:
+- The ledger filename in `emit_replay_event` is
+  `replay-<run-id>-<safe-ts>-<replay-event-id>.jsonl` where
+  `safe-ts` is the ISO timestamp with colons and dashes stripped
+  and `replay-event-id` is the UUID generated for the replay.
+- The existing `replay-<run-id>-*.jsonl` glob the
+  `test_replay_run` cases match against still matches because
+  the UUID suffix sits inside the wildcard.
+- Two consecutive replays in the determinism fixture never
+  overwrite each other's ledger file.
+
+### R-FIN-027: CI runs replay-determinism as a contract gate
+
+WHEN the CI workflow set runs, THE SYSTEM SHALL execute the
+`replay-determinism` job in
+`.github/workflows/run-evidence-gates.yml` as a contract gate
+with no escape hatch.
+
+Acceptance:
+- `.github/workflows/run-evidence-gates.yml` declares a separate
+  `replay-determinism` job that runs on `ubuntu-latest` with
+  Python 3.11 and Node 20.
+- The job checks out chip-supply-chain-map with `fetch-depth: 0`
+  so the recorded sandbox SHA is reachable, installs the
+  gate-script dependencies plus the Node modules, and runs
+  `python -m unittest scripts.test_replay_determinism` with
+  `RERUNS=3`.
+- The job carries no `continue-on-error: true` and no
+  `if: ${{ failure() }}` mask.
+- A failure-bundle upload step runs only on failure to capture
+  `artifacts/failbundles/` for review and does not mask the
+  underlying job failure.

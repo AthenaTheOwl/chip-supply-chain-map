@@ -92,3 +92,15 @@ deferred:
     note: covered collectively by DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain
   - id: R-FIN-024
     note: covered collectively by DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain
+  # Workflow B recovery / 2026-05-29 added R-FIN-025..027 for the
+  # dedicated multi-rerun determinism fixture plus the per-replay
+  # ledger UUID-suffix fix plus the replay-determinism CI job.
+  # R-FIN-025 is resolved by
+  # DEC-FIN-008-chip-map-dedicated-determinism-fixture directly via
+  # the front-matter requirement field. R-FIN-026..027 are resolved
+  # collectively by the same DEC; the DEC's `## coverage` section
+  # enumerates them.
+  - id: R-FIN-026
+    note: covered collectively by DEC-FIN-008-chip-map-dedicated-determinism-fixture
+  - id: R-FIN-027
+    note: covered collectively by DEC-FIN-008-chip-map-dedicated-determinism-fixture
