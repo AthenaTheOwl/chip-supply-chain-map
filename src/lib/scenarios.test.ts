@@ -15,6 +15,8 @@
  *    the directly exposed nodes' scores go up, untargeted nodes do not.
  *
  * Run with `npm test`.
+ *
+ * Covers: R-FIN-028, R-FIN-029, R-FIN-030.
  */
 import assert from "node:assert/strict";
 import {

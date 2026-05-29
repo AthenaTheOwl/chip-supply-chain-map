@@ -19,6 +19,8 @@ Coverage:
 3. Missing record: exit 1 with a clear "not found" message.
 4. Partial: only ``sandbox_image_ref`` carries PENDING (inputs
    already resolved); only that one field is rewritten.
+
+Covers: R-FIN-020.
 """
 
 from __future__ import annotations

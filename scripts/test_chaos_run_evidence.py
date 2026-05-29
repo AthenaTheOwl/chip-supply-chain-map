@@ -43,6 +43,8 @@ once, applies its mutation in memory, writes the mutated copy to a
 TemporaryDirectory, monkey-patches the validator module's
 ``ROOT`` / ``EVENT_LEDGER_DIR`` / ``RUN_RECORDS_DIR`` to point at the
 temp tree, and runs ``main``.
+
+Covers: R-FIN-031, R-FIN-032, R-FIN-033.
 """
 
 from __future__ import annotations

@@ -22,6 +22,8 @@ Coverage:
 The export sub-process is stubbed in the positive case so the
 tests do not depend on ``node`` being installed on the test
 machine.
+
+Covers: R-FIN-013, R-FIN-014, R-FIN-015, R-FIN-016.
 """
 
 from __future__ import annotations
@@ -315,6 +317,8 @@ class ReplayUriTests(unittest.TestCase):
     ``repo://chip-supply-chain-map@<sha>/`` URI form. The PENDING
     placeholder must short-circuit with a clear "run the finalizer"
     message.
+
+    Covers: R-FIN-019.
     """
 
     def test_parse_sandbox_sha_uri_form(self) -> None:

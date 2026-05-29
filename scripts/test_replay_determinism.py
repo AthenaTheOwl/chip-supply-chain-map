@@ -45,6 +45,8 @@ Override the replay count with the ``RERUNS`` env var (default 3).
 Run locally with::
 
     python -m unittest scripts.test_replay_determinism
+
+Covers: R-FIN-025, R-FIN-026, R-FIN-027.
 """
 
 from __future__ import annotations

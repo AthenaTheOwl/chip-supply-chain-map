@@ -19,6 +19,9 @@ The negative cases cover the six Round-3 cross-check failure modes:
    ``gate.check.*`` events.
 
 Plus one positive case where a clean Run record + ledger pair passes.
+
+Covers: R-FIN-003, R-FIN-004, R-FIN-005, R-FIN-006, R-FIN-007,
+R-FIN-008, R-FIN-009, R-FIN-010, R-FIN-011, R-FIN-012.
 """
 
 from __future__ import annotations
@@ -319,6 +322,8 @@ class ResolveUriTests(unittest.TestCase):
     The validator must accept BOTH the new repo:// URI form and
     legacy local paths during the migration window. These tests
     pin the four-case truth table from DEC-CDCP-014.
+
+    Covers: R-FIN-017, R-FIN-018.
     """
 
     def test_repo_uri_resolves_under_portfolio_root(self) -> None:

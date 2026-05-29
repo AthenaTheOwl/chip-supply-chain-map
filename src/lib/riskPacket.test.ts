@@ -1,3 +1,15 @@
+/**
+ * Hand-rolled smoke test for the watchlist risk packet builder
+ * (DEC-FIN-002). Pins that `buildWatchlistRiskPacket` produces a
+ * deterministic client-side packet over sourced graph, score,
+ * scenario, and financial sensitivity facts, and that
+ * `formatRiskPacket` renders the packet to JSON / markdown without
+ * mutating the underlying data.
+ *
+ * Run with `npm test`.
+ *
+ * Covers: R-FIN-002.
+ */
 import assert from "node:assert/strict";
 import {
   buildWatchlistRiskPacket,

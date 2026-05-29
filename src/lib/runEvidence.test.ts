@@ -1,3 +1,22 @@
+/**
+ * Hand-rolled smoke test for the watchlist export run-evidence emitter
+ * (DEC-FIN-003, DEC-FIN-004, DEC-FIN-006). Pins:
+ *
+ * - canonicalization of inputs + heuristic config (order-independent)
+ * - SHA-256 format + stability (`prompt_snapshot_hash`,
+ *   `tool_schemas_snapshot_hash`)
+ * - gate aggregation into `gate_results_summary`
+ * - JSONL ledger emission + Run record emission shape
+ * - schema-aligned payload keys (`tool_name`, `fields_populated`,
+ *   cloned `gate_results_summary` on `pipeline.done`)
+ * - portable `repo://` + `artifact://` URI grammar in emitter helpers
+ *   (DEC-CDCP-014 + DEC-FIN-006)
+ *
+ * Run with `npm test`.
+ *
+ * Covers: R-FIN-002, R-FIN-005, R-FIN-006, R-FIN-007, R-FIN-010,
+ * R-FIN-011, R-FIN-017.
+ */
 import assert from "node:assert/strict";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
