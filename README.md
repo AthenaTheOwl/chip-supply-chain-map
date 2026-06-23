@@ -96,6 +96,23 @@ npm.cmd run dev
 npm.cmd run build
 ```
 
+## live demo
+
+Live Vercel app: <https://chip-supply-chain-map.vercel.app/>
+
+Vercel build settings:
+
+```text
+build command: npm run build
+output directory: dist
+```
+
+## connects to
+
+- `supplier-risk-rag-agent` for cited SEC risk text behind supply-chain exposure claims.
+- `semiconductor-e2e-manufacturing-optimization` for wafer-sourcing stress tests that sit below the graph.
+- `ai-supply-chain-copilot-prd` for the product workflow that would route graph findings into exception triage.
+
 ## methodology
 
 See [docs/methodology.md](./docs/methodology.md). The chokepoint
