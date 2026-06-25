@@ -21,6 +21,8 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@emnapi/core": "^1.11.1",
+    "@emnapi/runtime": "^1.11.1",
     "@tailwindcss/typography": "^0.5.10",
     "@types/cytoscape": "^3.31.0",
     "@types/react": "^18.3.0",
