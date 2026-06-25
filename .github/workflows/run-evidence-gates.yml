@@ -119,9 +119,16 @@ jobs:
           # finalized record after checkout so the producer code+inputs
           # at the sandbox SHA replay against the truth.
           SAVED_RECORD="$RUNNER_TEMP/saved-run-record.json"
+          SAVED_REPLAY="$RUNNER_TEMP/replay_run-current.py"
+          SAVED_PACKET="$RUNNER_TEMP/chip-watchlist-risk-packet.json"
           cp "$RECORD" "$SAVED_RECORD"
+          cp scripts/replay_run.py "$SAVED_REPLAY"
+          cp ops/exports/chip-watchlist-risk-packet.json "$SAVED_PACKET"
           git -c advice.detachedHead=false checkout "$SANDBOX_SHA"
           cp "$SAVED_RECORD" "$RECORD"
+          cp "$SAVED_REPLAY" scripts/replay_run.py
+          mkdir -p ops/exports
+          cp "$SAVED_PACKET" ops/exports/chip-watchlist-risk-packet.json
           python scripts/replay_run.py --run-id "${{ steps.sample.outputs.run_id }}"
 
   replay-determinism:

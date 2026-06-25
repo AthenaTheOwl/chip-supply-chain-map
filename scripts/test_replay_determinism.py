@@ -212,6 +212,14 @@ class ReplayDeterminismTests(unittest.TestCase):
             except RuntimeError:
                 pass
             try:
+                _git("checkout", "--", "scripts/replay_run.py")
+            except RuntimeError:
+                pass
+            try:
+                _git("checkout", "--", "ops/exports/chip-watchlist-risk-packet.json")
+            except RuntimeError:
+                pass
+            try:
                 _git("checkout", self._original_ref)
             except RuntimeError:
                 # Fall back to the SHA form if the symbolic ref name
@@ -277,11 +285,20 @@ class ReplayDeterminismTests(unittest.TestCase):
         # (which carries the PENDING placeholder per the DEC-FIN-006
         # two-pass flow) replays against the finalized SHA. The CI
         # workflow does the same dance via ``cp`` after the
-        # ``git checkout``.
+        # ``git checkout``. Save the current replay harness and final
+        # committed packet too: the sandbox SHA can predate replay
+        # portability fixes and the packet commit.
         finalized_record_bytes = RUN_RECORD_PATH.read_bytes()
+        replay_script_path = REPO_ROOT / "scripts" / "replay_run.py"
+        replay_script_bytes = replay_script_path.read_bytes()
+        committed_packet_path = REPO_ROOT / "ops" / "exports" / "chip-watchlist-risk-packet.json"
+        committed_packet_bytes = committed_packet_path.read_bytes()
         _git("checkout", sandbox_sha)
         self._checked_out_sandbox = True
         RUN_RECORD_PATH.write_bytes(finalized_record_bytes)
+        replay_script_path.write_bytes(replay_script_bytes)
+        committed_packet_path.parent.mkdir(parents=True, exist_ok=True)
+        committed_packet_path.write_bytes(committed_packet_bytes)
 
         canonical_traces: list[dict[str, Any]] = []
         canonical_hashes: list[str] = []
