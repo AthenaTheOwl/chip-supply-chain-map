@@ -27,13 +27,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out chip-supply-chain-map
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: chip-supply-chain-map
           fetch-depth: 0
 
       - name: Check out trace-to-eval-harness (sibling)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: AthenaTheOwl/trace-to-eval-harness
           path: trace-to-eval-harness
@@ -138,7 +138,7 @@ jobs:
     # job per DEC-FIN-008: contract gate, no continue-on-error.
     steps:
       - name: Check out chip-supply-chain-map
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -189,7 +189,7 @@ jobs:
     # ships. Contract gate, no continue-on-error.
     steps:
       - name: Check out chip-supply-chain-map
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v6
