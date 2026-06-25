@@ -1,0 +1,600 @@
+{
+  "version": 1,
+  "score_basis": "chokepoint-score-v1",
+  "active_scenarios": [],
+  "watchlist": [
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "fabless",
+      "country": "US",
+      "public_ticker": "NVDA",
+      "chokepoint_score": 5,
+      "source_id": "s11",
+      "financial_record_count": 1
+    },
+    {
+      "id": "tsmc",
+      "name": "TSMC",
+      "type": "foundry",
+      "country": "TW",
+      "public_ticker": "TSM",
+      "chokepoint_score": 100,
+      "source_id": "s1",
+      "financial_record_count": 2
+    },
+    {
+      "id": "asml",
+      "name": "ASML",
+      "type": "equipment",
+      "country": "NL",
+      "public_ticker": "ASML",
+      "chokepoint_score": 6,
+      "source_id": "s22",
+      "financial_record_count": 1
+    },
+    {
+      "id": "sk-hynix",
+      "name": "SK Hynix",
+      "type": "memory",
+      "country": "KR",
+      "public_ticker": "000660.KS",
+      "chokepoint_score": 3,
+      "source_id": "s54",
+      "financial_record_count": 1
+    }
+  ],
+  "summary": {
+    "watched_node_count": 4,
+    "average_chokepoint_score": 28.5,
+    "max_chokepoint_score": {
+      "node_id": "tsmc",
+      "name": "TSMC",
+      "score": 100
+    },
+    "dependency_count": 6,
+    "region_count": 6,
+    "sensitive_link_count": 8,
+    "financial_record_count": 5
+  },
+  "top_dependencies": [
+    {
+      "id": "asml",
+      "name": "ASML",
+      "type": "equipment",
+      "country": "NL",
+      "link_count": 2,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "sk-hynix",
+        "tsmc"
+      ],
+      "source_ids": [
+        "s22"
+      ]
+    },
+    {
+      "id": "ibiden",
+      "name": "Ibiden",
+      "type": "substrates",
+      "country": "JP",
+      "link_count": 2,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "nvidia",
+        "tsmc"
+      ],
+      "source_ids": [
+        "s49"
+      ]
+    },
+    {
+      "id": "tsmc",
+      "name": "TSMC",
+      "type": "foundry",
+      "country": "TW",
+      "link_count": 2,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "nvidia"
+      ],
+      "source_ids": [
+        "s1"
+      ]
+    },
+    {
+      "id": "jsr",
+      "name": "JSR",
+      "type": "materials",
+      "country": "JP",
+      "link_count": 1,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "tsmc"
+      ],
+      "source_ids": [
+        "s39"
+      ]
+    },
+    {
+      "id": "lasertec",
+      "name": "Lasertec",
+      "type": "equipment",
+      "country": "JP",
+      "link_count": 1,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "tsmc"
+      ],
+      "source_ids": [
+        "s29"
+      ]
+    },
+    {
+      "id": "sk-hynix",
+      "name": "SK Hynix",
+      "type": "memory",
+      "country": "KR",
+      "link_count": 1,
+      "highest_strength": "critical",
+      "watched_nodes": [
+        "nvidia"
+      ],
+      "source_ids": [
+        "s54"
+      ]
+    }
+  ],
+  "top_regions": [
+    {
+      "country": "US",
+      "node_count": 11,
+      "watched_count": 1,
+      "dependency_count": 10,
+      "source_ids": [
+        "s11",
+        "s18",
+        "s19",
+        "s25",
+        "s26",
+        "s27",
+        "s30",
+        "s41",
+        "s43",
+        "s53",
+        "s60"
+      ]
+    },
+    {
+      "country": "JP",
+      "node_count": 9,
+      "watched_count": 0,
+      "dependency_count": 9,
+      "source_ids": [
+        "s28",
+        "s29",
+        "s35",
+        "s37",
+        "s38",
+        "s39",
+        "s42",
+        "s49",
+        "s51"
+      ]
+    },
+    {
+      "country": "TW",
+      "node_count": 4,
+      "watched_count": 1,
+      "dependency_count": 4,
+      "source_ids": [
+        "s1",
+        "s44",
+        "s50",
+        "s62"
+      ]
+    },
+    {
+      "country": "KR",
+      "node_count": 3,
+      "watched_count": 1,
+      "dependency_count": 3,
+      "source_ids": [
+        "s2",
+        "s54",
+        "s55"
+      ]
+    },
+    {
+      "country": "GB",
+      "node_count": 2,
+      "watched_count": 0,
+      "dependency_count": 2,
+      "source_ids": [
+        "s21",
+        "s33"
+      ]
+    },
+    {
+      "country": "NL",
+      "node_count": 1,
+      "watched_count": 1,
+      "dependency_count": 1,
+      "source_ids": [
+        "s22"
+      ]
+    }
+  ],
+  "sensitive_links": [
+    {
+      "source": "asml",
+      "source_name": "ASML",
+      "target": "tsmc",
+      "target_name": "TSMC",
+      "relation": "supplies-equipment",
+      "strength": "critical",
+      "notes": "EUV scanners for leading-edge nodes",
+      "source_id": "s22",
+      "watched_nodes": [
+        "asml",
+        "tsmc"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "sk-hynix",
+      "source_name": "SK Hynix",
+      "target": "nvidia",
+      "target_name": "NVIDIA",
+      "relation": "supplies-memory",
+      "strength": "critical",
+      "notes": "HBM for AI accelerator platforms",
+      "source_id": "s54",
+      "watched_nodes": [
+        "nvidia",
+        "sk-hynix"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "tsmc",
+      "source_name": "TSMC",
+      "target": "nvidia",
+      "target_name": "NVIDIA",
+      "relation": "manufactures-for",
+      "strength": "critical",
+      "notes": "Advanced-node GPU and accelerator manufacturing",
+      "source_id": "s1",
+      "watched_nodes": [
+        "nvidia",
+        "tsmc"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "tsmc",
+      "source_name": "TSMC",
+      "target": "nvidia",
+      "target_name": "NVIDIA",
+      "relation": "packages-for",
+      "strength": "critical",
+      "notes": "CoWoS advanced packaging for AI accelerators",
+      "source_id": "s1",
+      "watched_nodes": [
+        "nvidia",
+        "tsmc"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "asml",
+      "source_name": "ASML",
+      "target": "intel-foundry",
+      "target_name": "Intel Foundry",
+      "relation": "supplies-equipment",
+      "strength": "critical",
+      "notes": "EUV scanners for leading-edge nodes",
+      "source_id": "s22",
+      "watched_nodes": [
+        "asml"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "asml",
+      "source_name": "ASML",
+      "target": "samsung-foundry",
+      "target_name": "Samsung Foundry",
+      "relation": "supplies-equipment",
+      "strength": "critical",
+      "notes": "EUV scanners for leading-edge nodes",
+      "source_id": "s22",
+      "watched_nodes": [
+        "asml"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "aws",
+      "source_name": "AWS",
+      "target": "nvidia",
+      "target_name": "NVIDIA",
+      "relation": "procures-from-fabless",
+      "strength": "critical",
+      "notes": "Cloud AI accelerator demand",
+      "source_id": "s64",
+      "watched_nodes": [
+        "nvidia"
+      ],
+      "active_scenarios": []
+    },
+    {
+      "source": "ibiden",
+      "source_name": "Ibiden",
+      "target": "nvidia",
+      "target_name": "NVIDIA",
+      "relation": "supplies-substrates",
+      "strength": "critical",
+      "notes": "ABF substrates for AI accelerator packages",
+      "source_id": "s49",
+      "watched_nodes": [
+        "nvidia"
+      ],
+      "active_scenarios": []
+    }
+  ],
+  "financial_sensitivity": [
+    {
+      "company": "ASML",
+      "ticker": "ASML",
+      "node_id": "asml",
+      "node_name": "ASML",
+      "scenario_id": "lithography-constraint",
+      "scenario_label": "EUV equipment delay",
+      "active_scenario": false,
+      "metric_name": "Net system sales",
+      "metric_value": "EUR 24.5B",
+      "period": "FY2025",
+      "sensitivity_band": "high",
+      "note": "Lithography delivery timing maps directly into system shipment revenue",
+      "source_id": "s107"
+    },
+    {
+      "company": "NVIDIA",
+      "ticker": "NVDA",
+      "node_id": "nvidia",
+      "node_name": "NVIDIA",
+      "scenario_id": "blackwell-mi-supply-drought",
+      "scenario_label": "Blackwell and MI supply drought",
+      "active_scenario": false,
+      "metric_name": "Data Center revenue",
+      "metric_value": "USD 193.7B",
+      "period": "FY2026",
+      "sensitivity_band": "high",
+      "note": "Blackwell shipment timing is tied to HBM and advanced packaging availability",
+      "source_id": "s104"
+    },
+    {
+      "company": "SK hynix",
+      "ticker": "000660.KS",
+      "node_id": "sk-hynix",
+      "node_name": "SK Hynix",
+      "scenario_id": "hbm-cowos-crunch",
+      "scenario_label": "HBM and CoWoS crunch",
+      "active_scenario": false,
+      "metric_name": "Revenue",
+      "metric_value": "KRW 97.1467T",
+      "period": "FY2025",
+      "sensitivity_band": "high",
+      "note": "HBM revenue more than doubled as AI memory became a larger profit driver",
+      "source_id": "s108"
+    },
+    {
+      "company": "TSMC",
+      "ticker": "TSM",
+      "node_id": "tsmc",
+      "node_name": "TSMC",
+      "scenario_id": "hbm-cowos-crunch",
+      "scenario_label": "HBM and CoWoS crunch",
+      "active_scenario": false,
+      "metric_name": "Advanced technology wafer revenue share",
+      "metric_value": "74%",
+      "period": "FY2025",
+      "sensitivity_band": "high",
+      "note": "Advanced nodes and packaging carry AI accelerator wafer demand",
+      "source_id": "s106"
+    },
+    {
+      "company": "TSMC",
+      "ticker": "TSM",
+      "node_id": "tsmc",
+      "node_name": "TSMC",
+      "scenario_id": "taiwan-ai-cluster-stress",
+      "scenario_label": "Taiwan AI cluster stress",
+      "active_scenario": false,
+      "metric_name": "Consolidated revenue",
+      "metric_value": "USD 122.42B",
+      "period": "FY2025",
+      "sensitivity_band": "high",
+      "note": "Taiwan leading edge and packaging concentration ties regional stress to revenue timing",
+      "source_id": "s106"
+    }
+  ],
+  "evidence_sources": [
+    {
+      "id": "s1",
+      "label": "TSMC 2024 Annual Report.",
+      "url": "https://investor.tsmc.com/static/annualReports/2024/english/index.html"
+    },
+    {
+      "id": "s2",
+      "label": "Samsung Electronics Annual Reports.",
+      "url": "https://www.samsung.com/global/ir/reports-disclosures/annual-reports/"
+    },
+    {
+      "id": "s11",
+      "label": "NVIDIA annual reports and proxies.",
+      "url": "https://investor.nvidia.com/financial-info/annual-reports-and-proxies/default.aspx"
+    },
+    {
+      "id": "s18",
+      "label": "Synopsys SEC filings.",
+      "url": "https://investor.synopsys.com/financials/sec-filings/default.aspx"
+    },
+    {
+      "id": "s19",
+      "label": "Cadence annual reports.",
+      "url": "https://investors.cadence.com/financial-information/annual-reports"
+    },
+    {
+      "id": "s21",
+      "label": "Arm annual reports.",
+      "url": "https://investors.arm.com/financials/annual-reports"
+    },
+    {
+      "id": "s22",
+      "label": "ASML annual reports.",
+      "url": "https://www.asml.com/en/investors/annual-report"
+    },
+    {
+      "id": "s25",
+      "label": "Applied Materials annual reports.",
+      "url": "https://ir.appliedmaterials.com/financial-information/annual-reports"
+    },
+    {
+      "id": "s26",
+      "label": "Lam Research annual reports.",
+      "url": "https://investor.lamresearch.com/financial-information/annual-reports"
+    },
+    {
+      "id": "s27",
+      "label": "KLA annual reports.",
+      "url": "https://ir.kla.com/financial-information/annual-reports"
+    },
+    {
+      "id": "s28",
+      "label": "Tokyo Electron annual reports.",
+      "url": "https://www.tel.com/ir/library/ar/"
+    },
+    {
+      "id": "s29",
+      "label": "Lasertec annual reports.",
+      "url": "https://www.lasertec.co.jp/en/ir/library/annual.html"
+    },
+    {
+      "id": "s30",
+      "label": "Onto Innovation SEC filings.",
+      "url": "https://investors.ontoinnovation.com/financial-information/sec-filings"
+    },
+    {
+      "id": "s33",
+      "label": "Edwards Vacuum semiconductor market page.",
+      "url": "https://www.edwardsvacuum.com/en/semiconductor"
+    },
+    {
+      "id": "s35",
+      "label": "Advantest annual reports.",
+      "url": "https://www.advantest.com/investors/library/annual-report/"
+    },
+    {
+      "id": "s37",
+      "label": "Shin-Etsu Chemical annual reports.",
+      "url": "https://www.shinetsu.co.jp/en/ir/library/annual/"
+    },
+    {
+      "id": "s38",
+      "label": "SUMCO annual reports.",
+      "url": "https://www.sumcosi.com/en/ir/library/annual.html"
+    },
+    {
+      "id": "s39",
+      "label": "JSR annual reports.",
+      "url": "https://www.jsr.co.jp/jsr_e/ir/library/annual.shtml"
+    },
+    {
+      "id": "s41",
+      "label": "Entegris SEC filings.",
+      "url": "https://investor.entegris.com/financials/sec-filings/default.aspx"
+    },
+    {
+      "id": "s42",
+      "label": "Hoya investor library.",
+      "url": "https://www.hoya.com/en/ir/library/"
+    },
+    {
+      "id": "s43",
+      "label": "Entegris acquisition of CMC Materials.",
+      "url": "https://investor.entegris.com/news-releases/news-release-details/entegris-completes-acquisition-cmc-materials"
+    },
+    {
+      "id": "s44",
+      "label": "GlobalWafers financial information.",
+      "url": "https://www.sas-globalwafers.com/en/investor-relations/financial-information/"
+    },
+    {
+      "id": "s49",
+      "label": "Ibiden annual reports.",
+      "url": "https://www.ibiden.com/ir/library/annual/"
+    },
+    {
+      "id": "s50",
+      "label": "Unimicron annual reports.",
+      "url": "https://www.unimicron.com/en/ir/annual-report"
+    },
+    {
+      "id": "s51",
+      "label": "Shinko Electric annual reports.",
+      "url": "https://www.shinko.co.jp/english/ir/library/annual-report/"
+    },
+    {
+      "id": "s53",
+      "label": "Micron SEC filings.",
+      "url": "https://investors.micron.com/financial-information/sec-filings"
+    },
+    {
+      "id": "s54",
+      "label": "SK Hynix investor relations reports.",
+      "url": "https://www.skhynix.com/ir/UI-FR-IR50"
+    },
+    {
+      "id": "s55",
+      "label": "Samsung Semiconductor memory products.",
+      "url": "https://semiconductor.samsung.com/us/dram/"
+    },
+    {
+      "id": "s60",
+      "label": "Amkor annual reports.",
+      "url": "https://ir.amkor.com/financials/annual-reports/default.aspx"
+    },
+    {
+      "id": "s62",
+      "label": "Powertech Technology financial reports.",
+      "url": "https://www.pti.com.tw/en/ir/financial-reports/"
+    },
+    {
+      "id": "s64",
+      "label": "AWS Trainium official page.",
+      "url": "https://aws.amazon.com/machine-learning/trainium/"
+    },
+    {
+      "id": "s104",
+      "label": "NVIDIA fiscal 2026 financial results.",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2026/"
+    },
+    {
+      "id": "s106",
+      "label": "TSMC 2025 Annual Report.",
+      "url": "https://investor.tsmc.com/static/annualReports/2025/english/index.html"
+    },
+    {
+      "id": "s107",
+      "label": "ASML 2025 Annual Report financials.",
+      "url": "https://www.asml.com/en/investors/annual-report/2025/financials"
+    },
+    {
+      "id": "s108",
+      "label": "SK hynix fiscal 2025 financial results.",
+      "url": "https://news.skhynix.com/sk-hynix-announces-fy25-financial-results/"
+    }
+  ]
+}
