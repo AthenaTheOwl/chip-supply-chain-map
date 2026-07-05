@@ -50,7 +50,7 @@ content.
 ## Domain decisions
 
 - Code ships under MIT. Data and docs ship under CC BY 4.0.
-- The graph holds 78 nodes and 180 edges as of the 2024-2026
+- The graph holds 87 nodes and 205 edges as of the 2024-2026
   snapshot. The CSV contract lives at `src/data/nodes.csv` and
   `src/data/edges.csv`; the source attestation lives at
   `src/data/sources.md` with `s\d+` IDs that the row-level

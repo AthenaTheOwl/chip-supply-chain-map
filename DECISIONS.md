@@ -4,7 +4,8 @@
 
 - Kept the brief's CSV schemas exactly for `nodes.csv` and `edges.csv`.
 - Used 78 nodes and 180 edges to stay inside the requested 50-100 node and
-  100-200 edge ranges while covering every required company.
+  100-200 edge ranges while covering every required company (now 87 nodes /
+  205 edges after later additions).
 - Treated most edges as supplier-to-consumer, but kept the brief's procurement
   semantics for `procures-from-foundry` and `procures-from-fabless`: the source
   is the downstream buyer and the target is the supplier.

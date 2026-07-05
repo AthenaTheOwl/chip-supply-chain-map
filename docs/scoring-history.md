@@ -34,9 +34,15 @@ live snapshot.
 
 ## What "synthetic" means here
 
-For each of the 78 nodes in `src/data/nodes.csv`, I authored a row
-per quarter (2025-Q3, 2025-Q4, 2026-Q1, 2026-Q2). The 2026-Q2 row is
-the "current" snapshot and was anchored to the score the live app
+For each of the 78 nodes in `src/data/nodes.csv` at the time, I
+authored a row per quarter (2025-Q3, 2025-Q4, 2026-Q1, 2026-Q2).
+`src/data/nodes.csv` has since grown to 87 nodes; the 9 nodes added
+later (AI accelerator and hyperscaler demand nodes such as NVIDIA
+Blackwell, AMD Instinct, Cerebras, Groq, SambaNova, Tenstorrent,
+Etched, CoreWeave, and Oracle Cloud) do not yet have quarterly rows
+in `nodes_history.csv`; the History slider has no historical view for
+those nodes until a future refresh extends the CSV. The 2026-Q2 row
+is the "current" snapshot and was anchored to the score the live app
 renders from `src/data/nodes.csv`. Earlier quarters were drifted
 backwards along plausible directions:
 
