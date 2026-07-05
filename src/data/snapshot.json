@@ -3,7 +3,7 @@
   "label": "Data snapshot 2026-06-05",
   "refreshed_at": "2026-06-05",
   "sources_checked_through": "2026-05-31",
-  "node_count": 88,
+  "node_count": 87,
   "edge_count": 205,
   "source_count": 113,
   "notes": "Node + edge counts derived from the bundled CSVs at refresh time. The sources_checked_through date is the latest disclosure date the curator confirmed for the top-20 sources (s1-s20)."
