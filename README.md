@@ -1,6 +1,6 @@
 # Chip supply chain map
 
-Seventy-eight nodes and 180 edges. Click a lithography node and the graph reminds you that a supply chain can fit on a screen only after you remove the panic.
+87 nodes, 205 edges, and 113 sources. Click a lithography node and the graph reminds you that a supply chain can fit on a screen only after you remove the panic.
 
 **Live:** [chip-supply-chain-map.vercel.app](https://chip-supply-chain-map.vercel.app/)
 
@@ -60,10 +60,10 @@ output directory: dist
 
 ## Data
 
-- `src/data/nodes.csv` - 78 companies and high-level attributes.
-- `src/data/edges.csv` - 180 directional dependencies.
+- `src/data/nodes.csv` - 87 companies and high-level attributes.
+- `src/data/edges.csv` - 205 directional dependencies.
 - `src/data/financial_sensitivity.csv` - sourced public-company revenue, capex, backlog, and exposure records keyed by node and scenario.
-- `src/data/sources.md` - source IDs used by the CSV files.
+- `src/data/sources.md` - 113 source IDs used by the CSV files.
 
 Sources favor official annual reports, SEC and company pages, and industry reports from SIA, BCG, and SEMI. Some supplier-customer edges are public-claim heuristics where companies do not disclose exact volumes or customer mix.
 
