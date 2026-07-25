@@ -46,9 +46,9 @@ import { parseCsv } from "../../src/lib/csv";
 // financial.ts and graph.ts both top-level-import "?raw" CSV/markdown
 // modules that only Vite knows how to load, so we cannot import them
 // here. We import the types via /// reference of the source-of-truth
-// modules and re-state the small helpers (SENSITIVITY_BANDS,
-// parseSources) below so the CLI bundles cleanly under esbuild without
+// modules and re-state SENSITIVITY_BANDS below so the CLI bundles cleanly without
 // pulling in the Vite raw-import side effects.
+import { parseSources } from "../../src/lib/sources";
 import {
   buildWatchlistRiskPacket,
   formatRiskPacket,
@@ -104,27 +104,6 @@ interface FinancialSensitivity {
   source_id: string;
   sensitivity_band: SensitivityBand;
   note: string;
-}
-
-// Pulled byte-for-byte from src/lib/graph.ts (parseSources only); kept
-// here for the same Vite-raw-import reason.
-function parseSources(raw: string): Map<string, SourceRef> {
-  const entries = new Map<string, SourceRef>();
-  const linePattern = /^- \*\*(s\d+)\*\* - (.*?) (https?:\/\/\S+)$/;
-
-  raw
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .forEach((line) => {
-      const match = line.match(linePattern);
-      if (!match) {
-        return;
-      }
-      const [, id, label, url] = match;
-      entries.set(id, { id, label, url });
-    });
-
-  return entries;
 }
 
 // ----------------------------------------------------------------- arg parsing

@@ -2,6 +2,7 @@ import edgesCsv from "../data/edges.csv?raw";
 import nodesCsv from "../data/nodes.csv?raw";
 import sourcesMd from "../data/sources.md?raw";
 import { parseCsv } from "./csv";
+import { parseSources } from "./sources";
 import {
   NODE_TYPES,
   RELATIONS,
@@ -9,7 +10,6 @@ import {
   type GraphData,
   type NodeType,
   type Relation,
-  type SourceRef,
   type Strength,
   type SupplyEdge,
   type SupplyNode
@@ -48,25 +48,6 @@ export function relatedNodeIdForEdge(
   }
 
   return edge.source === nodeId ? edge.target : edge.source;
-}
-
-export function parseSources(raw: string): Map<string, SourceRef> {
-  const entries = new Map<string, SourceRef>();
-  const linePattern = /^- \*\*(s\d+)\*\* - (.*?) (https?:\/\/\S+)$/;
-
-  raw
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .forEach((line) => {
-      const match = line.match(linePattern);
-      if (!match) {
-        return;
-      }
-      const [, id, label, url] = match;
-      entries.set(id, { id, label, url });
-    });
-
-  return entries;
 }
 
 function toNode(row: Record<string, string>): SupplyNode {
