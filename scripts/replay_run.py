@@ -46,7 +46,15 @@ Behavior, in order:
    ledger at
    ``ops/event-ledger/replay-<run-id>-<ISO-timestamp>.jsonl``.
 9. Write a replay report at
-   ``ops/replay-records/<run-id>/<replay-event-id>.json``.
+   ``ops/replay-records/<run-id>/<replay-event-id>.json``. The report
+   dates itself twice, on purpose. ``created_at`` is the name
+   athena-site's ``evidence_quorum_sentinel.py`` looks for when it
+   ages a replay artifact; that sentinel dropped its file-mtime
+   fallback (a fresh shallow clone dates every file to clone time),
+   so a report carrying only the older ``timestamp`` name is read as
+   undated and can never satisfy quorum. ``timestamp`` stays for the
+   artifacts already committed under ``ops/replay-records/``. Both
+   names always carry the same value.
 10. Print a summary line; exit 0 iff replay_equivalent.
 
 The script is offline-first: no network, no external binaries
@@ -505,6 +513,7 @@ def replay(
         # packet so the schema-required field stays populated.
         mismatch_packet_ref = _safe_rel(committed_packet)
         report = {
+            "created_at": timestamp,
             "comparison": {
                 "input_mismatches": input_mismatches,
                 "recomputed_prompt_snapshot_hash": recomputed_prompt,
@@ -555,6 +564,7 @@ def replay(
             )
             fallback_packet_ref = _safe_rel(committed_packet)
             report = {
+                "created_at": timestamp,
                 "comparison": {"export_stderr": stderr, "export_stdout": stdout},
                 "packet_ref": fallback_packet_ref,
                 "recorded_sandbox_sha": recorded_sha,
@@ -618,6 +628,7 @@ def replay(
         ledger_dir,
     )
     report = {
+        "created_at": timestamp,
         "comparison": {
             "committed_packet_hash": committed_hash,
             "committed_packet_ref": _safe_rel(committed_packet),
