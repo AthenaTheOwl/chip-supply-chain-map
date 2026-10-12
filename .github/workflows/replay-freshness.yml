@@ -1,0 +1,184 @@
+name: Replay freshness
+
+# Replays the canonical sample on a fixed schedule and commits the dated
+# replay record, so the replay-equivalence claim is re-checked twice a
+# month instead of when someone remembers (DEC-FIN-012).
+#
+# The replay sequence is the `replay-smoke` step from
+# `.github/workflows/run-evidence-gates.yml`: save the finalized Run
+# record, the current `scripts/replay_run.py` and the exported packet,
+# check out the recorded sandbox SHA, overlay the three, replay. The
+# only addition is what happens after a replay that exits 0: return to
+# main and commit the new replay record plus its per-replay ledger, and
+# nothing else. A replay that fails commits nothing and opens an issue.
+#
+# Canonical sample: run-6a665b303138.
+# Sibling repo dependency: AthenaTheOwl/trace-to-eval-harness.
+
+on:
+  schedule:
+    - cron: "17 6 1,15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: replay-freshness
+  cancel-in-progress: false
+
+env:
+  DEFAULT_BRANCH: main
+  # The replay commit (and a rebase, if main moves mid-run) is made as the Actions bot.
+  GIT_AUTHOR_NAME: github-actions[bot]
+  GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  GIT_COMMITTER_NAME: github-actions[bot]
+  GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+
+jobs:
+  replay-and-commit:
+    name: replay canonical sample and commit the record
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out chip-supply-chain-map
+        uses: actions/checkout@v7
+        with:
+          path: chip-supply-chain-map
+          ref: main
+          fetch-depth: 0
+
+      - name: Check out trace-to-eval-harness (sibling)
+        uses: actions/checkout@v7
+        with:
+          repository: AthenaTheOwl/trace-to-eval-harness
+          path: trace-to-eval-harness
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: chip-supply-chain-map/package-lock.json
+
+      - name: Install chip-supply-chain-map node deps
+        working-directory: chip-supply-chain-map
+        run: npm ci
+
+      - name: Resolve canonical sample
+        id: sample
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          RUN_ID="run-6a665b303138"
+          LEDGER="ops/event-ledger/${RUN_ID}.jsonl"
+          RECORD="ops/run-records/${RUN_ID}.json"
+          test -f "$LEDGER" || { echo "missing ledger: $LEDGER"; exit 1; }
+          test -f "$RECORD" || { echo "missing run record: $RECORD"; exit 1; }
+          echo "run_id=$RUN_ID"     >> "$GITHUB_OUTPUT"
+          echo "ledger=$LEDGER"     >> "$GITHUB_OUTPUT"
+          echo "record=$RECORD"     >> "$GITHUB_OUTPUT"
+
+      - name: Extract recorded sandbox SHA
+        id: sandbox
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          SANDBOX_URI=$(python -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["sandbox_image_ref"])' "${{ steps.sample.outputs.record }}")
+          echo "sandbox_uri=$SANDBOX_URI"
+          # Accept repo://<repo>@<sha>/ (portable form) and legacy <abs-path>@<sha>.
+          SANDBOX_SHA=$(echo "$SANDBOX_URI" | grep -oE '[a-f0-9]{40}' | head -n 1 || true)
+          if [ -z "$SANDBOX_SHA" ]; then
+            echo "could not extract 40-char SHA from sandbox_image_ref: $SANDBOX_URI" >&2
+            exit 1
+          fi
+          echo "sandbox_sha=$SANDBOX_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Replay at the recorded sandbox SHA
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          SANDBOX_SHA="${{ steps.sandbox.outputs.sandbox_sha }}"
+          RECORD="${{ steps.sample.outputs.record }}"
+          # Same sequence as replay-smoke in run-evidence-gates.yml.
+          SAVED_RECORD="$RUNNER_TEMP/saved-run-record.json"
+          SAVED_REPLAY="$RUNNER_TEMP/replay_run-current.py"
+          SAVED_PACKET="$RUNNER_TEMP/chip-watchlist-risk-packet.json"
+          cp "$RECORD" "$SAVED_RECORD"
+          cp scripts/replay_run.py "$SAVED_REPLAY"
+          cp ops/exports/chip-watchlist-risk-packet.json "$SAVED_PACKET"
+          git -c advice.detachedHead=false checkout "$SANDBOX_SHA"
+          cp "$SAVED_RECORD" "$RECORD"
+          cp "$SAVED_REPLAY" scripts/replay_run.py
+          mkdir -p ops/exports
+          cp "$SAVED_PACKET" ops/exports/chip-watchlist-risk-packet.json
+          python scripts/replay_run.py --run-id "${{ steps.sample.outputs.run_id }}"
+
+      - name: Return to main and stage only the new replay record and ledger
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          RUN_ID="${{ steps.sample.outputs.run_id }}"
+          RECORD="${{ steps.sample.outputs.record }}"
+          # The replay wrote exactly one report; the report names its ledger.
+          mapfile -t NEW_REPORTS < <(git ls-files --others --exclude-standard -- "ops/replay-records/${RUN_ID}/")
+          if [ "${#NEW_REPORTS[@]}" -ne 1 ]; then
+            echo "expected exactly one new replay record, found ${#NEW_REPORTS[@]}: ${NEW_REPORTS[*]:-none}" >&2
+            exit 1
+          fi
+          NEW_REPORT="${NEW_REPORTS[0]}"
+          NEW_LEDGER=$(python -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["replay_ledger_ref"])' "$NEW_REPORT")
+          test -f "$NEW_LEDGER" || { echo "replay ledger named by the report is missing: $NEW_LEDGER" >&2; exit 1; }
+          # The evidence quorum ages a record by created_at; refuse to commit one it cannot date.
+          python -c 'import json, sys; d = json.load(open(sys.argv[1], encoding="utf-8")); sys.exit(0 if d.get("replay_equivalent") is True and d.get("created_at") else "record is not an equivalent replay with created_at")' "$NEW_REPORT"
+          cp "$NEW_REPORT" "$RUNNER_TEMP/new-replay-record.json"
+          cp "$NEW_LEDGER" "$RUNNER_TEMP/new-replay-ledger.jsonl"
+          # Undo the three overlays so the branch switch is clean.
+          for path in "$RECORD" scripts/replay_run.py ops/exports/chip-watchlist-risk-packet.json; do
+            if git cat-file -e "HEAD:$path" 2>/dev/null; then
+              git checkout HEAD -- "$path"
+            else
+              rm -f "$path"
+            fi
+          done
+          git checkout "$DEFAULT_BRANCH"
+          mkdir -p "$(dirname "$NEW_REPORT")"
+          cp "$RUNNER_TEMP/new-replay-record.json" "$NEW_REPORT"
+          cp "$RUNNER_TEMP/new-replay-ledger.jsonl" "$NEW_LEDGER"
+          git add -- "$NEW_REPORT" "$NEW_LEDGER"
+          STAGED=$(git diff --cached --name-only | sort)
+          EXPECTED=$(printf '%s\n' "$NEW_REPORT" "$NEW_LEDGER" | sort)
+          if [ "$STAGED" != "$EXPECTED" ]; then
+            echo "staged set differs from the two replay files:" >&2
+            echo "$STAGED" >&2
+            exit 1
+          fi
+          git commit -m "ops: scheduled replay of ${RUN_ID}"
+          git show --stat --format='%h %s' HEAD
+
+      - name: Push the replay commit
+        working-directory: chip-supply-chain-map
+        run: |
+          set -euo pipefail
+          if ! git push origin "HEAD:${DEFAULT_BRANCH}"; then
+            # main moved while the replay ran; the commit only adds two new files, so a rebase cannot conflict.
+            git pull --rebase origin "$DEFAULT_BRANCH"
+            git push origin "HEAD:${DEFAULT_BRANCH}"
+          fi
+
+      - name: Open an issue when the scheduled replay fails
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh issue create \
+            --title "Scheduled replay failed on $(date -u +%Y-%m-%d)" \
+            --body "The replay-freshness workflow did not commit a replay record. No new record landed, so the 30-day evidence window keeps shrinking. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
