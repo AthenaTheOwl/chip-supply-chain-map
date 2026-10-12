@@ -758,3 +758,22 @@ Acceptance:
   corpus of 19 DECs reports 15 missing-field warnings (four DECs
   populate the fields: DEC-FIN-008, DEC-FIN-009, DEC-FIN-010, and
   DEC-FIN-011 which is self-applying).
+
+### R-FIN-038: scheduled replay commits a dated replay record
+
+WHEN the 1st or 15th of a month arrives, or a maintainer dispatches
+`.github/workflows/replay-freshness.yml`, THE SYSTEM SHALL replay the
+canonical sample `run-6a665b303138` with the `replay-smoke` sequence
+from `run-evidence-gates.yml` and, only when the replay exits 0,
+commit the new replay record and its per-replay ledger to `main`.
+
+Acceptance:
+- The workflow carries `schedule` (`cron: "17 6 1,15 * *"`) and
+  `workflow_dispatch`, `permissions: contents: write`, and a
+  concurrency group.
+- The commit adds exactly two files: one
+  `ops/replay-records/run-6a665b303138/<replay-event-id>.json` whose
+  `created_at` is the replay time, and the
+  `ops/event-ledger/replay-run-6a665b303138-*.jsonl` file that report
+  names under `replay_ledger_ref`. The step never runs `git add -A`.
+- A replay that exits non-zero commits nothing.

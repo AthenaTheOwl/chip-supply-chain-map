@@ -79,6 +79,8 @@ The repo runs the Cognitive Delivery Control Plane operating model: spec ledger,
 
 The 180-day data-freshness gate is wired into `.github/workflows/stale-data.yml`.
 
+A scheduled workflow, `.github/workflows/replay-freshness.yml`, replays the canonical sample twice a month and commits the dated replay record, so the reproducibility claim is re-checked on a fixed schedule instead of when someone remembers.
+
 ## Connects to
 
 - `supplier-risk-rag-agent` for cited SEC risk text behind supply-chain exposure claims.
