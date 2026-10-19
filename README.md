@@ -97,3 +97,7 @@ A scheduled workflow, `.github/workflows/replay-freshness.yml`, replays the cano
 ## License
 
 MIT for code. CC BY 4.0 for data and docs.
+
+## Method update
+
+[October method update: An alternate supplier is a path with qualification and timing](docs/substitution-feasibility.md).

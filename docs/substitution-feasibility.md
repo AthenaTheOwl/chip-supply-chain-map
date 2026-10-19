@@ -1,0 +1,13 @@
+# An alternate supplier is a path with qualification and timing
+
+Method update: October 18, 2026. Proposed experiments below are not reported as executed results.
+
+A supplier graph can contain two suppliers while still containing one usable route to delivered output. A second foundry node may require a process redesign; another substrate vendor may lack the package specification; an alternate line may deliver after the decision horizon. Counting neighboring nodes therefore measures graph degree, not operational substitution.
+
+Use the existing scenario machinery in `src/lib/scenarios.ts` to test a synthetic dependency with an alternate route that is visible but unavailable within the scenario horizon. Keep qualification, available capacity, allocation and switching lead time as separate assumptions. A candidate alternative should state which of those assumptions is observed and which is inferred.
+
+The proposed acceptance case has a primary supplier cut and two alternatives: one qualified but capacity-limited, one capable but too late. The explanation should name the unresolved constraint instead of reporting full substitution. Re-run the affected risk packet when an edge's qualification or lead-time evidence changes; retain the earlier packet as a historical result. Scenario multipliers express conditional stress choices and should not be presented as event probabilities.
+
+## References
+
+- https://github.com/3orionkings/ai-product-team/blob/main/workflows/process-change.md
