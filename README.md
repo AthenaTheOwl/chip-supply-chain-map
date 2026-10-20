@@ -94,10 +94,10 @@ A scheduled workflow, `.github/workflows/replay-freshness.yml`, replays the cano
 - A complete capacity model of the industry.
 - Wafer-start, HBM-stack, CoWoS-line, or fab-utilization data at private granularity.
 
-## License
-
-MIT for code. CC BY 4.0 for data and docs.
-
 ## Method update
 
 [October method update: An alternate supplier is a path with qualification and timing](docs/substitution-feasibility.md).
+
+## License
+
+MIT for code. CC BY 4.0 for data and docs.
