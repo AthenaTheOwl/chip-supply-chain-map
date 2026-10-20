@@ -32,7 +32,8 @@ when the subtype would be too sparse.
 1 / (1 + log(1 + alternatives))
 ```
 
-Alternatives are counted from companies with the same type and subtype. More
+Alternatives are counted from companies with the same type and subtype. When a
+node has no such peer, every company of the same type is counted instead. More
 public alternatives lower the score.
 
 `lead_time` is `1 + lead_time_months / 12`. Lead times are type-level estimates:
