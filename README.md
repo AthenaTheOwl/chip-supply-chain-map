@@ -10,7 +10,7 @@
 
 - Browse a hand-curated semiconductor dependency graph across foundries, fabless design, EDA/IP, equipment, materials, substrates, memory, packaging, hyperscalers, and industrial demand.
 - Click a node to see dependencies, geography, lead times, chokepoint score, investor sensitivity records, and source IDs.
-- Toggle nine scenarios, including Taiwan capacity shock, packaging bottleneck, substrate shortage, equipment delay, export-control tightening, HBM and CoWoS stress, and AI accelerator demand growth.
+- Toggle eleven scenarios, including Taiwan capacity shock, packaging bottleneck, substrate shortage, equipment delay, export-control tightening, HBM and CoWoS stress, and AI accelerator demand growth.
 - Build an investor watchlist from graph nodes, inspect aggregate exposure, and export a sourced JSON or markdown risk packet.
 
 ![Scenario toggle preview](./public/screenshots/scenario-active.gif)
